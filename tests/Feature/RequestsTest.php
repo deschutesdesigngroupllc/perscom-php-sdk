@@ -1,6 +1,7 @@
 <?php
 
 use Perscom\PerscomConnection;
+use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Response;
@@ -28,4 +29,4 @@ test('it will fail without defining the authenticator', function () {
         ->and($data)->toEqual([
             'message' => 'Unauthenticated',
         ]);
-});
+})->throws(UnauthorizedException::class);
