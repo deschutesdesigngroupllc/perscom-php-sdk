@@ -24,6 +24,7 @@ jobs:
         with:
           php-version: 8.1
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, exif, iconv, fileinfo
+          tools: composer
           coverage: none
 
       - name: Install Composer Dependencies

@@ -30,6 +30,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, exif, iconv, fileinfo
+          tools: composer
           coverage: none
 
       - name: Install Composer Dependencies
