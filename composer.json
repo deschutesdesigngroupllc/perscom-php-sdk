@@ -1,0 +1,29 @@
+{
+    "name": "perscom/php-sdk",
+    "version": "1.0.0",
+    "require": {
+        "php": "^8.1",
+        "saloonphp/saloon": "^2.0",
+        "saloonphp/rate-limit-plugin": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Perscom\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Perscom\\Test\\": "tests"
+        }
+    },
+    "require-dev": {
+        "crescat-io/saloon-sdk-generator": "^1.0",
+        "pestphp/pest": "^2.19",
+        "laravel/pint": "^1.13"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
