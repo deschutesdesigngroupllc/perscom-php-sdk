@@ -2,18 +2,25 @@
 
 namespace Perscom;
 
+use Perscom\Exceptions\TenantCouldNotBeIdentifiedException;
+use Perscom\Exceptions\AuthenticationException;
 use Perscom\Http\Resources\UserResource;
-use Saloon\Contracts\Authenticator;
+use Perscom\Traits\HasLogging;
+use Saloon\Contracts\Response;
 use Saloon\Http\Connector;
 use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
 use Saloon\RateLimitPlugin\Limit;
 use Saloon\RateLimitPlugin\Stores\MemoryStore;
 use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Plugins\AcceptsJson;
+use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
+use Throwable;
 
 class PerscomConnection extends Connector
 {
+    use AlwaysThrowOnErrors;
     use AcceptsJson;
+    use HasLogging;
     use HasRateLimits;
 
     /**
@@ -22,15 +29,7 @@ class PerscomConnection extends Connector
      */
     public function __construct(protected string $apiKey, protected string $perscomId)
     {
-        //
-    }
-
-    /**
-     * @return Authenticator|null
-     */
-    protected function defaultAuth(): ?Authenticator
-    {
-        return new PerscomAuthenticator($this->apiKey, $this->perscomId);
+        $this->withTokenAuth($this->apiKey);
     }
 
     /**
@@ -49,6 +48,7 @@ class PerscomConnection extends Connector
         return [
             'X-Perscom-Sdk' => true,
             'X-Perscom-Sdk-Version' => '1.0.0',
+            'X-Perscom-Id' => $this->perscomId
         ];
     }
 
@@ -70,8 +70,29 @@ class PerscomConnection extends Connector
         ];
     }
 
+    /**
+     * @return RateLimitStore
+     */
     protected function resolveRateLimitStore(): RateLimitStore
     {
         return new MemoryStore();
+    }
+
+    /**
+     * @param Response $response
+     * @param Throwable|null $senderException
+     * @return Throwable|null
+     */
+    public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
+    {
+        if ($response->json('error.type') === 'TenantCouldNotBeIdentified') {
+            return new TenantCouldNotBeIdentifiedException();
+        }
+
+        if ($response->json('error.type') === 'AuthenticationException') {
+            return new AuthenticationException();
+        }
+
+        return parent::getRequestException($response, $senderException);
     }
 }

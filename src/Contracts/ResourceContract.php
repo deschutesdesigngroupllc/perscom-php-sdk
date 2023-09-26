@@ -8,9 +8,10 @@ interface ResourceContract
 {
     /**
      * @param int $page
+     * @param int $limit
      * @return Response
      */
-    public function all(int $page): Response;
+    public function all(int $page = 1, int $limit = 20): Response;
 
     /**
      * @param int $id

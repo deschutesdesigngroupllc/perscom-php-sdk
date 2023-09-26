@@ -14,11 +14,12 @@ class UserResource extends Resource implements ResourceContract
 {
     /**
      * @param int $page
+     * @param int $limit
      * @return Response
      */
-    public function all(int $page = 1): Response
+    public function all(int $page = 1, int $limit = 20): Response
     {
-        return $this->connector->send(new GetUsersRequest());
+        return $this->connector->send(new GetUsersRequest($page, $limit));
     }
 
     /**
