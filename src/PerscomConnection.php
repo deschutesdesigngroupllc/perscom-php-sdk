@@ -3,6 +3,7 @@
 namespace Perscom;
 
 use Perscom\Http\Resources\UserResource;
+use Saloon\Contracts\Authenticator;
 use Saloon\Http\Connector;
 use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
 use Saloon\RateLimitPlugin\Limit;
@@ -10,10 +11,20 @@ use Saloon\RateLimitPlugin\Stores\MemoryStore;
 use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Plugins\AcceptsJson;
 
-class PerscomConnector extends Connector
+class PerscomConnection extends Connector
 {
     use AcceptsJson;
     use HasRateLimits;
+
+    public function __construct(protected string $apiKey, protected string $perscomId)
+    {
+        //
+    }
+
+    protected function defaultAuth(): ?Authenticator
+    {
+        return new PerscomAuthenticator($this->apiKey, $this->perscomId);
+    }
 
     public function resolveBaseUrl(): string
     {

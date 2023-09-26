@@ -1,18 +1,21 @@
 <?php
 
-use Perscom\PerscomConnector;
+use Perscom\PerscomConnection;
 use Saloon\Http\Response;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Helpers\Config;
 
 beforeEach(function () {
+    Config::preventStrayRequests();
+
     $this->mockClient = new MockClient([
         MockResponse::make([
             'name' => 'foo'
         ], 200),
     ]);
 
-    $this->connector = new PerscomConnector();
+    $this->connector = new PerscomConnection();
     $this->connector->withMockClient($this->mockClient);
 });
 

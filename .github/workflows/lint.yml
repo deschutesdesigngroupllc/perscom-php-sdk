@@ -1,0 +1,28 @@
+name: Code Style
+
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+    branches:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Check Code Style
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+
+      - name: Run Pint
+        run: composer run lint
+
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 🪄 Code Style Fixes

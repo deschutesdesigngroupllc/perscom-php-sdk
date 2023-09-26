@@ -4,7 +4,8 @@
     "require": {
         "php": "^8.1",
         "saloonphp/saloon": "^2.0",
-        "saloonphp/rate-limit-plugin": "^1.0"
+        "saloonphp/rate-limit-plugin": "^1.0",
+        "symfony/console": "^6.3"
     },
     "autoload": {
         "psr-4": {
