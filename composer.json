@@ -1,6 +1,21 @@
 {
-    "name": "perscom/php-sdk",
+    "name": "deschutesdesigngroupllc/perscom-php-sdk",
+    "description": "The PERSCOM PHP SDK is a powerful tool that enables seamless integration with the PERSCOM platform, allowing you to interact with PERSCOM's personnel data programmatically.",
+    "keywords": ["perscom", "sdk", "php"],
+    "homepage": "https://perscom.io",
+    "type": "project",
     "version": "1.0.0",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/issues",
+        "source": "https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk"
+    },
+    "authors": [
+        {
+            "name": "Jon Erickson",
+            "email": "jon@deschutesdesigngroup.com"
+        }
+    ],
     "require": {
         "php": "^8.1",
         "saloonphp/saloon": "^2.0",
