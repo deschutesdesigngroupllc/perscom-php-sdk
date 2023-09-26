@@ -24,7 +24,7 @@ class PerscomConnector extends Connector
     {
         return [
             'X-Perscom-Sdk' => true,
-            'X-Perscom-Sdk-Version' => '1.0.0'
+            'X-Perscom-Sdk-Version' => '1.0.0',
         ];
     }
 

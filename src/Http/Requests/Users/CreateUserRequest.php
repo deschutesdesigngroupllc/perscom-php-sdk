@@ -2,7 +2,6 @@
 
 namespace Perscom\Http\Requests\Users;
 
-use Saloon\Contracts\Body\BodyRepository;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
