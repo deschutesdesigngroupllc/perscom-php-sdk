@@ -19,7 +19,8 @@
     "require-dev": {
         "crescat-io/saloon-sdk-generator": "^1.0",
         "pestphp/pest": "^2.19",
-        "laravel/pint": "^1.13"
+        "laravel/pint": "^1.13",
+        "phpstan/phpstan": "^1.10"
     },
     "config": {
         "allow-plugins": {
@@ -28,6 +29,7 @@
     },
     "scripts": {
         "lint": "./vendor/bin/pint src",
-        "test": "./vendor/bin/pest"
+        "test": "./vendor/bin/pest",
+        "test:type": "./vendor/bin/phpstan analyse --error-format=github"
     }
 }

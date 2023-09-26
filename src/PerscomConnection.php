@@ -16,21 +16,34 @@ class PerscomConnection extends Connector
     use AcceptsJson;
     use HasRateLimits;
 
+    /**
+     * @param string $apiKey
+     * @param string $perscomId
+     */
     public function __construct(protected string $apiKey, protected string $perscomId)
     {
         //
     }
 
+    /**
+     * @return Authenticator|null
+     */
     protected function defaultAuth(): ?Authenticator
     {
         return new PerscomAuthenticator($this->apiKey, $this->perscomId);
     }
 
+    /**
+     * @return string
+     */
     public function resolveBaseUrl(): string
     {
         return 'https://api.perscom.io/v1';
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function defaultHeaders(): array
     {
         return [
@@ -39,11 +52,17 @@ class PerscomConnection extends Connector
         ];
     }
 
+    /**
+     * @return UserResource
+     */
     public function users(): UserResource
     {
         return new UserResource($this);
     }
 
+    /**
+     * @return array<Limit>
+     */
     protected function resolveLimits(): array
     {
         return [

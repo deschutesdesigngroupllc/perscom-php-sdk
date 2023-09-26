@@ -9,6 +9,9 @@ class GetUsersRequest extends Request
 {
     protected Method $method = Method::GET;
 
+    /**
+     * @return string
+     */
     public function resolveEndpoint(): string
     {
         return 'users';
