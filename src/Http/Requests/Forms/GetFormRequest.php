@@ -12,7 +12,7 @@ class GetFormRequest extends Request
     /**
      * @param int $id
      */
-    public function __construct(protected int $id)
+    public function __construct(public int $id)
     {
         //
     }

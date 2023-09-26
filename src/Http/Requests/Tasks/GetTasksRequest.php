@@ -13,7 +13,7 @@ class GetTasksRequest extends Request
      * @param int $page
      * @param int $limit
      */
-    public function __construct(protected int $page = 1, protected int $limit = 20)
+    public function __construct(public int $page = 1, public int $limit = 20)
     {
         //
     }

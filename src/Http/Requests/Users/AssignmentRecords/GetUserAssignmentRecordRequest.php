@@ -13,7 +13,7 @@ class GetUserAssignmentRecordRequest extends Request
      * @param int $userId
      * @param int $id
      */
-    public function __construct(protected int $userId, protected int $id)
+    public function __construct(public int $userId, public int $id)
     {
         //
     }

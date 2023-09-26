@@ -16,7 +16,7 @@ class CreateRankRequest extends Request implements HasBody
     /**
      * @param array<string, mixed>  $data
      */
-    public function __construct(protected array $data)
+    public function __construct(public array $data)
     {
         //
     }

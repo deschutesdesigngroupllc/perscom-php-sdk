@@ -17,7 +17,7 @@ class CreateUserAssignmentRecordRequest extends Request implements HasBody
      * @param int $userId
      * @param array<string, mixed>  $data
      */
-    public function __construct(protected int $userId, protected array $data)
+    public function __construct(public int $userId, public array $data)
     {
         //
     }

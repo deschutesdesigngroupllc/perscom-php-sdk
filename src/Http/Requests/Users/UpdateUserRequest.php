@@ -17,7 +17,7 @@ class UpdateUserRequest extends Request implements HasBody
      * @param int $id
      * @param array<string, mixed>  $data
      */
-    public function __construct(protected int $id, protected array $data)
+    public function __construct(public int $id, public array $data)
     {
         //
     }
