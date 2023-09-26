@@ -46,5 +46,7 @@
         "lint": "./vendor/bin/pint src",
         "test": "./vendor/bin/pest",
         "test:type": "./vendor/bin/phpstan analyse --error-format=github"
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

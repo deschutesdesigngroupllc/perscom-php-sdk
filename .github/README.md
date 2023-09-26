@@ -26,6 +26,14 @@ $response = $perscom->users()->all();
 $data = $response->json();
 ```
 
+## Installation
+
+You can install the package using [Composer](https://getcomposer.org):
+
+```shell
+composer require deschutesdesigngroupllc/perscom-php-sdk
+```
+
 ## Getting Started
 
 Visit our documentation [here](https://docs.perscom.io) to get started.
