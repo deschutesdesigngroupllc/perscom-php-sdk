@@ -6,7 +6,7 @@
 
 A PHP packages that helps kickstart your next [PERSCOM](https://perscom.io) integration.
 
-[![Test Status](https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/actions/workflows/tests.yml/badge.svg)](https://img.shields.io/github/actions/workflow/status/DeschutesDesignGroupLLC/perscom-php-sdk/tests.yml?label=tests)
+[![Test Suite](https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/actions/workflows/tests.yml/badge.svg)](https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/actions/workflows/tests.yml)
 ![Downloads](https://img.shields.io/packagist/dm/sammyjo20/saloon)
 
 [Documentation](https://docs.pescom.io)
