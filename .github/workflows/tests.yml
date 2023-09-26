@@ -35,7 +35,7 @@ jobs:
           coverage: none
 
       - name: Install Composer Dependencies
-        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+        run: composer install --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
 
       - name: Execute Tests
         run: composer run test
