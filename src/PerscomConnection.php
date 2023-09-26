@@ -2,8 +2,22 @@
 
 namespace Perscom;
 
+use Perscom\Exceptions\NotFoundHttpException;
 use Perscom\Exceptions\TenantCouldNotBeIdentifiedException;
 use Perscom\Exceptions\AuthenticationException;
+use Perscom\Http\Resources\AnnouncementResource;
+use Perscom\Http\Resources\AwardResource;
+use Perscom\Http\Resources\CalendarResource;
+use Perscom\Http\Resources\EventResource;
+use Perscom\Http\Resources\FormResource;
+use Perscom\Http\Resources\GroupResource;
+use Perscom\Http\Resources\PositionResource;
+use Perscom\Http\Resources\QualificationResource;
+use Perscom\Http\Resources\RankResource;
+use Perscom\Http\Resources\SpecialtyResource;
+use Perscom\Http\Resources\SubmissionResource;
+use Perscom\Http\Resources\TaskResource;
+use Perscom\Http\Resources\UnitResource;
 use Perscom\Http\Resources\UserResource;
 use Perscom\Traits\HasLogging;
 use Saloon\Contracts\Response;
@@ -53,6 +67,110 @@ class PerscomConnection extends Connector
     }
 
     /**
+     * @return AnnouncementResource
+     */
+    public function announcements(): AnnouncementResource
+    {
+        return new AnnouncementResource($this);
+    }
+
+    /**
+     * @return AwardResource
+     */
+    public function awards(): AwardResource
+    {
+        return new AwardResource($this);
+    }
+
+    /**
+     * @return CalendarResource
+     */
+    public function calendars(): CalendarResource
+    {
+        return new CalendarResource($this);
+    }
+
+    /**
+     * @return EventResource
+     */
+    public function events(): EventResource
+    {
+        return new EventResource($this);
+    }
+
+    /**
+     * @return FormResource
+     */
+    public function forms(): FormResource
+    {
+        return new FormResource($this);
+    }
+
+    /**
+     * @return GroupResource
+     */
+    public function groups(): GroupResource
+    {
+        return new GroupResource($this);
+    }
+
+    /**
+     * @return PositionResource
+     */
+    public function positions(): PositionResource
+    {
+        return new PositionResource($this);
+    }
+
+    /**
+     * @return QualificationResource
+     */
+    public function qualifications(): QualificationResource
+    {
+        return new QualificationResource($this);
+    }
+
+    /**
+     * @return RankResource
+     */
+    public function ranks(): RankResource
+    {
+        return new RankResource($this);
+    }
+
+    /**
+     * @return SpecialtyResource
+     */
+    public function specialties(): SpecialtyResource
+    {
+        return new SpecialtyResource($this);
+    }
+
+    /**
+     * @return SubmissionResource
+     */
+    public function submissions(): SubmissionResource
+    {
+        return new SubmissionResource($this);
+    }
+
+    /**
+     * @return TaskResource
+     */
+    public function tasks(): TaskResource
+    {
+        return new TaskResource($this);
+    }
+
+    /**
+     * @return UnitResource
+     */
+    public function units(): UnitResource
+    {
+        return new UnitResource($this);
+    }
+
+    /**
      * @return UserResource
      */
     public function users(): UserResource
@@ -91,6 +209,10 @@ class PerscomConnection extends Connector
 
         if ($response->json('error.type') === 'AuthenticationException') {
             return new AuthenticationException();
+        }
+
+        if ($response->json('error.type') === 'NotFoundHttpException') {
+            return new NotFoundHttpException();
         }
 
         return parent::getRequestException($response, $senderException);
