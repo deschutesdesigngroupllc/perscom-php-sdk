@@ -15,7 +15,7 @@ beforeEach(function () {
         ], 200),
     ]);
 
-    $this->connector = new PerscomConnection();
+    $this->connector = new PerscomConnection('foo', 'bar');
     $this->connector->withMockClient($this->mockClient);
 });
 

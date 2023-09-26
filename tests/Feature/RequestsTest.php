@@ -17,7 +17,7 @@ test('it will fail without defining the authenticator', function () {
         ], 401),
     ]);
 
-    $connector = new PerscomConnection();
+    $connector = new PerscomConnection('foo', 'bar');
     $connector->withMockClient($mockClient);
     $response = $connector->users()->all();
 
