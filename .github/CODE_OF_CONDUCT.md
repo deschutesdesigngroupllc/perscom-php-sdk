@@ -1,4 +1,3 @@
-```markdown
 # PERSCOM PHP SDK Code of Conduct
 
 ## Our Pledge
@@ -38,4 +37,3 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 ## Questions or Concerns?
 
 If you have any questions or concerns about this Code of Conduct or its enforcement, please contact the project team at [email address].
-```
