@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Perscom\RequestType;
+namespace Perscom\Http\Requests;
 
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;

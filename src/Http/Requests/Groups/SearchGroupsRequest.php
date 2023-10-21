@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests\Groups;
 
-use Perscom\RequestType\AbstractSearchRequest;
+use Perscom\Http\Requests\AbstractSearchRequest;
 
 class SearchGroupsRequest extends AbstractSearchRequest
 {
