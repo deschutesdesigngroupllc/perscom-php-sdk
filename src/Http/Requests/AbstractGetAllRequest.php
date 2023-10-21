@@ -39,10 +39,15 @@ abstract class AbstractGetAllRequest extends Request
      */
     protected function defaultQuery(): array
     {
-        return [
-            'include' => implode(',', $this->include),
+        $query = [
             'limit' => $this->limit,
             'page' => $this->page,
         ];
+
+        if ($this->include) {
+            $query['include'] = implode(',', $this->include);
+        }
+
+        return $query;
     }
 }
