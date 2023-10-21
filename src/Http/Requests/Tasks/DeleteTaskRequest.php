@@ -2,26 +2,15 @@
 
 namespace Perscom\Http\Requests\Tasks;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractDeleteRequest;
 
-class DeleteTaskRequest extends Request
+class DeleteTaskRequest extends AbstractDeleteRequest
 {
-    protected Method $method = Method::DELETE;
-
-    /**
-     * @param int $id
-     */
-    public function __construct(public int $id)
-    {
-        //
-    }
-
     /**
      * @return string
      */
-    public function resolveEndpoint(): string
+    public function getResource(): string
     {
-        return "tasks/{$this->id}";
+        return 'tasks';
     }
 }

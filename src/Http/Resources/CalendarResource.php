@@ -14,13 +14,14 @@ use Saloon\Contracts\Response;
 class CalendarResource extends Resource implements ResourceContract
 {
     /**
+     * @param array<string> $include
      * @param int $page
      * @param int $limit
      * @return Response
      */
-    public function all(int $page = 1, int $limit = 20): Response
+    public function all(array $include = [], int $page = 1, int $limit = 20): Response
     {
-        return $this->connector->send(new GetCalendarsRequest($page, $limit));
+        return $this->connector->send(new GetCalendarsRequest($include, $page, $limit));
     }
 
     /**
@@ -34,11 +35,12 @@ class CalendarResource extends Resource implements ResourceContract
 
     /**
      * @param int $id
+     * @param array<string> $include
      * @return Response
      */
-    public function get(int $id): Response
+    public function get(int $id, array $include = []): Response
     {
-        return $this->connector->send(new GetCalendarRequest($id));
+        return $this->connector->send(new GetCalendarRequest($id, $include));
     }
 
     /**

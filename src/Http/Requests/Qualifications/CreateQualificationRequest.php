@@ -2,38 +2,15 @@
 
 namespace Perscom\Http\Requests\Qualifications;
 
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
-use Saloon\Traits\Body\HasJsonBody;
+use Perscom\Http\Requests\AbstractCreateRequest;
 
-class CreateQualificationRequest extends Request implements HasBody
+class CreateQualificationRequest extends AbstractCreateRequest
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::POST;
-
-    /**
-     * @param array<string, mixed>  $data
-     */
-    public function __construct(public array $data)
-    {
-        //
-    }
-
     /**
      * @return string
      */
-    public function resolveEndpoint(): string
+    public function getResource(): string
     {
         return 'qualifications';
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    protected function defaultBody(): array
-    {
-        return $this->data;
     }
 }

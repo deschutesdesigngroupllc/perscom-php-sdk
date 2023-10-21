@@ -2,26 +2,15 @@
 
 namespace Perscom\Http\Requests\Ranks;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractGetRequest;
 
-class GetRankRequest extends Request
+class GetRankRequest extends AbstractGetRequest
 {
-    protected Method $method = Method::GET;
-
-    /**
-     * @param int $id
-     */
-    public function __construct(public int $id)
-    {
-        //
-    }
-
     /**
      * @return string
      */
-    public function resolveEndpoint(): string
+    public function getResource(): string
     {
-        return "ranks/{$this->id}";
+        return 'ranks';
     }
 }
