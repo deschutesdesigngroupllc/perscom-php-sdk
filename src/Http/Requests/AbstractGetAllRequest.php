@@ -12,10 +12,11 @@ abstract class AbstractGetAllRequest extends Request
     protected Method $method = Method::GET;
 
     /**
+     * @param array<string> $include
      * @param int $page
      * @param int $limit
      */
-    public function __construct(public int $page = 1, public int $limit = 20)
+    public function __construct(public array $include = [], public int $page = 1, public int $limit = 20)
     {
         //
     }
@@ -39,6 +40,7 @@ abstract class AbstractGetAllRequest extends Request
     protected function defaultQuery(): array
     {
         return [
+            'include' => implode(',', $this->include),
             'limit' => $this->limit,
             'page' => $this->page,
         ];

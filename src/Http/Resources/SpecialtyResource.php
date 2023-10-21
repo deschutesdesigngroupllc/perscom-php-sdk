@@ -5,8 +5,8 @@ namespace Perscom\Http\Resources;
 use Perscom\Contracts\ResourceContract;
 use Perscom\Http\Requests\Specialties\CreateSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\DeleteSpecialtyRequest;
-use Perscom\Http\Requests\Specialties\GetSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\GetSpecialtiesRequest;
+use Perscom\Http\Requests\Specialties\GetSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\SearchSpecialtiesRequest;
 use Perscom\Http\Requests\Specialties\UpdateSpecialtyRequest;
 use Saloon\Contracts\Response;
@@ -14,13 +14,14 @@ use Saloon\Contracts\Response;
 class SpecialtyResource extends Resource implements ResourceContract
 {
     /**
+     * @param array<string> $include
      * @param int $page
      * @param int $limit
      * @return Response
      */
-    public function all(int $page = 1, int $limit = 20): Response
+    public function all(array $include = [], int $page = 1, int $limit = 20): Response
     {
-        return $this->connector->send(new GetSpecialtiesRequest($page, $limit));
+        return $this->connector->send(new GetSpecialtiesRequest($include, $page, $limit));
     }
 
     /**
@@ -34,11 +35,12 @@ class SpecialtyResource extends Resource implements ResourceContract
 
     /**
      * @param int $id
+     * @param array<string> $include
      * @return Response
      */
-    public function get(int $id): Response
+    public function get(int $id, array $include = []): Response
     {
-        return $this->connector->send(new GetSpecialtyRequest($id));
+        return $this->connector->send(new GetSpecialtyRequest($id, $include));
     }
 
     /**

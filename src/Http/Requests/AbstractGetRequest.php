@@ -13,8 +13,9 @@ abstract class AbstractGetRequest extends Request
 
     /**
      * @param int $id
+     * @param array<string> $include
      */
-    public function __construct(public int $id)
+    public function __construct(public int $id, public array $include = [])
     {
         //
     }
@@ -31,4 +32,14 @@ abstract class AbstractGetRequest extends Request
      * @return string
      */
     abstract protected function getResource(): string;
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaultQuery(): array
+    {
+        return [
+            'include' => implode(',', $this->include),
+        ];
+    }
 }
