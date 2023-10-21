@@ -2,38 +2,15 @@
 
 namespace Perscom\Http\Requests\Specialties;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractGetAllRequest;
 
-class GetSpecialtiesRequest extends Request
+class GetSpecialtiesRequest extends AbstractGetAllRequest
 {
-    protected Method $method = Method::GET;
-
-    /**
-     * @param int $page
-     * @param int $limit
-     */
-    public function __construct(public int $page = 1, public int $limit = 20)
-    {
-        //
-    }
-
     /**
      * @return string
      */
-    public function resolveEndpoint(): string
+    public function getResource(): string
     {
-        return 'specialtys';
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    protected function defaultQuery(): array
-    {
-        return [
-            'limit' => $this->limit,
-            'page' => $this->page,
-        ];
+        return 'specialties';
     }
 }

@@ -2,26 +2,15 @@
 
 namespace Perscom\Http\Requests\Forms;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractDeleteRequest;
 
-class DeleteFormRequest extends Request
+class DeleteFormRequest extends AbstractDeleteRequest
 {
-    protected Method $method = Method::DELETE;
-
-    /**
-     * @param int $id
-     */
-    public function __construct(public int $id)
-    {
-        //
-    }
-
     /**
      * @return string
      */
-    public function resolveEndpoint(): string
+    public function getResource(): string
     {
-        return "forms/{$this->id}";
+        return 'forms';
     }
 }

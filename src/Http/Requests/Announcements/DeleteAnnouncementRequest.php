@@ -2,26 +2,15 @@
 
 namespace Perscom\Http\Requests\Announcements;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractDeleteRequest;
 
-class DeleteAnnouncementRequest extends Request
+class DeleteAnnouncementRequest extends AbstractDeleteRequest
 {
-    protected Method $method = Method::DELETE;
-
-    /**
-     * @param int $id
-     */
-    public function __construct(public int $id)
-    {
-        //
-    }
-
     /**
      * @return string
      */
-    public function resolveEndpoint(): string
+    public function getResource(): string
     {
-        return "announcements/{$this->id}";
+        return 'announcements';
     }
 }

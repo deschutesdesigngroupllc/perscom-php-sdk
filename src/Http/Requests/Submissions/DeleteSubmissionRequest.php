@@ -2,26 +2,15 @@
 
 namespace Perscom\Http\Requests\Submissions;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractDeleteRequest;
 
-class DeleteSubmissionRequest extends Request
+class DeleteSubmissionRequest extends AbstractDeleteRequest
 {
-    protected Method $method = Method::DELETE;
-
-    /**
-     * @param int $id
-     */
-    public function __construct(public int $id)
-    {
-        //
-    }
-
     /**
      * @return string
      */
-    public function resolveEndpoint(): string
+    public function getResource(): string
     {
-        return "submissions/{$this->id}";
+        return 'submissions';
     }
 }

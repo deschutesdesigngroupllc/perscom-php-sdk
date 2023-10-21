@@ -2,26 +2,15 @@
 
 namespace Perscom\Http\Requests\Qualifications;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractGetRequest;
 
-class GetQualificationRequest extends Request
+class GetQualificationRequest extends AbstractGetRequest
 {
-    protected Method $method = Method::GET;
-
-    /**
-     * @param int $id
-     */
-    public function __construct(public int $id)
-    {
-        //
-    }
-
     /**
      * @return string
      */
-    public function resolveEndpoint(): string
+    public function getResource(): string
     {
-        return "qualifications/{$this->id}";
+        return 'qualifications';
     }
 }

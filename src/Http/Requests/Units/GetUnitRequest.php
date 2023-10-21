@@ -2,26 +2,15 @@
 
 namespace Perscom\Http\Requests\Units;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractGetRequest;
 
-class GetUnitRequest extends Request
+class GetUnitRequest extends AbstractGetRequest
 {
-    protected Method $method = Method::GET;
-
-    /**
-     * @param int $id
-     */
-    public function __construct(public int $id)
-    {
-        //
-    }
-
     /**
      * @return string
      */
-    public function resolveEndpoint(): string
+    public function getResource(): string
     {
-        return "units/{$this->id}";
+        return 'units';
     }
 }
