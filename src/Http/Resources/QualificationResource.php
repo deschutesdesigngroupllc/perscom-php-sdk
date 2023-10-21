@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Qualifications\CreateQualificationRequest;
 use Perscom\Http\Requests\Qualifications\DeleteQualificationRequest;
 use Perscom\Http\Requests\Qualifications\GetQualificationRequest;
 use Perscom\Http\Requests\Qualifications\GetQualificationsRequest;
+use Perscom\Http\Requests\Qualifications\SearchQualificationsRequest;
 use Perscom\Http\Requests\Qualifications\UpdateQualificationRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class QualificationResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetQualificationsRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchQualificationsRequest($data));
     }
 
     /**

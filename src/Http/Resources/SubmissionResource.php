@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Submissions\CreateSubmissionRequest;
 use Perscom\Http\Requests\Submissions\DeleteSubmissionRequest;
 use Perscom\Http\Requests\Submissions\GetSubmissionRequest;
 use Perscom\Http\Requests\Submissions\GetSubmissionsRequest;
+use Perscom\Http\Requests\Submissions\SearchSubmissionsRequest;
 use Perscom\Http\Requests\Submissions\UpdateSubmissionRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class SubmissionResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetSubmissionsRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchSubmissionsRequest($data));
     }
 
     /**

@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Units\CreateUnitRequest;
 use Perscom\Http\Requests\Units\DeleteUnitRequest;
 use Perscom\Http\Requests\Units\GetUnitRequest;
 use Perscom\Http\Requests\Units\GetUnitsRequest;
+use Perscom\Http\Requests\Units\SearchUnitsRequest;
 use Perscom\Http\Requests\Units\UpdateUnitRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class UnitResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetUnitsRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchUnitsRequest($data));
     }
 
     /**

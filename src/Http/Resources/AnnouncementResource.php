@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Announcements\CreateAnnouncementRequest;
 use Perscom\Http\Requests\Announcements\DeleteAnnouncementRequest;
 use Perscom\Http\Requests\Announcements\GetAnnouncementRequest;
 use Perscom\Http\Requests\Announcements\GetAnnouncementsRequest;
+use Perscom\Http\Requests\Announcements\SearchAnnouncementsRequest;
 use Perscom\Http\Requests\Announcements\UpdateAnnouncementRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class AnnouncementResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetAnnouncementsRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchAnnouncementsRequest($data));
     }
 
     /**

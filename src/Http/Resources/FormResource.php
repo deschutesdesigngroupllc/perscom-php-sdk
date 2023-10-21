@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Forms\CreateFormRequest;
 use Perscom\Http\Requests\Forms\DeleteFormRequest;
 use Perscom\Http\Requests\Forms\GetFormRequest;
 use Perscom\Http\Requests\Forms\GetFormsRequest;
+use Perscom\Http\Requests\Forms\SearchFormsRequest;
 use Perscom\Http\Requests\Forms\UpdateFormRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class FormResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetFormsRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchFormsRequest($data));
     }
 
     /**

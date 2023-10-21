@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Calendars\CreateCalendarRequest;
 use Perscom\Http\Requests\Calendars\DeleteCalendarRequest;
 use Perscom\Http\Requests\Calendars\GetCalendarRequest;
 use Perscom\Http\Requests\Calendars\GetCalendarsRequest;
+use Perscom\Http\Requests\Calendars\SearchCalendarsRequest;
 use Perscom\Http\Requests\Calendars\UpdateCalendarRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class CalendarResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetCalendarsRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchCalendarsRequest($data));
     }
 
     /**

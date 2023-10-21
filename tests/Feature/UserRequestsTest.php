@@ -4,6 +4,7 @@ use Perscom\Http\Requests\Users\CreateUserRequest;
 use Perscom\Http\Requests\Users\DeleteUserRequest;
 use Perscom\Http\Requests\Users\GetUserRequest;
 use Perscom\Http\Requests\Users\GetUsersRequest;
+use Perscom\Http\Requests\Users\SearchUsersRequest;
 use Perscom\Http\Requests\Users\UpdateUserRequest;
 use Perscom\PerscomConnection;
 use Saloon\Contracts\Request;
@@ -18,6 +19,14 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetUsersRequest::class => MockResponse::make([
             'name' => 'foo'
+        ], 200),
+        SearchUsersRequest::class => MockResponse::make([
+            'data' => [
+                [
+                    'id' => 1,
+                    'name' => 'foo'
+                ]
+            ]
         ], 200),
         GetUserRequest::class => MockResponse::make([
             'id' => 1,
@@ -50,6 +59,29 @@ test('it can get all users', function () {
         ]);
 
     $this->mockClient->assertSent(GetUsersRequest::class);
+});
+
+test('it can search users', function () {
+    $response = $this->connector->users()->search([
+        'filters' => [
+            ['field' => 'name', 'value' => 'foo']
+        ]
+    ]);
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                [
+                    'id' => 1,
+                    'name' => 'foo'
+                ]
+            ]
+        ]);
+
+    $this->mockClient->assertSent(SearchUsersRequest::class);
 });
 
 test('it can get a user', function () {
