@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Awards\CreateAwardRequest;
 use Perscom\Http\Requests\Awards\DeleteAwardRequest;
 use Perscom\Http\Requests\Awards\GetAwardRequest;
 use Perscom\Http\Requests\Awards\GetAwardsRequest;
+use Perscom\Http\Requests\Awards\SearchAwardsRequest;
 use Perscom\Http\Requests\Awards\UpdateAwardRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class AwardResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetAwardsRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchAwardsRequest($data));
     }
 
     /**

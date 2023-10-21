@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Ranks\CreateRankRequest;
 use Perscom\Http\Requests\Ranks\DeleteRankRequest;
 use Perscom\Http\Requests\Ranks\GetRankRequest;
 use Perscom\Http\Requests\Ranks\GetRanksRequest;
+use Perscom\Http\Requests\Ranks\SearchRanksRequest;
 use Perscom\Http\Requests\Ranks\UpdateRankRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class RankResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetRanksRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchRanksRequest($data));
     }
 
     /**

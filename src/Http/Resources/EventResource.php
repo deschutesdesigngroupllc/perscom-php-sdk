@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Events\CreateEventRequest;
 use Perscom\Http\Requests\Events\DeleteEventRequest;
 use Perscom\Http\Requests\Events\GetEventRequest;
 use Perscom\Http\Requests\Events\GetEventsRequest;
+use Perscom\Http\Requests\Events\SearchEventsRequest;
 use Perscom\Http\Requests\Events\UpdateEventRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class EventResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetEventsRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchEventsRequest($data));
     }
 
     /**

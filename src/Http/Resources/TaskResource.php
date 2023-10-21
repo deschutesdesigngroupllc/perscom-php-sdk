@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Tasks\CreateTaskRequest;
 use Perscom\Http\Requests\Tasks\DeleteTaskRequest;
 use Perscom\Http\Requests\Tasks\GetTaskRequest;
 use Perscom\Http\Requests\Tasks\GetTasksRequest;
+use Perscom\Http\Requests\Tasks\SearchTasksRequest;
 use Perscom\Http\Requests\Tasks\UpdateTaskRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class TaskResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetTasksRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchTasksRequest($data));
     }
 
     /**

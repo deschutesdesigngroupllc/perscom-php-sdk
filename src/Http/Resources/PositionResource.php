@@ -7,6 +7,7 @@ use Perscom\Http\Requests\Positions\CreatePositionRequest;
 use Perscom\Http\Requests\Positions\DeletePositionRequest;
 use Perscom\Http\Requests\Positions\GetPositionRequest;
 use Perscom\Http\Requests\Positions\GetPositionsRequest;
+use Perscom\Http\Requests\Positions\SearchPositionsRequest;
 use Perscom\Http\Requests\Positions\UpdatePositionRequest;
 use Saloon\Contracts\Response;
 
@@ -20,6 +21,15 @@ class PositionResource extends Resource implements ResourceContract
     public function all(int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetPositionsRequest($page, $limit));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return Response
+     */
+    public function search(array $data): Response
+    {
+        return $this->connector->send(new SearchPositionsRequest($data));
     }
 
     /**
