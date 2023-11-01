@@ -2,9 +2,9 @@
 
 namespace Perscom;
 
+use Perscom\Exceptions\AuthenticationException;
 use Perscom\Exceptions\NotFoundHttpException;
 use Perscom\Exceptions\TenantCouldNotBeIdentifiedException;
-use Perscom\Exceptions\AuthenticationException;
 use Perscom\Http\Resources\AnnouncementResource;
 use Perscom\Http\Resources\AwardResource;
 use Perscom\Http\Resources\CalendarResource;
@@ -15,6 +15,7 @@ use Perscom\Http\Resources\PositionResource;
 use Perscom\Http\Resources\QualificationResource;
 use Perscom\Http\Resources\RankResource;
 use Perscom\Http\Resources\SpecialtyResource;
+use Perscom\Http\Resources\StatusResource;
 use Perscom\Http\Resources\SubmissionResource;
 use Perscom\Http\Resources\TaskResource;
 use Perscom\Http\Resources\UnitResource;
@@ -144,6 +145,14 @@ class PerscomConnection extends Connector
     public function specialties(): SpecialtyResource
     {
         return new SpecialtyResource($this);
+    }
+
+    /**
+     * @return StatusResource
+     */
+    public function statuses(): StatusResource
+    {
+        return new StatusResource($this);
     }
 
     /**
