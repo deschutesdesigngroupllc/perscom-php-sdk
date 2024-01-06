@@ -8,6 +8,8 @@ A PHP package that helps kickstart your next [PERSCOM](https://perscom.io) integ
 
 [![Test Suite](https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/actions/workflows/tests.yml/badge.svg)](https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/actions/workflows/tests.yml)
 ![Downloads](https://img.shields.io/packagist/dm/deschutesdesigngroupllc/perscom-php-sdk)
+![Packagist Version](https://img.shields.io/packagist/v/DeschutesDesignGroupLLC/perscom-php-sdk)
+![GitHub License](https://img.shields.io/github/license/DeschutesDesignGroupLLC/perscom-php-sdk)
 
 [Documentation](https://docs.perscom.io)
 
