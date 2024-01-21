@@ -24,7 +24,8 @@ beforeEach(function () {
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
+                    'name' => 'foo',
+                    'status' => null,
                 ]
             ]
         ], 200),
@@ -66,7 +67,7 @@ test('it can search users', function () {
         'filters' => [
             ['field' => 'name', 'value' => 'foo']
         ]
-    ]);
+    ], ['status']);
 
     $data = $response->json();
 
@@ -76,7 +77,8 @@ test('it can search users', function () {
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
+                    'name' => 'foo',
+                    'status' => null,
                 ]
             ]
         ]);
