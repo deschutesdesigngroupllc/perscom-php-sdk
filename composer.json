@@ -4,7 +4,7 @@
     "keywords": ["perscom", "sdk", "php"],
     "homepage": "https://perscom.io",
     "type": "project",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "license": "MIT",
     "support": {
         "issues": "https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/issues",
