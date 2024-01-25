@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.0.4 - 2024-01-21
+
+### What's Changed
+
+* Bump pestphp/pest from 2.24.0 to 2.31.0 by @dependabot in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/21
+* add include to all search endpoints by @jannes-io in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/23
+
+**Full Changelog**: https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/compare/v1.0.3...v1.0.4
+
 ## v1.0.3 - 2023-11-01
 
 ### What's Changed
