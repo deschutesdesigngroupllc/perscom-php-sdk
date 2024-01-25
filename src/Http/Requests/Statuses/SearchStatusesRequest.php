@@ -13,6 +13,6 @@ class SearchStatusesRequest extends AbstractSearchRequest
      */
     protected function getResource(): string
     {
-        return 'specialtys';
+        return 'statuses';
     }
 }
