@@ -13,6 +13,6 @@ class SearchSpecialtiesRequest extends AbstractSearchRequest
      */
     protected function getResource(): string
     {
-        return 'specialtys';
+        return 'specialties';
     }
 }

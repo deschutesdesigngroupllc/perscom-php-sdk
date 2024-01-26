@@ -26,11 +26,12 @@ class QualificationResource extends Resource implements ResourceContract
 
     /**
      * @param array<string, mixed> $data
+     * @param array<string> $include
      * @return Response
      */
-    public function search(array $data): Response
+    public function search(array $data, array $include = []): Response
     {
-        return $this->connector->send(new SearchQualificationsRequest($data));
+        return $this->connector->send(new SearchQualificationsRequest($data, $include));
     }
 
     /**

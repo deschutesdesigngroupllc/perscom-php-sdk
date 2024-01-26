@@ -26,11 +26,12 @@ class StatusResource extends Resource implements ResourceContract
 
     /**
      * @param array<string, mixed> $data
+     * @param array<string> $include
      * @return Response
      */
-    public function search(array $data): Response
+    public function search(array $data, array $include = []): Response
     {
-        return $this->connector->send(new SearchStatusesRequest($data));
+        return $this->connector->send(new SearchStatusesRequest($data, $include));
     }
 
     /**
