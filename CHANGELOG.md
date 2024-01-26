@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.0.5 - 2024-01-26
+
+### What's Changed
+
+* Add includes on missing endpoints and fix status/specialty search requests by @jannes-io in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/26
+
+**Full Changelog**: https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/compare/v1.0.4...v1.0.5
+
 ## v1.0.4 - 2024-01-21
 
 ### What's Changed
