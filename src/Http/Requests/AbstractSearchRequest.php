@@ -31,6 +31,11 @@ abstract class AbstractSearchRequest extends Request implements HasBody
         return "{$this->getResource()}/search";
     }
 
+    /**
+     * @return string
+     */
+    abstract protected function getResource(): string;
+
     protected function defaultQuery(): array
     {
         $query = [];
@@ -49,9 +54,4 @@ abstract class AbstractSearchRequest extends Request implements HasBody
     {
         return $this->data;
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function getResource(): string;
 }

@@ -2,26 +2,16 @@
 
 namespace Perscom\Http\Requests\Users\AssignmentRecords;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractRelationalGetAllRequest;
 
-class GetUserAssignmentRecordsRequest extends Request
+class GetUserAssignmentRecordsRequest extends AbstractRelationalGetAllRequest
 {
-    protected Method $method = Method::GET;
-
     /**
-     * @param int $userId
-     */
-    public function __construct(public int $userId)
-    {
-        //
-    }
-
-    /**
+     * @param int $relationId
      * @return string
      */
-    public function resolveEndpoint(): string
+    protected function getResource(int $relationId): string
     {
-        return "users/{$this->userId}/assignment-records";
+        return "users/$relationId/assignment-records";
     }
 }

@@ -2,26 +2,16 @@
 
 namespace Perscom\Http\Requests\Users\RankRecords;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractRelationalGetAllRequest;
 
-class GetUserRankRecordsRequest extends Request
+class GetUserRankRecordsRequest extends AbstractRelationalGetAllRequest
 {
-    protected Method $method = Method::GET;
-
     /**
-     * @param int $userId
-     */
-    public function __construct(public int $userId)
-    {
-        //
-    }
-
-    /**
+     * @param int $relationId
      * @return string
      */
-    public function resolveEndpoint(): string
+    protected function getResource(int $relationId): string
     {
-        return "users/{$this->userId}/rank-records";
+        return "users/$relationId/rank-records";
     }
 }

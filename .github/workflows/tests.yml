@@ -32,10 +32,15 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, exif, iconv, fileinfo
           tools: composer
-          coverage: none
+          coverage: xdebug
 
       - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Execute Tests
         run: composer run test
+
+      - name: Upload Coverage Reports
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

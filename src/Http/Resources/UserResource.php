@@ -9,6 +9,14 @@ use Perscom\Http\Requests\Users\GetUserRequest;
 use Perscom\Http\Requests\Users\GetUsersRequest;
 use Perscom\Http\Requests\Users\SearchUsersRequest;
 use Perscom\Http\Requests\Users\UpdateUserRequest;
+use Perscom\Http\Resources\Users\AssignmentRecordsResource;
+use Perscom\Http\Resources\Users\AwardRecordsResource;
+use Perscom\Http\Resources\Users\CombatRecordsResource;
+use Perscom\Http\Resources\Users\CoverPhotoResource;
+use Perscom\Http\Resources\Users\ProfilePhotoResource;
+use Perscom\Http\Resources\Users\QualificationRecordsResource;
+use Perscom\Http\Resources\Users\RankRecordsResource;
+use Perscom\Http\Resources\Users\ServiceRecordsResource;
 use Saloon\Contracts\Response;
 
 class UserResource extends Resource implements ResourceContract
@@ -70,5 +78,77 @@ class UserResource extends Resource implements ResourceContract
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteUserRequest($id));
+    }
+
+    /**
+     * @param int $id
+     * @return ProfilePhotoResource
+     */
+    public function profile_photo(int $id): ProfilePhotoResource
+    {
+        return new ProfilePhotoResource($this->connector, $id);
+    }
+
+    /**
+     * @param int $id
+     * @return CoverPhotoResource
+     */
+    public function cover_photo(int $id): CoverPhotoResource
+    {
+        return new CoverPhotoResource($this->connector, $id);
+    }
+
+    /**
+     * @param int $id
+     * @return AssignmentRecordsResource
+     */
+    public function assignment_records(int $id): AssignmentRecordsResource
+    {
+        return new AssignmentRecordsResource($this->connector, $id);
+    }
+
+    /**
+     * @param int $id
+     * @return AwardRecordsResource
+     */
+    public function award_records(int $id): AwardRecordsResource
+    {
+        return new AwardRecordsResource($this->connector, $id);
+    }
+
+    /**
+     * @param int $id
+     * @return CombatRecordsResource
+     */
+    public function combat_records(int $id): CombatRecordsResource
+    {
+        return new CombatRecordsResource($this->connector, $id);
+    }
+
+    /**
+     * @param int $id
+     * @return QualificationRecordsResource
+     */
+    public function qualification_records(int $id): QualificationRecordsResource
+    {
+        return new QualificationRecordsResource($this->connector, $id);
+    }
+
+    /**
+     * @param int $id
+     * @return RankRecordsResource
+     */
+    public function rank_records(int $id): RankRecordsResource
+    {
+        return new RankRecordsResource($this->connector, $id);
+    }
+
+    /**
+     * @param int $id
+     * @return ServiceRecordsResource
+     */
+    public function service_records(int $id): ServiceRecordsResource
+    {
+        return new ServiceRecordsResource($this->connector, $id);
     }
 }

@@ -34,7 +34,8 @@
         "crescat-io/saloon-sdk-generator": "^1.0",
         "pestphp/pest": "^2.19",
         "laravel/pint": "^1.13",
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^1.10",
+        "pestphp/pest-plugin-type-coverage": "^2.4"
     },
     "config": {
         "allow-plugins": {
@@ -43,8 +44,9 @@
     },
     "scripts": {
         "lint": "./vendor/bin/pint src",
-        "test": "./vendor/bin/pest",
-        "test:types": "./vendor/bin/phpstan analyse --error-format=github"
+        "test": "./vendor/bin/pest --coverage --min=100",
+        "test:lint": "./vendor/bin/pint src --test",
+        "test:types": "./vendor/bin/pest --type-coverage --min=100"
     },
     "minimum-stability": "stable",
     "prefer-stable": true

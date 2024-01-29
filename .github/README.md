@@ -10,6 +10,7 @@ A PHP package that helps kickstart your next [PERSCOM](https://perscom.io) integ
 ![Downloads](https://img.shields.io/packagist/dm/deschutesdesigngroupllc/perscom-php-sdk)
 ![Packagist Version](https://img.shields.io/packagist/v/DeschutesDesignGroupLLC/perscom-php-sdk)
 ![GitHub License](https://img.shields.io/github/license/DeschutesDesignGroupLLC/perscom-php-sdk)
+[![codecov](https://codecov.io/gh/DeschutesDesignGroupLLC/perscom-php-sdk/graph/badge.svg?token=uJUiz1Sv6X)](https://codecov.io/gh/DeschutesDesignGroupLLC/perscom-php-sdk)
 
 [Documentation](https://docs.perscom.io)
 
@@ -25,6 +26,11 @@ The PERSCOM PHP SDK is a powerful tool that enables seamless integration with th
 $perscom = new PerscomConnection('api-token', 'perscom-id');
 
 $response = $perscom->users()->all();
+$response = $perscom->users()->profile_photo(1)->create('image.jpg')
+$response = $perscom->users()->assignment_records(1, 10)->delete();
+$response = $perscom->users()->update(1, [
+    'name' => 'My New Name'
+])
 
 $data = $response->json();
 ```
