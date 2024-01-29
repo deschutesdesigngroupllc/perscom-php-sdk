@@ -52,7 +52,7 @@ class PerscomConnection extends Connector
      */
     public function resolveBaseUrl(): string
     {
-        return 'https://api.perscom.io/v1';
+        return 'http://api.lvh.me/v1';
     }
 
     /**
