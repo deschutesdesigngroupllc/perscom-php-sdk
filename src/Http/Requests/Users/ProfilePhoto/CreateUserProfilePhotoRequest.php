@@ -24,12 +24,16 @@ class CreateUserProfilePhotoRequest extends Request implements HasBody
         //
     }
 
+    /**
+     * @return string
+     */
     public function resolveEndpoint(): string
     {
         return "users/$this->relationId";
     }
 
     /**
+     * @return array<MultipartValue>
      * @throws SaloonException
      */
     protected function defaultBody(): array

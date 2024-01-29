@@ -21,11 +21,17 @@ class DeleteUserProfilePhotoRequest extends Request implements HasBody
         //
     }
 
+    /**
+     * @return string
+     */
     public function resolveEndpoint(): string
     {
         return "users/$this->relationId";
     }
 
+    /**
+     * @return array<string, null>
+     */
     protected function defaultBody(): array
     {
         return [
