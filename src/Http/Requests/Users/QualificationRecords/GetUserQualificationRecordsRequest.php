@@ -2,26 +2,16 @@
 
 namespace Perscom\Http\Requests\Users\QualificationRecords;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use Perscom\Http\Requests\AbstractRelationalGetAllRequest;
 
-class GetUserQualificationRecordsRequest extends Request
+class GetUserQualificationRecordsRequest extends AbstractRelationalGetAllRequest
 {
-    protected Method $method = Method::GET;
-
     /**
-     * @param int $userId
-     */
-    public function __construct(public int $userId)
-    {
-        //
-    }
-
-    /**
+     * @param int $relationId
      * @return string
      */
-    public function resolveEndpoint(): string
+    protected function getResource(int $relationId): string
     {
-        return "users/{$this->userId}/qualification-records";
+        return "users/$relationId/qualification-records";
     }
 }

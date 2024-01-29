@@ -25,6 +25,10 @@ The PERSCOM PHP SDK is a powerful tool that enables seamless integration with th
 $perscom = new PerscomConnection('api-token', 'perscom-id');
 
 $response = $perscom->users()->all();
+$response = $perscom->users()->assignment_records(1, 10)->delete();
+$response = $perscom->users()->update(1, [
+    'name' => 'My New Name'
+])
 
 $data = $response->json();
 ```

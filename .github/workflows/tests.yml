@@ -32,7 +32,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, exif, iconv, fileinfo
           tools: composer
-          coverage: none
+          coverage: xdebug
 
       - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-interaction --no-progress

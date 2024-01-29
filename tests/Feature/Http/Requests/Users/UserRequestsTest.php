@@ -8,10 +8,10 @@ use Perscom\Http\Requests\Users\SearchUsersRequest;
 use Perscom\Http\Requests\Users\UpdateUserRequest;
 use Perscom\PerscomConnection;
 use Saloon\Contracts\Request;
-use Saloon\Http\Response;
+use Saloon\Helpers\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Helpers\Config;
+use Saloon\Http\Response;
 
 beforeEach(function () {
     Config::preventStrayRequests();

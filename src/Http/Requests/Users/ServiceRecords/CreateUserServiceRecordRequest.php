@@ -2,39 +2,16 @@
 
 namespace Perscom\Http\Requests\Users\ServiceRecords;
 
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
-use Saloon\Traits\Body\HasJsonBody;
+use Perscom\Http\Requests\AbstractRelationalCreateRequest;
 
-class CreateUserServiceRecordRequest extends Request implements HasBody
+class CreateUserServiceRecordRequest extends AbstractRelationalCreateRequest
 {
-    use HasJsonBody;
-
-    protected Method $method = Method::POST;
-
     /**
-     * @param int $userId
-     * @param array<string, mixed>  $data
-     */
-    public function __construct(public int $userId, public array $data)
-    {
-        //
-    }
-
-    /**
+     * @param int $relationId
      * @return string
      */
-    public function resolveEndpoint(): string
+    protected function getResource(int $relationId): string
     {
-        return "users/{$this->userId}/service-records";
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    protected function defaultBody(): array
-    {
-        return $this->data;
+        return "users/$relationId/service-records";
     }
 }
