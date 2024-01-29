@@ -39,3 +39,8 @@ jobs:
 
       - name: Execute Tests
         run: composer run test
+
+      - name: Upload Coverage Reports
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
