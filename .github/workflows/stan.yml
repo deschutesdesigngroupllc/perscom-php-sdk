@@ -1,4 +1,4 @@
-name: PHPStan
+name: Type Coverage
 
 on:
   push:
