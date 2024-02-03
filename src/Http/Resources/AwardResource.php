@@ -26,20 +26,20 @@ class AwardResource extends Resource implements ResourceContract
 
     /**
      * @param array<string, mixed> $data
-     * @param array<string> $include
+     * @param string|array<string> $include
      * @return Response
      */
-    public function search(array $data, array $include = []): Response
+    public function search(array $data, string|array $include = []): Response
     {
         return $this->connector->send(new SearchAwardsRequest($data, $include));
     }
 
     /**
      * @param int $id
-     * @param array<string> $include
+     * @param string|array<string> $include
      * @return Response
      */
-    public function get(int $id, array $include = []): Response
+    public function get(int $id, string|array $include = []): Response
     {
         return $this->connector->send(new GetAwardRequest($id, $include));
     }

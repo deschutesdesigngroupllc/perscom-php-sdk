@@ -16,10 +16,10 @@ interface ResourceContract
 
     /**
      * @param int $id
-     * @param array<string> $include
+     * @param string|array<string> $include
      * @return Response
      */
-    public function get(int $id, array $include = []): Response;
+    public function get(int $id, string|array $include = []): Response;
 
     /**
      * @param array<string, mixed> $data

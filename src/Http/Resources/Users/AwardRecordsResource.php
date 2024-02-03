@@ -36,10 +36,10 @@ class AwardRecordsResource extends Resource implements ResourceContract
 
     /**
      * @param int $id
-     * @param array<string> $include
+     * @param string|array<string> $include
      * @return Response
      */
-    public function get(int $id, array $include = []): Response
+    public function get(int $id, string|array $include = []): Response
     {
         return $this->connector->send(new GetUserAwardRecordRequest($this->relationId, $id, $include));
     }
