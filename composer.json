@@ -44,7 +44,7 @@
     },
     "scripts": {
         "lint": "./vendor/bin/pint src",
-        "test": "./vendor/bin/pest --coverage --min=100",
+        "test": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=100",
         "test:lint": "./vendor/bin/pint src --test",
         "test:types": "./vendor/bin/pest --type-coverage --min=100"
     },

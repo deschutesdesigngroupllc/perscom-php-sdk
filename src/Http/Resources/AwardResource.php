@@ -14,12 +14,12 @@ use Saloon\Contracts\Response;
 class AwardResource extends Resource implements ResourceContract
 {
     /**
-     * @param array<string> $include
+     * @param string|array<string> $include
      * @param int $page
      * @param int $limit
      * @return Response
      */
-    public function all(array $include = [], int $page = 1, int $limit = 20): Response
+    public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetAwardsRequest($include, $page, $limit));
     }

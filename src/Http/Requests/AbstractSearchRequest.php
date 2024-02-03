@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests;
 
+use Illuminate\Support\Arr;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -16,11 +17,12 @@ abstract class AbstractSearchRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     /**
-     * @param array<string, mixed> $data
-     * @param array<string> $include
+     * @param array $data
+     * @param string|array<string> $include
      */
-    public function __construct(public array $data, public array $include = [])
+    public function __construct(public array $data, public string|array $include = [])
     {
+        $this->include = Arr::wrap($this->include);
     }
 
     /**

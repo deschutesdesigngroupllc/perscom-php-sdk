@@ -7,12 +7,12 @@ use Saloon\Contracts\Response;
 interface ResourceContract
 {
     /**
-     * @param array<string> $include
+     * @param string|array<string> $include
      * @param int $page
      * @param int $limit
      * @return Response
      */
-    public function all(array $include = [], int $page = 1, int $limit = 20): Response;
+    public function all(string|array $include = [], int $page = 1, int $limit = 20): Response;
 
     /**
      * @param int $id
