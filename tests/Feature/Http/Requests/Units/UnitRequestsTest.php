@@ -62,11 +62,7 @@ test('it can get all units', function () {
 });
 
 test('it can search units', function () {
-    $response = $this->connector->units()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->units()->search('foo');
 
     $data = $response->json();
 

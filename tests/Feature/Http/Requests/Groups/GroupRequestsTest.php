@@ -62,11 +62,7 @@ test('it can get all groups', function () {
 });
 
 test('it can search groups', function () {
-    $response = $this->connector->groups()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->groups()->search('foo');
 
     $data = $response->json();
 

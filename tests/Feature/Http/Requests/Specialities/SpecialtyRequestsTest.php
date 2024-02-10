@@ -62,11 +62,7 @@ test('it can get all specialties', function () {
 });
 
 test('it can search specialties', function () {
-    $response = $this->connector->specialties()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->specialties()->search('foo');
 
     $data = $response->json();
 

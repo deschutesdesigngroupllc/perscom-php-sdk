@@ -62,11 +62,7 @@ test('it can get all calendars', function () {
 });
 
 test('it can search calendars', function () {
-    $response = $this->connector->calendars()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->calendars()->search('foo');
 
     $data = $response->json();
 

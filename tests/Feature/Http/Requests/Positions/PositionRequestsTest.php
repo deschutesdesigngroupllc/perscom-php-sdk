@@ -62,11 +62,7 @@ test('it can get all positions', function () {
 });
 
 test('it can search positions', function () {
-    $response = $this->connector->positions()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->positions()->search('foo');
 
     $data = $response->json();
 

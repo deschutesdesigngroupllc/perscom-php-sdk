@@ -62,11 +62,7 @@ test('it can get all submissions', function () {
 });
 
 test('it can search submissions', function () {
-    $response = $this->connector->submissions()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->submissions()->search('foo');
 
     $data = $response->json();
 

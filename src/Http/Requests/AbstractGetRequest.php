@@ -41,7 +41,7 @@ abstract class AbstractGetRequest extends Request
     {
         $query = [];
 
-        if ($this->include) {
+        if (filled($this->include)) {
             $query['include'] = implode(',', $this->include);
         }
 

@@ -3,6 +3,8 @@
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
+use Perscom\Data\FilterObject;
+use Perscom\Data\SortObject;
 use Perscom\Http\Requests\Awards\CreateAwardRequest;
 use Perscom\Http\Requests\Awards\DeleteAwardRequest;
 use Perscom\Http\Requests\Awards\GetAwardRequest;
@@ -25,13 +27,15 @@ class AwardResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param string|null $value
+     * @param SortObject|array<SortObject>|null $sort
+     * @param FilterObject|array<FilterObject>|null $filter
      * @param string|array<string> $include
      * @return Response
      */
-    public function search(array $data, string|array $include = []): Response
+    public function search(?string $value = null, mixed $sort = null, mixed $filter = null, string|array $include = []): Response
     {
-        return $this->connector->send(new SearchAwardsRequest($data, $include));
+        return $this->connector->send(new SearchAwardsRequest($value, $sort, $filter, $include));
     }
 
     /**

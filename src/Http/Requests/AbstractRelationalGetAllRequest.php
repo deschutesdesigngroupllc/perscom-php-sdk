@@ -47,7 +47,7 @@ abstract class AbstractRelationalGetAllRequest extends Request
             'page' => $this->page,
         ];
 
-        if ($this->include) {
+        if (filled($this->include)) {
             $query['include'] = implode(',', $this->include);
         }
 

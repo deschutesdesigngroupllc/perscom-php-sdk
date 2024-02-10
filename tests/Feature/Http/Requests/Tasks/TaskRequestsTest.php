@@ -62,11 +62,7 @@ test('it can get all tasks', function () {
 });
 
 test('it can search tasks', function () {
-    $response = $this->connector->tasks()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->tasks()->search('foo');
 
     $data = $response->json();
 

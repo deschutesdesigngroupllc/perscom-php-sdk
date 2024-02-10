@@ -62,11 +62,7 @@ test('it can get all events', function () {
 });
 
 test('it can search events', function () {
-    $response = $this->connector->events()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->events()->search('foo');
 
     $data = $response->json();
 
