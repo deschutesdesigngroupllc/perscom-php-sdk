@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests;
 
+use Illuminate\Support\Arr;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -14,11 +15,11 @@ abstract class AbstractRelationalGetRequest extends Request
     /**
      * @param int $relationId
      * @param int $resourceId
-     * @param array $include
+     * @param string|array<string> $include
      */
-    public function __construct(public int $relationId, public int $resourceId, public array $include = [])
+    public function __construct(public int $relationId, public int $resourceId, public string|array $include = [])
     {
-        //
+        $this->include = Arr::wrap($this->include);
     }
 
     /**
@@ -42,7 +43,7 @@ abstract class AbstractRelationalGetRequest extends Request
     {
         $query = [];
 
-        if ($this->include) {
+        if (filled($this->include)) {
             $query['include'] = implode(',', $this->include);
         }
 

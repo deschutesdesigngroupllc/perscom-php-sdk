@@ -62,11 +62,7 @@ test('it can get all announcements', function () {
 });
 
 test('it can search announcements', function () {
-    $response = $this->connector->announcements()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->announcements()->search('foo');
 
     $data = $response->json();
 

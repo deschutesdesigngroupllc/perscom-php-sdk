@@ -62,11 +62,7 @@ test('it can get all forms', function () {
 });
 
 test('it can search forms', function () {
-    $response = $this->connector->forms()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->forms()->search('foo');
 
     $data = $response->json();
 

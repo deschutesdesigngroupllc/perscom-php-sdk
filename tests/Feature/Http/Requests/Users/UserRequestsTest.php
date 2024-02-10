@@ -63,11 +63,7 @@ test('it can get all users', function () {
 });
 
 test('it can search users', function () {
-    $response = $this->connector->users()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ], ['status']);
+    $response = $this->connector->users()->search('foo');
 
     $data = $response->json();
 

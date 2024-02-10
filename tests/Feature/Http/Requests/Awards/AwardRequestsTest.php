@@ -62,11 +62,7 @@ test('it can get all awards', function () {
 });
 
 test('it can search awards', function () {
-    $response = $this->connector->awards()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->awards()->search('foo');
 
     $data = $response->json();
 

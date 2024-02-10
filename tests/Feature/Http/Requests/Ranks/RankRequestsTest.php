@@ -62,11 +62,7 @@ test('it can get all ranks', function () {
 });
 
 test('it can search ranks', function () {
-    $response = $this->connector->ranks()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->ranks()->search('foo');
 
     $data = $response->json();
 

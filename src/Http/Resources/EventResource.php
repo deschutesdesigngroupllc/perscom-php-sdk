@@ -3,6 +3,8 @@
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
+use Perscom\Data\FilterObject;
+use Perscom\Data\SortObject;
 use Perscom\Http\Requests\Events\CreateEventRequest;
 use Perscom\Http\Requests\Events\DeleteEventRequest;
 use Perscom\Http\Requests\Events\GetEventRequest;
@@ -14,32 +16,34 @@ use Saloon\Contracts\Response;
 class EventResource extends Resource implements ResourceContract
 {
     /**
-     * @param array<string> $include
+     * @param string|array<string> $include
      * @param int $page
      * @param int $limit
      * @return Response
      */
-    public function all(array $include = [], int $page = 1, int $limit = 20): Response
+    public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetEventsRequest($include, $page, $limit));
     }
 
     /**
-     * @param array<string, mixed> $data
-     * @param array<string> $include
+     * @param string|null $value
+     * @param SortObject|array<SortObject>|null $sort
+     * @param FilterObject|array<FilterObject>|null $filter
+     * @param string|array<string> $include
      * @return Response
      */
-    public function search(array $data, array $include = []): Response
+    public function search(?string $value = null, mixed $sort = null, mixed $filter = null, string|array $include = []): Response
     {
-        return $this->connector->send(new SearchEventsRequest($data, $include));
+        return $this->connector->send(new SearchEventsRequest($value, $sort, $filter, $include));
     }
 
     /**
      * @param int $id
-     * @param array<string> $include
+     * @param string|array<string> $include
      * @return Response
      */
-    public function get(int $id, array $include = []): Response
+    public function get(int $id, string|array $include = []): Response
     {
         return $this->connector->send(new GetEventRequest($id, $include));
     }

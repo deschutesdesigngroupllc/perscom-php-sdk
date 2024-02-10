@@ -62,11 +62,7 @@ test('it can get all qualifications', function () {
 });
 
 test('it can search qualifications', function () {
-    $response = $this->connector->qualifications()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->qualifications()->search('foo');
 
     $data = $response->json();
 

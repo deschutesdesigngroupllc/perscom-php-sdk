@@ -62,11 +62,7 @@ test('it can get all statuses', function () {
 });
 
 test('it can search statuses', function () {
-    $response = $this->connector->statuses()->search([
-        'filters' => [
-            ['field' => 'name', 'value' => 'foo']
-        ]
-    ]);
+    $response = $this->connector->statuses()->search('foo');
 
     $data = $response->json();
 
