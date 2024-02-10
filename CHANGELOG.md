@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.0.7 - 2024-02-10
+
+### What's Changed
+
+* Bump pestphp/pest-plugin-type-coverage from 2.4.0 to 2.8.0 by @dependabot in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/29
+* Add search filtering and sorting by @JonErickson in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/30
+
+**Full Changelog**: https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/compare/v1.0.6...v1.0.7
+
 ## v1.0.6 - 2024-01-29
 
 ### What's Changed
