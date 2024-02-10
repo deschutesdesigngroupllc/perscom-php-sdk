@@ -25,13 +25,34 @@ The PERSCOM PHP SDK is a powerful tool that enables seamless integration with th
 
 $perscom = new PerscomConnection('api-token', 'perscom-id');
 
+// Get a list of a specific resource
 $response = $perscom->users()->all();
-$response = $perscom->users()->profile_photo(1)->create('image.jpg')
-$response = $perscom->users()->assignment_records(1, 10)->delete();
-$response = $perscom->users()->update(1, [
+
+// Creating a resource
+$response = $perscom->users()->create(data: [
+    'name' => 'My New User'
+])
+
+// Updating a resource
+$response = $perscom->users()->update(id: 1, data: [
     'name' => 'My New Name'
 ])
 
+// Deleting a resource
+$response = $perscom->users()->delete(id: 1)
+
+// Searching for a resource
+$response = $perscom->users()->search(
+    value: 'foobar', 
+    sort: new SortObject('first_name', 'asc'), 
+    filter: new FilterObject('created_at', '<', '2024-01-01')
+)
+
+// Other examples
+$response = $perscom->users()->profile_photo(id: 1)->create(filePath: 'image.jpg')
+$response = $perscom->users()->assignment_records(id: 1)->delete();
+
+// Parse the response into a usable array
 $data = $response->json();
 ```
 
