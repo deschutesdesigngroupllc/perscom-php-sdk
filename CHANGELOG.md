@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.0.9 - 2024-02-11
+
+### What's Changed
+
+* Support custom base url by @JonErickson in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/37
+
+**Full Changelog**: https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/compare/v1.0.8...v1.0.9
+
 ## v1.0.8 - 2024-02-11
 
 ### What's Changed
