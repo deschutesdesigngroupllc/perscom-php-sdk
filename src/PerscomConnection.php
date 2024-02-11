@@ -20,6 +20,7 @@ use Perscom\Http\Resources\SubmissionResource;
 use Perscom\Http\Resources\TaskResource;
 use Perscom\Http\Resources\UnitResource;
 use Perscom\Http\Resources\UserResource;
+use Perscom\Support\Composer;
 use Perscom\Traits\HasLogging;
 use Saloon\Contracts\Response;
 use Saloon\Http\Connector;
@@ -61,11 +62,18 @@ class PerscomConnection extends Connector
      */
     protected function defaultHeaders(): array
     {
-        return [
+        $headers = [
             'X-Perscom-Sdk' => true,
-            'X-Perscom-Sdk-Version' => '1.0.0',
             'X-Perscom-Id' => $this->perscomId
         ];
+
+        // @codeCoverageIgnoreStart
+        if ($version = Composer::getPerscomPackageVersion()) {
+            $headers['X-Perscom-Sdk-Version'] = $version;
+        }
+        // @codeCoverageIgnoreEnd
+
+        return $headers;
     }
 
     /**
