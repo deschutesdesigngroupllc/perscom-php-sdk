@@ -20,6 +20,18 @@ beforeEach(function () {
     Config::preventStrayRequests();
 });
 
+test('it will resolve the default base url', function () {
+    $connection = new PerscomConnection('foo', 'bar');
+
+    expect($connection->resolveBaseUrl())->toEqual('https://api.perscom.io/v1');
+});
+
+test('it will resolve a custom base url', function () {
+    $connection = new PerscomConnection('foo', 'bar', 'http://foo.bar');
+
+    expect($connection->resolveBaseUrl())->toEqual('http://foo.bar');
+});
+
 test('it will throw an exception on a failed request', function () {
     $mockClient = new MockClient([
         MockResponse::make([

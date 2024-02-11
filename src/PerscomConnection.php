@@ -41,8 +41,9 @@ class PerscomConnection extends Connector
     /**
      * @param string $apiKey
      * @param string $perscomId
+     * @param string|null $baseUrl
      */
-    public function __construct(protected string $apiKey, protected string $perscomId)
+    public function __construct(protected string $apiKey, protected string $perscomId, protected ?string $baseUrl = null)
     {
         $this->withTokenAuth($this->apiKey);
     }
@@ -52,7 +53,7 @@ class PerscomConnection extends Connector
      */
     public function resolveBaseUrl(): string
     {
-        return 'http://api.lvh.me/v1';
+        return $this->baseUrl ?? 'https://api.perscom.io/v1';
     }
 
     /**
