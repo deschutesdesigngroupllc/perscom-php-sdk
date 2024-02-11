@@ -18,7 +18,8 @@
     "require": {
         "php": "^8.1",
         "saloonphp/saloon": "^2.0",
-        "saloonphp/rate-limit-plugin": "^1.0"
+        "saloonphp/rate-limit-plugin": "^1.0",
+        "illuminate/support": "^10.43"
     },
     "autoload": {
         "psr-4": {
