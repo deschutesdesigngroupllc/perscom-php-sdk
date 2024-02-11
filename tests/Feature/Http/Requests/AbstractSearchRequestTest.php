@@ -21,13 +21,15 @@ test('can properly format the query parameters', function () {
 
     $connector = new PerscomConnection('foo', 'bar');
     $connector->withMockClient($mockClient);
-    $connector->users()->search(include: 'foo');
+    $connector->users()->search(include: 'foo', page: 3, limit: 100);
 
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchUsersRequest
             && $request->query() instanceof ArrayStore
             && $request->query()->all() == [
-                'include' => 'foo'
+                'include' => 'foo',
+                'page' => 3,
+                'limit' => 100
             ];
     });
 });
