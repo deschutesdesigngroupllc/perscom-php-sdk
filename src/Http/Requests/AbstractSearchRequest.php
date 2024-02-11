@@ -23,12 +23,16 @@ abstract class AbstractSearchRequest extends Request implements HasBody
      * @param SortObject|array<SortObject>|null $sort
      * @param FilterObject|array<FilterObject>|null $filter
      * @param string|array $include
+     * @param int $limit
+     * @param int $page
      */
     public function __construct(
         public ?string $value = null,
         public mixed $sort = null,
         public mixed $filter = null,
-        public string|array $include = []
+        public string|array $include = [],
+        public int $page = 1,
+        public int $limit = 20,
     ) {
         $this->sort = Arr::wrap($this->sort);
         $this->filter = Arr::wrap($this->filter);
@@ -53,7 +57,10 @@ abstract class AbstractSearchRequest extends Request implements HasBody
      */
     protected function defaultQuery(): array
     {
-        $query = [];
+        $query = [
+            'limit' => $this->limit,
+            'page' => $this->page,
+        ];
 
         if (filled($this->include)) {
             $query['include'] = implode(',', $this->include);

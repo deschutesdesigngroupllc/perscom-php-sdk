@@ -31,11 +31,19 @@ class AnnouncementResource extends Resource implements ResourceContract
      * @param SortObject|array<SortObject>|null $sort
      * @param FilterObject|array<FilterObject>|null $filter
      * @param string|array<string> $include
+     * @param int $page
+     * @param int $limit
      * @return Response
      */
-    public function search(?string $value = null, mixed $sort = null, mixed $filter = null, string|array $include = []): Response
-    {
-        return $this->connector->send(new SearchAnnouncementsRequest($value, $sort, $filter, $include));
+    public function search(
+        ?string $value = null,
+        mixed $sort = null,
+        mixed $filter = null,
+        string|array $include = [],
+        int $page = 1,
+        int $limit = 20,
+    ): Response {
+        return $this->connector->send(new SearchAnnouncementsRequest($value, $sort, $filter, $include, $page, $limit));
     }
 
     /**
@@ -49,7 +57,7 @@ class AnnouncementResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param array<string, mixed>  $data
+     * @param array<string, mixed> $data
      * @return Response
      */
     public function create(array $data): Response
@@ -59,7 +67,7 @@ class AnnouncementResource extends Resource implements ResourceContract
 
     /**
      * @param int $id
-     * @param array<string, mixed>  $data
+     * @param array<string, mixed> $data
      * @return Response
      */
     public function update(int $id, array $data): Response
