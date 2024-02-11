@@ -1,5 +1,15 @@
 # Release Notes
 
+## v1.0.8 - 2024-02-11
+
+### What's Changed
+
+* Add illuminate support package by @JonErickson in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/36
+* add missing types on FilterObject's value field by @jannes-io in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/33
+* paginate search results by @jannes-io in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/35
+
+**Full Changelog**: https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/compare/v1.0.7...v1.0.8
+
 ## v1.0.7 - 2024-02-10
 
 ### What's Changed
