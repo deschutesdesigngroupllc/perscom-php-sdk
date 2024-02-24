@@ -27,7 +27,7 @@ abstract class AbstractRelationalGetRequest extends Request
      */
     public function resolveEndpoint(): string
     {
-        return $this->getResource($this->relationId);
+        return "{$this->getResource($this->relationId)}/$this->resourceId";
     }
 
     /**
