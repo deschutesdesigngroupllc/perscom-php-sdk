@@ -30,7 +30,7 @@ abstract class AbstractRelationalUpdateRequest extends Request implements HasBod
      */
     public function resolveEndpoint(): string
     {
-        return $this->getResource($this->relationId);
+        return "{$this->getResource($this->relationId)}/$this->resourceId";
     }
 
     /**
