@@ -11,6 +11,7 @@ use Perscom\Http\Requests\Submissions\GetSubmissionRequest;
 use Perscom\Http\Requests\Submissions\GetSubmissionsRequest;
 use Perscom\Http\Requests\Submissions\SearchSubmissionsRequest;
 use Perscom\Http\Requests\Submissions\UpdateSubmissionRequest;
+use Perscom\Http\Resources\Submissions\StatusResource;
 use Saloon\Contracts\Response;
 
 class SubmissionResource extends Resource implements ResourceContract
@@ -82,5 +83,14 @@ class SubmissionResource extends Resource implements ResourceContract
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteSubmissionRequest($id));
+    }
+
+    /**
+     * @param int $id
+     * @return StatusResource
+     */
+    public function statuses(int $id): StatusResource
+    {
+        return new StatusResource($this->connector, $id);
     }
 }
