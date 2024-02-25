@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.0.11 - 2024-02-25
+
+### What's Changed
+
+* Add package version to headers by @JonErickson in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/38
+* Add detach and sync by @JonErickson in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/43
+
+**Full Changelog**: https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/compare/v1.0.10...v1.0.11
+
 ## v1.0.10 - 2024-02-25
 
 ### What's Changed
