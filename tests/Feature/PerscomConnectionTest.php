@@ -19,6 +19,7 @@ test('it will leave the sdk version out of the default headers', function () {
 
     expect($connection->headers()->all())->toEqual([
         'X-Perscom-Sdk' => true,
+        'X-Perscom-Sdk-Version' => 'dev-master',
         'X-Perscom-Id' => 'bar'
     ]);
 });

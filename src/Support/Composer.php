@@ -2,6 +2,9 @@
 
 namespace Perscom\Support;
 
+use Composer\InstalledVersions;
+use Exception;
+
 class Composer
 {
     /**
@@ -10,10 +13,10 @@ class Composer
      */
     public static function getPerscomPackageVersion(string $packageName = 'deschutesdesigngroupllc/perscom-php-sdk'): ?string
     {
-        $composerJson = json_decode(file_get_contents(__DIR__.'/../../vendor/composer/installed.json'), true);
-
-        $package = collect(data_get($composerJson, 'packages'))->first(fn ($package) => data_get($package, 'name') === $packageName);
-
-        return data_get($package, 'version_normalized');
+        try {
+            return InstalledVersions::getVersion($packageName);
+        } catch (Exception $exception) {
+            return null;
+        }
     }
 }

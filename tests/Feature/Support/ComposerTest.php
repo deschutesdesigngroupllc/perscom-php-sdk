@@ -7,3 +7,9 @@ test('it can retrieve the installed package version', function () {
 
     expect(! is_null($version))->toBeTrue();
 });
+
+test('it will return null if the package does not exists', function () {
+    $version = Composer::getPerscomPackageVersion('foobar');
+
+    expect(is_null($version))->toBeTrue();
+});

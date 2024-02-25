@@ -67,11 +67,9 @@ class PerscomConnection extends Connector
             'X-Perscom-Id' => $this->perscomId
         ];
 
-        // @codeCoverageIgnoreStart
         if ($version = Composer::getPerscomPackageVersion()) {
             $headers['X-Perscom-Sdk-Version'] = $version;
         }
-        // @codeCoverageIgnoreEnd
 
         return $headers;
     }
