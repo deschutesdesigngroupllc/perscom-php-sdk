@@ -8,7 +8,7 @@ use Exception;
 class Composer
 {
     /**
-     * @param string $packageName
+     * @param  string  $packageName
      * @return string|null
      */
     public static function getPerscomPackageVersion(string $packageName = 'deschutesdesigngroupllc/perscom-php-sdk'): ?string

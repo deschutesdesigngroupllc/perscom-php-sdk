@@ -7,7 +7,7 @@ use Perscom\Http\Requests\AbstractRelationalGetAllRequest;
 class GetUserCombatRecordsRequest extends AbstractRelationalGetAllRequest
 {
     /**
-     * @param int $relationId
+     * @param  int  $relationId
      * @return string
      */
     protected function getResource(int $relationId): string

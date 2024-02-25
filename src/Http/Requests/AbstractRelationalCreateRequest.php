@@ -16,8 +16,8 @@ abstract class AbstractRelationalCreateRequest extends Request implements HasBod
     protected Method $method = Method::POST;
 
     /**
-     * @param int $relationId
-     * @param array $data
+     * @param  int  $relationId
+     * @param  array  $data
      */
     public function __construct(public int $relationId, public array $data)
     {
@@ -33,7 +33,7 @@ abstract class AbstractRelationalCreateRequest extends Request implements HasBod
     }
 
     /**
-     * @param int $relationId
+     * @param  int  $relationId
      * @return string
      */
     abstract protected function getResource(int $relationId): string;

@@ -15,8 +15,8 @@ use Saloon\Contracts\Response;
 class AwardRecordsResource extends Resource implements ResourceContract
 {
     /**
-     * @param Connector $connector
-     * @param int $relationId
+     * @param  Connector  $connector
+     * @param  int  $relationId
      */
     public function __construct(protected Connector $connector, protected int $relationId)
     {
@@ -24,9 +24,9 @@ class AwardRecordsResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param string|array<string> $include
-     * @param int $page
-     * @param int $limit
+     * @param  string|array<string>  $include
+     * @param  int  $page
+     * @param  int  $limit
      * @return Response
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
@@ -35,8 +35,8 @@ class AwardRecordsResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
-     * @param string|array<string> $include
+     * @param  int  $id
+     * @param  string|array<string>  $include
      * @return Response
      */
     public function get(int $id, string|array $include = []): Response
@@ -45,7 +45,7 @@ class AwardRecordsResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param array<string, mixed>  $data
+     * @param  array<string, mixed>  $data
      * @return Response
      */
     public function create(array $data): Response
@@ -54,8 +54,8 @@ class AwardRecordsResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
-     * @param array<string, mixed>  $data
+     * @param  int  $id
+     * @param  array<string, mixed>  $data
      * @return Response
      */
     public function update(int $id, array $data): Response
@@ -64,7 +64,7 @@ class AwardRecordsResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return Response
      */
     public function delete(int $id): Response

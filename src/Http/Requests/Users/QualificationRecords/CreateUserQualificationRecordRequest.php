@@ -7,7 +7,7 @@ use Perscom\Http\Requests\AbstractRelationalCreateRequest;
 class CreateUserQualificationRecordRequest extends AbstractRelationalCreateRequest
 {
     /**
-     * @param int $relationId
+     * @param  int  $relationId
      * @return string
      */
     protected function getResource(int $relationId): string

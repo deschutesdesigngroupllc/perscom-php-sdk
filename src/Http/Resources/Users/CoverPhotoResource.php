@@ -11,8 +11,8 @@ use Saloon\Contracts\Response;
 class CoverPhotoResource extends Resource
 {
     /**
-     * @param Connector $connector
-     * @param int $relationId
+     * @param  Connector  $connector
+     * @param  int  $relationId
      */
     public function __construct(protected Connector $connector, protected int $relationId)
     {
@@ -20,7 +20,7 @@ class CoverPhotoResource extends Resource
     }
 
     /**
-     * @param string $filePath
+     * @param  string  $filePath
      * @return Response
      */
     public function create(string $filePath): Response

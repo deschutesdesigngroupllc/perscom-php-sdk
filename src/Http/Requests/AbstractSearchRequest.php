@@ -19,12 +19,12 @@ abstract class AbstractSearchRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     /**
-     * @param string|null $value
-     * @param SortObject|array<SortObject>|null $sort
-     * @param FilterObject|array<FilterObject>|null $filter
-     * @param string|array $include
-     * @param int $limit
-     * @param int $page
+     * @param  string|null  $value
+     * @param  SortObject|array<SortObject>|null  $sort
+     * @param  FilterObject|array<FilterObject>|null  $filter
+     * @param  string|array  $include
+     * @param  int  $limit
+     * @param  int  $page
      */
     public function __construct(
         public ?string $value = null,

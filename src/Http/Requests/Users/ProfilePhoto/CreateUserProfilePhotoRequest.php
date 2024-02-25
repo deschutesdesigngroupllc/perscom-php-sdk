@@ -16,8 +16,8 @@ class CreateUserProfilePhotoRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     /**
-     * @param int $relationId
-     * @param string $filePath
+     * @param  int  $relationId
+     * @param  string  $filePath
      */
     public function __construct(public int $relationId, public string $filePath)
     {
@@ -34,6 +34,7 @@ class CreateUserProfilePhotoRequest extends Request implements HasBody
 
     /**
      * @return array<MultipartValue>
+     *
      * @throws SaloonException
      */
     protected function defaultBody(): array

@@ -7,7 +7,7 @@ use Perscom\Http\Requests\AbstractRelationalUpdateRequest;
 class UpdateUserServiceRecordRequest extends AbstractRelationalUpdateRequest
 {
     /**
-     * @param int $relationId
+     * @param  int  $relationId
      * @return string
      */
     protected function getResource(int $relationId): string

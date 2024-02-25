@@ -17,19 +17,19 @@ beforeEach(function () {
 
     $this->mockClient = new MockClient([
         GetUserCombatRecordsRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         GetUserCombatRecordRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         CreateUserCombatRecordRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         UpdateUserCombatRecordRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         DeleteUserCombatRecordRequest::class => MockResponse::make([], 201),
     ]);
@@ -61,7 +61,7 @@ test('it can get a users combat record', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -73,7 +73,7 @@ test('it can get a users combat record', function () {
 
 test('it can create a users combat record', function () {
     $response = $this->connector->users()->combat_records(1)->create([
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -82,7 +82,7 @@ test('it can create a users combat record', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -93,7 +93,7 @@ test('it can create a users combat record', function () {
 
 test('it can update a users combat record', function () {
     $response = $this->connector->users()->combat_records(1)->update(1, [
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -102,7 +102,7 @@ test('it can update a users combat record', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {

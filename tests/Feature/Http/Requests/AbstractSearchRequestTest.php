@@ -15,7 +15,7 @@ use Saloon\Repositories\Body\JsonBodyRepository;
 test('can properly format the query parameters', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -29,7 +29,7 @@ test('can properly format the query parameters', function () {
             && $request->query()->all() == [
                 'include' => 'foo',
                 'page' => 3,
-                'limit' => 100
+                'limit' => 100,
             ];
     });
 });
@@ -37,7 +37,7 @@ test('can properly format the query parameters', function () {
 test('can properly format a search value argument', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -50,8 +50,8 @@ test('can properly format a search value argument', function () {
             && $request->body() instanceof JsonBodyRepository
             && $request->body()->all() == [
                 'search' => [
-                    'value' => 'foo'
-                ]
+                    'value' => 'foo',
+                ],
             ];
     });
 });
@@ -59,7 +59,7 @@ test('can properly format a search value argument', function () {
 test('can properly format a single sort argument', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -72,8 +72,8 @@ test('can properly format a single sort argument', function () {
             && $request->body() instanceof JsonBodyRepository
             && $request->body()->all() == [
                 'sort' => [
-                    ['field' => 'foo', 'direction' => 'asc']
-                ]
+                    ['field' => 'foo', 'direction' => 'asc'],
+                ],
             ];
     });
 });
@@ -81,7 +81,7 @@ test('can properly format a single sort argument', function () {
 test('can properly format an array of sort arguments', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -95,8 +95,8 @@ test('can properly format an array of sort arguments', function () {
             && $request->body()->all() == [
                 'sort' => [
                     ['field' => 'foo', 'direction' => 'asc'],
-                    ['field' => 'bar', 'direction' => 'desc']
-                ]
+                    ['field' => 'bar', 'direction' => 'desc'],
+                ],
             ];
     });
 });
@@ -104,7 +104,7 @@ test('can properly format an array of sort arguments', function () {
 test('can properly format a single filter argument', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -117,8 +117,8 @@ test('can properly format a single filter argument', function () {
             && $request->body() instanceof JsonBodyRepository
             && $request->body()->all() == [
                 'filters' => [
-                    ['field' => 'foo', 'operator' => '=', 'value' => 'bar', 'type' => 'or']
-                ]
+                    ['field' => 'foo', 'operator' => '=', 'value' => 'bar', 'type' => 'or'],
+                ],
             ];
     });
 });
@@ -126,7 +126,7 @@ test('can properly format a single filter argument', function () {
 test('can properly format an array of filter arguments', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -140,8 +140,8 @@ test('can properly format an array of filter arguments', function () {
             && $request->body()->all() == [
                 'filters' => [
                     ['field' => 'foo', 'operator' => '=', 'value' => 'bar', 'type' => 'or'],
-                    ['field' => 'bar', 'operator' => '=', 'value' => 'foo', 'type' => 'and']
-                ]
+                    ['field' => 'bar', 'operator' => '=', 'value' => 'foo', 'type' => 'and'],
+                ],
             ];
     });
 });

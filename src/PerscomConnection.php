@@ -34,15 +34,15 @@ use Throwable;
 
 class PerscomConnection extends Connector
 {
-    use AlwaysThrowOnErrors;
     use AcceptsJson;
+    use AlwaysThrowOnErrors;
     use HasLogging;
     use HasRateLimits;
 
     /**
-     * @param string $apiKey
-     * @param string $perscomId
-     * @param string|null $baseUrl
+     * @param  string  $apiKey
+     * @param  string  $perscomId
+     * @param  string|null  $baseUrl
      */
     public function __construct(protected string $apiKey, protected string $perscomId, protected ?string $baseUrl = null)
     {
@@ -64,7 +64,7 @@ class PerscomConnection extends Connector
     {
         $headers = [
             'X-Perscom-Sdk' => true,
-            'X-Perscom-Id' => $this->perscomId
+            'X-Perscom-Id' => $this->perscomId,
         ];
 
         if ($version = Composer::getPerscomPackageVersion()) {
@@ -213,8 +213,8 @@ class PerscomConnection extends Connector
     }
 
     /**
-     * @param Response $response
-     * @param Throwable|null $senderException
+     * @param  Response  $response
+     * @param  Throwable|null  $senderException
      * @return Throwable|null
      */
     public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable

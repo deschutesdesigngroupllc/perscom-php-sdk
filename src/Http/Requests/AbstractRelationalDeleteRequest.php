@@ -12,8 +12,8 @@ abstract class AbstractRelationalDeleteRequest extends Request
     protected Method $method = Method::DELETE;
 
     /**
-     * @param int $relationId
-     * @param int $resourceId
+     * @param  int  $relationId
+     * @param  int  $resourceId
      */
     public function __construct(public int $relationId, public int $resourceId)
     {
@@ -29,7 +29,7 @@ abstract class AbstractRelationalDeleteRequest extends Request
     }
 
     /**
-     * @param int $relationId
+     * @param  int  $relationId
      * @return string
      */
     abstract protected function getResource(int $relationId): string;

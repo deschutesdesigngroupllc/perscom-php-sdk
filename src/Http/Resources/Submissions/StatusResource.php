@@ -6,6 +6,8 @@ namespace Perscom\Http\Resources\Submissions;
 
 use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\Submissions\Statuses\AttachSubmissionStatusRequest;
+use Perscom\Http\Requests\Submissions\Statuses\DetachSubmissionStatusRequest;
+use Perscom\Http\Requests\Submissions\Statuses\SyncSubmissionStatusRequest;
 use Perscom\Http\Resources\Resource;
 use Saloon\Contracts\Connector;
 use Saloon\Contracts\Response;
@@ -13,8 +15,8 @@ use Saloon\Contracts\Response;
 class StatusResource extends Resource
 {
     /**
-     * @param Connector $connector
-     * @param int $relationId
+     * @param  Connector  $connector
+     * @param  int  $relationId
      */
     public function __construct(Connector $connector, protected int $relationId)
     {
@@ -22,12 +24,34 @@ class StatusResource extends Resource
     }
 
     /**
-     * @param ResourceObject|array<ResourceObject> $resources
-     * @param string|array<string> $include
+     * @param  ResourceObject|array<ResourceObject>  $resources
+     * @param  string|array<string>  $include
+     * @param  bool  $allowDuplicates
      * @return Response
      */
-    public function attach(ResourceObject|array $resources, string|array $include = []): Response
+    public function attach(ResourceObject|array $resources, string|array $include = [], bool $allowDuplicates = false): Response
     {
-        return $this->connector->send(new AttachSubmissionStatusRequest($this->relationId, $resources, $include));
+        return $this->connector->send(new AttachSubmissionStatusRequest($this->relationId, $resources, $include, $allowDuplicates));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $resources
+     * @param  string|array<string>  $include
+     * @return Response
+     */
+    public function detach(ResourceObject|array $resources, string|array $include = []): Response
+    {
+        return $this->connector->send(new DetachSubmissionStatusRequest($this->relationId, $resources, $include));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $resources
+     * @param  string|array<string>  $include
+     * @param  bool  $allowDetaching
+     * @return Response
+     */
+    public function sync(ResourceObject|array $resources, string|array $include = [], bool $allowDetaching = true): Response
+    {
+        return $this->connector->send(new SyncSubmissionStatusRequest($this->relationId, $resources, $include, $allowDetaching));
     }
 }

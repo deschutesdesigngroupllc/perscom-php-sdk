@@ -16,8 +16,8 @@ abstract class AbstractUpdateRequest extends Request implements HasBody
     protected Method $method = Method::PUT;
 
     /**
-     * @param int $id
-     * @param array<string, mixed>  $data
+     * @param  int  $id
+     * @param  array<string, mixed>  $data
      */
     public function __construct(public int $id, public array $data)
     {

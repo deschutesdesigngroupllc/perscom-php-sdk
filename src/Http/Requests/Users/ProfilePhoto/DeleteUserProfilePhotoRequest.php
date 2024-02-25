@@ -14,7 +14,7 @@ class DeleteUserProfilePhotoRequest extends Request implements HasBody
     protected Method $method = Method::PUT;
 
     /**
-     * @param int $relationId
+     * @param  int  $relationId
      */
     public function __construct(public int $relationId)
     {
@@ -35,7 +35,7 @@ class DeleteUserProfilePhotoRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         return [
-            'profile_photo' => null
+            'profile_photo' => null,
         ];
     }
 }
