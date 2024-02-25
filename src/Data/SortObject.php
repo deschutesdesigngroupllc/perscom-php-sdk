@@ -7,8 +7,8 @@ use Saloon\Contracts\Arrayable;
 class SortObject implements Arrayable
 {
     /**
-     * @param string $field
-     * @param string $direction The supported directions are 'asc' and 'desc'.
+     * @param  string  $field
+     * @param  string  $direction The supported directions are 'asc' and 'desc'.
      */
     public function __construct(public string $field, public string $direction = 'asc')
     {
@@ -22,7 +22,7 @@ class SortObject implements Arrayable
     {
         return [
             'field' => $this->field,
-            'direction' => $this->direction
+            'direction' => $this->direction,
         ];
     }
 }

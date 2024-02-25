@@ -13,10 +13,10 @@ abstract class AbstractRelationalGetAllRequest extends Request
     protected Method $method = Method::GET;
 
     /**
-     * @param int $relationId
-     * @param string|array<string> $include
-     * @param int $page
-     * @param int $limit
+     * @param  int  $relationId
+     * @param  string|array<string>  $include
+     * @param  int  $page
+     * @param  int  $limit
      */
     public function __construct(public int $relationId, public string|array $include = [], public int $page = 1, public int $limit = 20)
     {
@@ -32,7 +32,7 @@ abstract class AbstractRelationalGetAllRequest extends Request
     }
 
     /**
-     * @param int $relationId
+     * @param  int  $relationId
      * @return string
      */
     abstract protected function getResource(int $relationId): string;

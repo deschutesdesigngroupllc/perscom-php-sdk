@@ -16,9 +16,9 @@ use Saloon\Contracts\Response;
 class UnitResource extends Resource implements ResourceContract
 {
     /**
-     * @param string|array<string> $include
-     * @param int $page
-     * @param int $limit
+     * @param  string|array<string>  $include
+     * @param  int  $page
+     * @param  int  $limit
      * @return Response
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
@@ -27,16 +27,16 @@ class UnitResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param string|null $value
-     * @param SortObject|array<SortObject>|null $sort
-     * @param FilterObject|array<FilterObject>|null $filter
-     * @param string|array<string> $include
-     * @param int $page
-     * @param int $limit
+     * @param  string|null  $value
+     * @param  SortObject|array<SortObject>|null  $sort
+     * @param  FilterObject|array<FilterObject>|null  $filter
+     * @param  string|array<string>  $include
+     * @param  int  $page
+     * @param  int  $limit
      * @return Response
      */
     public function search(
-        ?string $value = null,
+        string $value = null,
         mixed $sort = null,
         mixed $filter = null,
         string|array $include = [],
@@ -47,8 +47,8 @@ class UnitResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
-     * @param string|array<string> $include
+     * @param  int  $id
+     * @param  string|array<string>  $include
      * @return Response
      */
     public function get(int $id, string|array $include = []): Response
@@ -57,7 +57,7 @@ class UnitResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      * @return Response
      */
     public function create(array $data): Response
@@ -66,8 +66,8 @@ class UnitResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
-     * @param array<string, mixed> $data
+     * @param  int  $id
+     * @param  array<string, mixed>  $data
      * @return Response
      */
     public function update(int $id, array $data): Response
@@ -76,7 +76,7 @@ class UnitResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return Response
      */
     public function delete(int $id): Response

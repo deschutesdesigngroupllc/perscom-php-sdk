@@ -22,6 +22,6 @@ test('it will set the correct headers', function () {
         ->toMatchArray([
             'X-Perscom-Sdk',
             'X-Perscom-Id',
-            'X-Perscom-Sdk-Version'
+            'X-Perscom-Sdk-Version',
         ]);
 });

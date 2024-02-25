@@ -9,7 +9,7 @@ use Perscom\Http\Requests\AbstractSearchRequest;
 class SearchUsersRequest extends AbstractSearchRequest
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function getResource(): string
     {

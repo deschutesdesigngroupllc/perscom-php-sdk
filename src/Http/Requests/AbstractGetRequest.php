@@ -13,8 +13,8 @@ abstract class AbstractGetRequest extends Request
     protected Method $method = Method::GET;
 
     /**
-     * @param int $id
-     * @param string|array<string> $include
+     * @param  int  $id
+     * @param  string|array<string>  $include
      */
     public function __construct(public int $id, public string|array $include = [])
     {

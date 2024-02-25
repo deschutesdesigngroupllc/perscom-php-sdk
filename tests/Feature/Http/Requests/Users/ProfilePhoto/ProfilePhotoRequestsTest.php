@@ -16,7 +16,7 @@ beforeEach(function () {
 
     $this->mockClient = new MockClient([
         CreateUserCoverPhotoRequest::class => MockResponse::make([
-            'cover_photo' => 'foo'
+            'cover_photo' => 'foo',
         ], 200),
         DeleteUserCoverPhotoRequest::class => MockResponse::make([], 201),
     ]);

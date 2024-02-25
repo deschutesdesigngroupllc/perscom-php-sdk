@@ -9,8 +9,8 @@ use Saloon\Contracts\Arrayable;
 class ResourceObject implements Arrayable
 {
     /**
-     * @param int $id
-     * @param array $data
+     * @param  int  $id
+     * @param  array  $data
      */
     public function __construct(
         public int $id,

@@ -18,7 +18,7 @@ beforeEach(function () {
 
     $this->mockClient = new MockClient([
         GetUsersRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         SearchUsersRequest::class => MockResponse::make([
             'data' => [
@@ -26,20 +26,20 @@ beforeEach(function () {
                     'id' => 1,
                     'name' => 'foo',
                     'status' => null,
-                ]
-            ]
+                ],
+            ],
         ], 200),
         GetUserRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         CreateUserRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         UpdateUserRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         DeleteUserRequest::class => MockResponse::make([], 201),
     ]);
@@ -75,8 +75,8 @@ test('it can search users', function () {
                     'id' => 1,
                     'name' => 'foo',
                     'status' => null,
-                ]
-            ]
+                ],
+            ],
         ]);
 
     $this->mockClient->assertSent(SearchUsersRequest::class);
@@ -91,7 +91,7 @@ test('it can get a user', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -102,7 +102,7 @@ test('it can get a user', function () {
 
 test('it can create a user', function () {
     $response = $this->connector->users()->create([
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -111,7 +111,7 @@ test('it can create a user', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -122,7 +122,7 @@ test('it can create a user', function () {
 
 test('it can update a user', function () {
     $response = $this->connector->users()->update(1, [
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -131,7 +131,7 @@ test('it can update a user', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {

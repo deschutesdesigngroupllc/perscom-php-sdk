@@ -7,7 +7,7 @@ use Perscom\Http\Requests\AbstractRelationalDeleteRequest;
 class DeleteUserRankRecordRequest extends AbstractRelationalDeleteRequest
 {
     /**
-     * @param int $relationId
+     * @param  int  $relationId
      * @return string
      */
     protected function getResource(int $relationId): string

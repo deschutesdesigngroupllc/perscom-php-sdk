@@ -18,27 +18,27 @@ beforeEach(function () {
 
     $this->mockClient = new MockClient([
         GetPositionsRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         SearchPositionsRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
-                ]
-            ]
+                    'name' => 'foo',
+                ],
+            ],
         ], 200),
         GetPositionRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         CreatePositionRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         UpdatePositionRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         DeletePositionRequest::class => MockResponse::make([], 201),
     ]);
@@ -72,9 +72,9 @@ test('it can search positions', function () {
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
-                ]
-            ]
+                    'name' => 'foo',
+                ],
+            ],
         ]);
 
     $this->mockClient->assertSent(SearchPositionsRequest::class);
@@ -89,7 +89,7 @@ test('it can get a position', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -100,7 +100,7 @@ test('it can get a position', function () {
 
 test('it can create a position', function () {
     $response = $this->connector->positions()->create([
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -109,7 +109,7 @@ test('it can create a position', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -120,7 +120,7 @@ test('it can create a position', function () {
 
 test('it can update a position', function () {
     $response = $this->connector->positions()->update(1, [
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -129,7 +129,7 @@ test('it can update a position', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {

@@ -18,27 +18,27 @@ beforeEach(function () {
 
     $this->mockClient = new MockClient([
         GetGroupsRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         SearchGroupsRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
-                ]
-            ]
+                    'name' => 'foo',
+                ],
+            ],
         ], 200),
         GetGroupRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         CreateGroupRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         UpdateGroupRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         DeleteGroupRequest::class => MockResponse::make([], 201),
     ]);
@@ -72,9 +72,9 @@ test('it can search groups', function () {
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
-                ]
-            ]
+                    'name' => 'foo',
+                ],
+            ],
         ]);
 
     $this->mockClient->assertSent(SearchGroupsRequest::class);
@@ -89,7 +89,7 @@ test('it can get a group', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -100,7 +100,7 @@ test('it can get a group', function () {
 
 test('it can create a group', function () {
     $response = $this->connector->groups()->create([
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -109,7 +109,7 @@ test('it can create a group', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -120,7 +120,7 @@ test('it can create a group', function () {
 
 test('it can update a group', function () {
     $response = $this->connector->groups()->update(1, [
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -129,7 +129,7 @@ test('it can update a group', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {

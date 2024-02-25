@@ -18,27 +18,27 @@ beforeEach(function () {
 
     $this->mockClient = new MockClient([
         GetTasksRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         SearchTasksRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
-                ]
-            ]
+                    'name' => 'foo',
+                ],
+            ],
         ], 200),
         GetTaskRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         CreateTaskRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         UpdateTaskRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         DeleteTaskRequest::class => MockResponse::make([], 201),
     ]);
@@ -72,9 +72,9 @@ test('it can search tasks', function () {
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
-                ]
-            ]
+                    'name' => 'foo',
+                ],
+            ],
         ]);
 
     $this->mockClient->assertSent(SearchTasksRequest::class);
@@ -89,7 +89,7 @@ test('it can get a task', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -100,7 +100,7 @@ test('it can get a task', function () {
 
 test('it can create a task', function () {
     $response = $this->connector->tasks()->create([
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -109,7 +109,7 @@ test('it can create a task', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -120,7 +120,7 @@ test('it can create a task', function () {
 
 test('it can update a task', function () {
     $response = $this->connector->tasks()->update(1, [
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -129,7 +129,7 @@ test('it can update a task', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {

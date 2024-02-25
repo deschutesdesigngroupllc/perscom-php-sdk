@@ -25,8 +25,8 @@ test('it will throw an exception on a failed request', function () {
         MockResponse::make([
             'error' => [
                 'message' => 'foo',
-                'type' => 'bar'
-            ]
+                'type' => 'bar',
+            ],
         ], 401),
     ]);
 
@@ -48,8 +48,8 @@ test('it will throw an authentication exception', function () {
         MockResponse::make([
             'error' => [
                 'message' => 'foo bar',
-                'type' => 'AuthenticationException'
-            ]
+                'type' => 'AuthenticationException',
+            ],
         ], 401),
     ]);
 
@@ -63,8 +63,8 @@ test('it will throw a not found exception', function () {
         MockResponse::make([
             'error' => [
                 'message' => 'foo bar',
-                'type' => 'NotFoundHttpException'
-            ]
+                'type' => 'NotFoundHttpException',
+            ],
         ], 401),
     ]);
 
@@ -78,8 +78,8 @@ test('it will throw a tenant not identified exception', function () {
         MockResponse::make([
             'error' => [
                 'message' => 'foo bar',
-                'type' => 'TenantCouldNotBeIdentified'
-            ]
+                'type' => 'TenantCouldNotBeIdentified',
+            ],
         ], 401),
     ]);
 
@@ -91,7 +91,7 @@ test('it will throw a tenant not identified exception', function () {
 test('it will send the proper parameters in a get all request', function () {
     $mockClient = new MockClient([
         GetUsersRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -105,7 +105,7 @@ test('it will send the proper parameters in a get all request', function () {
             && $request->query()->all() == [
                 'limit' => 2,
                 'page' => 5,
-                'include' => 'rank'
+                'include' => 'rank',
             ];
     });
 });
@@ -113,7 +113,7 @@ test('it will send the proper parameters in a get all request', function () {
 test('it will send the proper parameters in a get request', function () {
     $mockClient = new MockClient([
         GetUserRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -126,7 +126,7 @@ test('it will send the proper parameters in a get request', function () {
             && $request->id === 1
             && $request->query() instanceof ArrayStore
             && $request->query()->all() == [
-                'include' => 'rank'
+                'include' => 'rank',
             ];
     });
 });
@@ -134,7 +134,7 @@ test('it will send the proper parameters in a get request', function () {
 test('it will send the proper parameters in a relational get all request', function () {
     $mockClient = new MockClient([
         GetUserAssignmentRecordsRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -149,7 +149,7 @@ test('it will send the proper parameters in a relational get all request', funct
             && $request->query()->all() == [
                 'limit' => 2,
                 'page' => 5,
-                'include' => 'rank'
+                'include' => 'rank',
             ];
     });
 });
@@ -157,7 +157,7 @@ test('it will send the proper parameters in a relational get all request', funct
 test('it will send the proper parameters in a relational get request', function () {
     $mockClient = new MockClient([
         GetUserAssignmentRecordRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
     ]);
 
@@ -171,7 +171,7 @@ test('it will send the proper parameters in a relational get request', function 
             && $request->resourceId === 1
             && $request->query() instanceof ArrayStore
             && $request->query()->all() == [
-                'include' => 'rank'
+                'include' => 'rank',
             ];
     });
 });

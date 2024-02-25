@@ -19,14 +19,15 @@ use Perscom\Http\Resources\Users\ProfilePhotoResource;
 use Perscom\Http\Resources\Users\QualificationRecordsResource;
 use Perscom\Http\Resources\Users\RankRecordsResource;
 use Perscom\Http\Resources\Users\ServiceRecordsResource;
+use Perscom\Http\Resources\Users\StatusResource;
 use Saloon\Contracts\Response;
 
 class UserResource extends Resource implements ResourceContract
 {
     /**
-     * @param string|array $include
-     * @param int $page
-     * @param int $limit
+     * @param  string|array<string>  $include
+     * @param  int  $page
+     * @param  int  $limit
      * @return Response
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
@@ -35,16 +36,16 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param string|null $value
-     * @param SortObject|array<SortObject>|null $sort
-     * @param FilterObject|array<FilterObject>|null $filter
-     * @param string|array<string> $include
-     * @param int $page
-     * @param int $limit
+     * @param  string|null  $value
+     * @param  SortObject|array<SortObject>|null  $sort
+     * @param  FilterObject|array<FilterObject>|null  $filter
+     * @param  string|array<string>  $include
+     * @param  int  $page
+     * @param  int  $limit
      * @return Response
      */
     public function search(
-        ?string $value = null,
+        string $value = null,
         mixed $sort = null,
         mixed $filter = null,
         string|array $include = [],
@@ -55,8 +56,8 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
-     * @param string|array<string> $include
+     * @param  int  $id
+     * @param  string|array<string>  $include
      * @return Response
      */
     public function get(int $id, string|array $include = []): Response
@@ -65,7 +66,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      * @return Response
      */
     public function create(array $data): Response
@@ -74,8 +75,8 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
-     * @param array<string, mixed> $data
+     * @param  int  $id
+     * @param  array<string, mixed>  $data
      * @return Response
      */
     public function update(int $id, array $data): Response
@@ -84,7 +85,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return Response
      */
     public function delete(int $id): Response
@@ -93,7 +94,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return ProfilePhotoResource
      */
     public function profile_photo(int $id): ProfilePhotoResource
@@ -102,7 +103,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return CoverPhotoResource
      */
     public function cover_photo(int $id): CoverPhotoResource
@@ -111,7 +112,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return AssignmentRecordsResource
      */
     public function assignment_records(int $id): AssignmentRecordsResource
@@ -120,7 +121,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return AwardRecordsResource
      */
     public function award_records(int $id): AwardRecordsResource
@@ -129,7 +130,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return CombatRecordsResource
      */
     public function combat_records(int $id): CombatRecordsResource
@@ -138,7 +139,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return QualificationRecordsResource
      */
     public function qualification_records(int $id): QualificationRecordsResource
@@ -147,7 +148,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return RankRecordsResource
      */
     public function rank_records(int $id): RankRecordsResource
@@ -156,11 +157,20 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return ServiceRecordsResource
      */
     public function service_records(int $id): ServiceRecordsResource
     {
         return new ServiceRecordsResource($this->connector, $id);
+    }
+
+    /**
+     * @param  int  $id
+     * @return StatusResource
+     */
+    public function statuses(int $id): StatusResource
+    {
+        return new StatusResource($this->connector, $id);
     }
 }

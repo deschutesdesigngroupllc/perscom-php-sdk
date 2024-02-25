@@ -16,9 +16,9 @@ abstract class AbstractRelationalUpdateRequest extends Request implements HasBod
     protected Method $method = Method::PUT;
 
     /**
-     * @param int $relationId
-     * @param int $resourceId
-     * @param array $data
+     * @param  int  $relationId
+     * @param  int  $resourceId
+     * @param  array  $data
      */
     public function __construct(public int $relationId, public int $resourceId, public array $data)
     {
@@ -34,7 +34,7 @@ abstract class AbstractRelationalUpdateRequest extends Request implements HasBod
     }
 
     /**
-     * @param int $relationId
+     * @param  int  $relationId
      * @return string
      */
     abstract protected function getResource(int $relationId): string;

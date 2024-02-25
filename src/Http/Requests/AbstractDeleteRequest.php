@@ -12,7 +12,7 @@ abstract class AbstractDeleteRequest extends Request
     protected Method $method = Method::DELETE;
 
     /**
-     * @param int $id
+     * @param  int  $id
      */
     public function __construct(public int $id)
     {

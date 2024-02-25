@@ -18,27 +18,27 @@ beforeEach(function () {
 
     $this->mockClient = new MockClient([
         GetEventsRequest::class => MockResponse::make([
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         SearchEventsRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
-                ]
-            ]
+                    'name' => 'foo',
+                ],
+            ],
         ], 200),
         GetEventRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         CreateEventRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         UpdateEventRequest::class => MockResponse::make([
             'id' => 1,
-            'name' => 'foo'
+            'name' => 'foo',
         ], 200),
         DeleteEventRequest::class => MockResponse::make([], 201),
     ]);
@@ -72,9 +72,9 @@ test('it can search events', function () {
             'data' => [
                 [
                     'id' => 1,
-                    'name' => 'foo'
-                ]
-            ]
+                    'name' => 'foo',
+                ],
+            ],
         ]);
 
     $this->mockClient->assertSent(SearchEventsRequest::class);
@@ -89,7 +89,7 @@ test('it can get a event', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -100,7 +100,7 @@ test('it can get a event', function () {
 
 test('it can create a event', function () {
     $response = $this->connector->events()->create([
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -109,7 +109,7 @@ test('it can create a event', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
@@ -120,7 +120,7 @@ test('it can create a event', function () {
 
 test('it can update a event', function () {
     $response = $this->connector->events()->update(1, [
-        'foo' => 'bar'
+        'foo' => 'bar',
     ]);
 
     $data = $response->json();
@@ -129,7 +129,7 @@ test('it can update a event', function () {
         ->and($response)->toBeInstanceOf(Response::class)
         ->and($data)->toEqual([
             'name' => 'foo',
-            'id' => 1
+            'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
