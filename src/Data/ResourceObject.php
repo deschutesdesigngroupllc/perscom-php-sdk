@@ -25,7 +25,7 @@ class ResourceObject implements Arrayable
     public function toArray(): array
     {
         return [
-            (string)$this->id => $this->data,
+            (string) $this->id => $this->data,
         ];
     }
 }

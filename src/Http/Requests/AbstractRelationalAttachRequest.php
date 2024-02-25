@@ -11,7 +11,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
-abstract class AbstractAttachRequest extends Request implements HasBody
+abstract class AbstractRelationalAttachRequest extends Request implements HasBody
 {
     use HasJsonBody;
 

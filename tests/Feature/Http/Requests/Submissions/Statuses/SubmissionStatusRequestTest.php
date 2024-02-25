@@ -9,13 +9,13 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 
 beforeEach(function () {
-   Config::preventStrayRequests();
+    Config::preventStrayRequests();
 
-   $this->mockClient = new MockClient([
-       AttachSubmissionStatusRequest::class => MockResponse::make([
-           'attached' => [1]
-       ])
-   ]);
+    $this->mockClient = new MockClient([
+        AttachSubmissionStatusRequest::class => MockResponse::make([
+            'attached' => [1]
+        ])
+    ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
     $this->connector->withMockClient($this->mockClient);

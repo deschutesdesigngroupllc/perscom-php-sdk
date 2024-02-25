@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests\Submissions\Statuses;
 
-use Perscom\Http\Requests\AbstractAttachRequest;
+use Perscom\Http\Requests\AbstractRelationalAttachRequest;
 
-class AttachSubmissionStatusRequest extends AbstractAttachRequest
+class AttachSubmissionStatusRequest extends AbstractRelationalAttachRequest
 {
     /**
      * @param int $relationId
