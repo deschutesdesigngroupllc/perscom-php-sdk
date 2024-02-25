@@ -14,7 +14,7 @@ test('it will resolve a custom base url', function () {
     expect($connection->resolveBaseUrl())->toEqual('http://foo.bar');
 });
 
-test('it will leave the sdk version out of the default headers', function () {
+test('it will set the correct headers', function () {
     $connection = new PerscomConnection('foo', 'bar');
 
     expect(array_keys($connection->headers()->all()))
