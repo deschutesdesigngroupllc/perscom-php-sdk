@@ -1,5 +1,16 @@
 # Release Notes
 
+## v1.0.10 - 2024-02-25
+
+### What's Changed
+
+* fix missing resource id on relational requests by @jannes-io in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/41
+* Bump pestphp/pest from 2.33.0 to 2.34.0 by @dependabot in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/39
+* Bump illuminate/support from 10.43.0 to 10.44.0 by @dependabot in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/40
+* add submission attach statuses by @jannes-io in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/42
+
+**Full Changelog**: https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/compare/v1.0.9...v1.0.10
+
 ## v1.0.9 - 2024-02-11
 
 ### What's Changed
