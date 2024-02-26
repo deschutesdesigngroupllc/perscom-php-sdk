@@ -36,7 +36,7 @@ class CalendarResource extends Resource implements ResourceContract
      * @return Response
      */
     public function search(
-        string $value = null,
+        ?string $value = null,
         mixed $sort = null,
         mixed $filter = null,
         string|array $include = [],

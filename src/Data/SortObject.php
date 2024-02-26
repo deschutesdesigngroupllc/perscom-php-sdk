@@ -8,7 +8,7 @@ class SortObject implements Arrayable
 {
     /**
      * @param  string  $field
-     * @param  string  $direction The supported directions are 'asc' and 'desc'.
+     * @param  string  $direction  The supported directions are 'asc' and 'desc'.
      */
     public function __construct(public string $field, public string $direction = 'asc')
     {
