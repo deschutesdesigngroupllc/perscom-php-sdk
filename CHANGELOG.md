@@ -1,5 +1,16 @@
 # Release Notes
 
+## v1.0.12 - 2024-04-21
+
+### What's Changed
+
+* Bump laravel/pint from 1.13.3 to 1.14.0 by @dependabot in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/44
+* Bump saloonphp/saloon from 2.12.0 to 2.12.1 by @dependabot in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/50
+* Bump illuminate/support from 10.44.0 to 10.48.7 by @dependabot in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/51
+* add document endpoints (#52) by @jannes-io in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/53
+
+**Full Changelog**: https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/compare/v1.0.11...v1.0.12
+
 ## v1.0.11 - 2024-02-25
 
 ### What's Changed
