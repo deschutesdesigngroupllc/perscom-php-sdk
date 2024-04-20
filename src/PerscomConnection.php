@@ -8,6 +8,7 @@ use Perscom\Exceptions\TenantCouldNotBeIdentifiedException;
 use Perscom\Http\Resources\AnnouncementResource;
 use Perscom\Http\Resources\AwardResource;
 use Perscom\Http\Resources\CalendarResource;
+use Perscom\Http\Resources\DocumentResource;
 use Perscom\Http\Resources\EventResource;
 use Perscom\Http\Resources\FormResource;
 use Perscom\Http\Resources\GroupResource;
@@ -192,6 +193,14 @@ class PerscomConnection extends Connector
     public function users(): UserResource
     {
         return new UserResource($this);
+    }
+
+    /**
+     * @return DocumentResource
+     */
+    public function documents(): DocumentResource
+    {
+        return new DocumentResource($this);
     }
 
     /**
