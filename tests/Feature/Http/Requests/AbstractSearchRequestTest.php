@@ -3,6 +3,7 @@
 namespace Perscom\Test\Feature\Http\Requests;
 
 use Perscom\Data\FilterObject;
+use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
 use Perscom\Http\Requests\Users\SearchUsersRequest;
 use Perscom\PerscomConnection;
@@ -141,6 +142,51 @@ test('can properly format an array of filter arguments', function () {
                 'filters' => [
                     ['field' => 'foo', 'operator' => '=', 'value' => 'bar', 'type' => 'or'],
                     ['field' => 'bar', 'operator' => '=', 'value' => 'foo', 'type' => 'and'],
+                ],
+            ];
+    });
+});
+
+test('can properly format a single scope argument', function () {
+    $mockClient = new MockClient([
+        SearchUsersRequest::class => MockResponse::make([
+            'name' => 'foo',
+        ], 200),
+    ]);
+
+    $connector = new PerscomConnection('foo', 'bar');
+    $connector->withMockClient($mockClient);
+    $connector->users()->search(scope: new ScopeObject('foo', ['bar']));
+
+    $mockClient->assertSent(function (Request $request) {
+        return $request instanceof SearchUsersRequest
+            && $request->body() instanceof JsonBodyRepository
+            && $request->body()->all() == [
+                'scopes' => [
+                    ['name' => 'foo', 'parameters' => ['bar']],
+                ],
+            ];
+    });
+});
+
+test('can properly format an array of scope arguments', function () {
+    $mockClient = new MockClient([
+        SearchUsersRequest::class => MockResponse::make([
+            'name' => 'foo',
+        ], 200),
+    ]);
+
+    $connector = new PerscomConnection('foo', 'bar');
+    $connector->withMockClient($mockClient);
+    $connector->users()->search(scope: [new ScopeObject('foo'), new ScopeObject('bar')]);
+
+    $mockClient->assertSent(function (Request $request) {
+        return $request instanceof SearchUsersRequest
+            && $request->body() instanceof JsonBodyRepository
+            && $request->body()->all() == [
+                'scopes' => [
+                    ['name' => 'foo'],
+                    ['name' => 'bar'],
                 ],
             ];
     });

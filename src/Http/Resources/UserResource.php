@@ -4,6 +4,7 @@ namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
 use Perscom\Data\FilterObject;
+use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
 use Perscom\Http\Requests\Users\CreateUserRequest;
 use Perscom\Http\Requests\Users\DeleteUserRequest;
@@ -39,20 +40,22 @@ class UserResource extends Resource implements ResourceContract
      * @param  string|null  $value
      * @param  SortObject|array<SortObject>|null  $sort
      * @param  FilterObject|array<FilterObject>|null  $filter
+     * @param  ScopeObject|array<ScopeObject>|null  $scope
      * @param  string|array<string>  $include
      * @param  int  $page
      * @param  int  $limit
      * @return Response
      */
     public function search(
-        ?string $value = null,
+        string $value = null,
         mixed $sort = null,
         mixed $filter = null,
+        mixed $scope = null,
         string|array $include = [],
         int $page = 1,
         int $limit = 20,
     ): Response {
-        return $this->connector->send(new SearchUsersRequest($value, $sort, $filter, $include, $page, $limit));
+        return $this->connector->send(new SearchUsersRequest($value, $sort, $filter, $scope, $include, $page, $limit));
     }
 
     /**
