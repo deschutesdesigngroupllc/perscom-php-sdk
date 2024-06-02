@@ -1,5 +1,15 @@
 # Release Notes
 
+## v2.0.0 - 2024-06-02
+
+### What's Changed
+
+* Bump laravel/pint from 1.15.1 to 1.16.0 by @dependabot in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/59
+* Bump illuminate/support from 10.48.8 to 10.48.11 by @dependabot in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/58
+* BC: Add scope object to search requests by @JonErickson in https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/pull/60
+
+**Full Changelog**: https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/compare/v1.0.12...v2.0.0
+
 ## v1.0.12 - 2024-04-21
 
 ### What's Changed
