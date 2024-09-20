@@ -8,9 +8,6 @@ use Perscom\Http\Requests\AbstractSearchRequest;
 
 class SearchGroupsRequest extends AbstractSearchRequest
 {
-    /**
-     * {@inheritDoc}
-     */
     protected function getResource(): string
     {
         return 'groups';

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Perscom\Data;
 
-use Saloon\Contracts\Arrayable;
+use Illuminate\Contracts\Support\Arrayable;
 
-class ScopeObject implements Arrayable
+final class ScopeObject implements Arrayable
 {
     public function __construct(public string $name, public array $parameters = [])
     {

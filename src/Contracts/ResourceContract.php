@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Contracts;
 
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 interface ResourceContract
 {

@@ -15,6 +15,7 @@ use Perscom\Http\Requests\Users\GetUsersRequest;
 use Perscom\Http\Requests\Users\SearchUsersRequest;
 use Perscom\Http\Requests\Users\UpdateUserRequest;
 use Perscom\Http\Resources\Users\AssignmentRecordsResource;
+use Perscom\Http\Resources\Users\AttachmentsResource;
 use Perscom\Http\Resources\Users\AwardRecordsResource;
 use Perscom\Http\Resources\Users\CombatRecordsResource;
 use Perscom\Http\Resources\Users\CoverPhotoResource;
@@ -23,12 +24,16 @@ use Perscom\Http\Resources\Users\QualificationRecordsResource;
 use Perscom\Http\Resources\Users\RankRecordsResource;
 use Perscom\Http\Resources\Users\ServiceRecordsResource;
 use Perscom\Http\Resources\Users\StatusResource;
-use Saloon\Contracts\Response;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
+use Saloon\Http\Response;
 
 class UserResource extends Resource implements ResourceContract
 {
     /**
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
@@ -40,6 +45,8 @@ class UserResource extends Resource implements ResourceContract
      * @param  FilterObject|array<FilterObject>|null  $filter
      * @param  ScopeObject|array<ScopeObject>|null  $scope
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function search(
         ?string $value = null,
@@ -55,6 +62,8 @@ class UserResource extends Resource implements ResourceContract
 
     /**
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function get(int $id, string|array $include = []): Response
     {
@@ -63,6 +72,8 @@ class UserResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function create(array $data): Response
     {
@@ -71,12 +82,17 @@ class UserResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function update(int $id, array $data): Response
     {
         return $this->connector->send(new UpdateUserRequest($id, $data));
     }
 
+    /**
+     * @throws FatalRequestException|RequestException
+     */
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteUserRequest($id));
@@ -90,6 +106,11 @@ class UserResource extends Resource implements ResourceContract
     public function cover_photo(int $id): CoverPhotoResource
     {
         return new CoverPhotoResource($this->connector, $id);
+    }
+
+    public function attachments(int $id): AttachmentsResource
+    {
+        return new AttachmentsResource($this->connector, $id);
     }
 
     public function assignment_records(int $id): AssignmentRecordsResource

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Perscom\Data;
 
-use Saloon\Contracts\Arrayable;
+use Illuminate\Contracts\Support\Arrayable;
 
-class SortObject implements Arrayable
+final class SortObject implements Arrayable
 {
     /**
      * @param  string  $direction  The supported directions are 'asc' and 'desc'.

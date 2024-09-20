@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Users\QualificationRecords\GetUserQualificationRecordR
 use Perscom\Http\Requests\Users\QualificationRecords\GetUserQualificationRecordsRequest;
 use Perscom\Http\Requests\Users\QualificationRecords\UpdateUserQualificationRecordRequest;
 use Perscom\PerscomConnection;
-use Saloon\Contracts\Request;
-use Saloon\Helpers\Config;
+use Saloon\Http\Request;
+use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Response;

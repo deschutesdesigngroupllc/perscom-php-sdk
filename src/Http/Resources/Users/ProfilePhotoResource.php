@@ -7,8 +7,8 @@ namespace Perscom\Http\Resources\Users;
 use Perscom\Http\Requests\Users\ProfilePhoto\CreateUserProfilePhotoRequest;
 use Perscom\Http\Requests\Users\ProfilePhoto\DeleteUserProfilePhotoRequest;
 use Perscom\Http\Resources\Resource;
-use Saloon\Contracts\Connector;
-use Saloon\Contracts\Response;
+use Saloon\Http\Connector;
+use Saloon\Http\Response;
 
 class ProfilePhotoResource extends Resource
 {

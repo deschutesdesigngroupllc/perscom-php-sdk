@@ -36,7 +36,8 @@
         "laravel/pint": "^1.16",
         "phpstan/phpstan": "1.12.4",
         "mockery/mockery": "^1.6.7",
-        "pestphp/pest-plugin-type-coverage": "^3.0"
+        "pestphp/pest-plugin-type-coverage": "^3.0",
+        "pestphp/pest-plugin-arch": "^3.0"
     },
     "config": {
         "allow-plugins": {
@@ -44,6 +45,7 @@
         }
     },
     "scripts": {
+        "herd:test": "herd coverage ./vendor/bin/pest --coverage --min=100",
         "lint": "./vendor/bin/pint src",
         "test": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=100",
         "test:lint": "./vendor/bin/pint src --test",

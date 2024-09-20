@@ -15,12 +15,16 @@ use Perscom\Http\Requests\Submissions\GetSubmissionsRequest;
 use Perscom\Http\Requests\Submissions\SearchSubmissionsRequest;
 use Perscom\Http\Requests\Submissions\UpdateSubmissionRequest;
 use Perscom\Http\Resources\Submissions\StatusResource;
-use Saloon\Contracts\Response;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
+use Saloon\Http\Response;
 
 class SubmissionResource extends Resource implements ResourceContract
 {
     /**
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
@@ -32,6 +36,8 @@ class SubmissionResource extends Resource implements ResourceContract
      * @param  FilterObject|array<FilterObject>|null  $filter
      * @param  ScopeObject|array<ScopeObject>|null  $scope
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function search(
         ?string $value = null,
@@ -47,6 +53,8 @@ class SubmissionResource extends Resource implements ResourceContract
 
     /**
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function get(int $id, string|array $include = []): Response
     {
@@ -55,6 +63,8 @@ class SubmissionResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function create(array $data): Response
     {
@@ -63,12 +73,17 @@ class SubmissionResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function update(int $id, array $data): Response
     {
         return $this->connector->send(new UpdateSubmissionRequest($id, $data));
     }
 
+    /**
+     * @throws FatalRequestException|RequestException
+     */
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteSubmissionRequest($id));

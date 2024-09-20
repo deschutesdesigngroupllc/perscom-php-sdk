@@ -14,12 +14,16 @@ use Perscom\Http\Requests\Tasks\GetTaskRequest;
 use Perscom\Http\Requests\Tasks\GetTasksRequest;
 use Perscom\Http\Requests\Tasks\SearchTasksRequest;
 use Perscom\Http\Requests\Tasks\UpdateTaskRequest;
-use Saloon\Contracts\Response;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
+use Saloon\Http\Response;
 
 class TaskResource extends Resource implements ResourceContract
 {
     /**
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
@@ -31,6 +35,8 @@ class TaskResource extends Resource implements ResourceContract
      * @param  FilterObject|array<FilterObject>|null  $filter
      * @param  ScopeObject|array<ScopeObject>|null  $scope
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function search(
         ?string $value = null,
@@ -46,6 +52,8 @@ class TaskResource extends Resource implements ResourceContract
 
     /**
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function get(int $id, string|array $include = []): Response
     {
@@ -54,6 +62,8 @@ class TaskResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function create(array $data): Response
     {
@@ -62,12 +72,17 @@ class TaskResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function update(int $id, array $data): Response
     {
         return $this->connector->send(new UpdateTaskRequest($id, $data));
     }
 
+    /**
+     * @throws FatalRequestException|RequestException
+     */
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteTaskRequest($id));

@@ -6,6 +6,6 @@ namespace Perscom\Exceptions;
 
 use Exception;
 
-class InvalidArgumentException extends Exception
+final class InvalidArgumentException extends Exception
 {
 }

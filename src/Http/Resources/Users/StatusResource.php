@@ -9,8 +9,8 @@ use Perscom\Http\Requests\Users\Statuses\AttachUserStatusRequest;
 use Perscom\Http\Requests\Users\Statuses\DetachUserStatusRequest;
 use Perscom\Http\Requests\Users\Statuses\SyncUserStatusRequest;
 use Perscom\Http\Resources\Resource;
-use Saloon\Contracts\Connector;
-use Saloon\Contracts\Response;
+use Saloon\Http\Connector;
+use Saloon\Http\Response;
 
 class StatusResource extends Resource
 {

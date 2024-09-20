@@ -7,7 +7,7 @@ namespace Perscom\Support;
 use Composer\InstalledVersions;
 use Exception;
 
-class Composer
+final class Composer
 {
     public static function getPerscomPackageVersion(string $packageName = 'deschutesdesigngroupllc/perscom-php-sdk'): ?string
     {

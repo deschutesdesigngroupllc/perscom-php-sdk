@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Resources;
 
-use Saloon\Contracts\Connector;
+use Saloon\Http\Connector;
 
 class Resource
 {

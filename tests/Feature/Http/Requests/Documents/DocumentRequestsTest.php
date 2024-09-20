@@ -7,7 +7,7 @@ use Perscom\Http\Requests\Documents\GetDocumentsRequest;
 use Perscom\Http\Requests\Documents\SearchDocumentsRequest;
 use Perscom\Http\Requests\Documents\UpdateDocumentRequest;
 use Perscom\PerscomConnection;
-use Saloon\Helpers\Config;
+use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Request;

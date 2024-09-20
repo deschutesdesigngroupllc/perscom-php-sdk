@@ -11,8 +11,10 @@ use Perscom\Http\Requests\Users\CombatRecords\GetUserCombatRecordRequest;
 use Perscom\Http\Requests\Users\CombatRecords\GetUserCombatRecordsRequest;
 use Perscom\Http\Requests\Users\CombatRecords\UpdateUserCombatRecordRequest;
 use Perscom\Http\Resources\Resource;
-use Saloon\Contracts\Connector;
-use Saloon\Contracts\Response;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
+use Saloon\Http\Connector;
+use Saloon\Http\Response;
 
 class CombatRecordsResource extends Resource implements ResourceContract
 {
@@ -23,6 +25,8 @@ class CombatRecordsResource extends Resource implements ResourceContract
 
     /**
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
@@ -31,6 +35,8 @@ class CombatRecordsResource extends Resource implements ResourceContract
 
     /**
      * @param  string|array<string>  $include
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function get(int $id, string|array $include = []): Response
     {
@@ -39,6 +45,8 @@ class CombatRecordsResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function create(array $data): Response
     {
@@ -47,12 +55,17 @@ class CombatRecordsResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function update(int $id, array $data): Response
     {
         return $this->connector->send(new UpdateUserCombatRecordRequest($this->relationId, $id, $data));
     }
 
+    /**
+     * @throws FatalRequestException|RequestException
+     */
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteUserCombatRecordRequest($this->relationId, $id));
