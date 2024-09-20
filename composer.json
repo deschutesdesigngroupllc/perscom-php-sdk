@@ -35,7 +35,7 @@
         "crescat-io/saloon-sdk-generator": "^1.0",
         "pestphp/pest": "^2.19",
         "laravel/pint": "^1.13",
-        "phpstan/phpstan": "1.10.67",
+        "phpstan/phpstan": "1.12.4",
         "pestphp/pest-plugin-type-coverage": "^2.4",
         "mockery/mockery": "^1.6"
     },
