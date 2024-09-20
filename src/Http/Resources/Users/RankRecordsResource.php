@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Perscom\Http\Resources\Users;
 
 use Perscom\Contracts\ResourceContract;
@@ -14,10 +16,6 @@ use Saloon\Contracts\Response;
 
 class RankRecordsResource extends Resource implements ResourceContract
 {
-    /**
-     * @param  Connector  $connector
-     * @param  int  $relationId
-     */
     public function __construct(protected Connector $connector, protected int $relationId)
     {
         parent::__construct($connector);
@@ -25,9 +23,6 @@ class RankRecordsResource extends Resource implements ResourceContract
 
     /**
      * @param  string|array<string>  $include
-     * @param  int  $page
-     * @param  int  $limit
-     * @return Response
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
@@ -35,9 +30,7 @@ class RankRecordsResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param  int  $id
      * @param  string|array<string>  $include
-     * @return Response
      */
     public function get(int $id, string|array $include = []): Response
     {
@@ -46,7 +39,6 @@ class RankRecordsResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
-     * @return Response
      */
     public function create(array $data): Response
     {
@@ -54,19 +46,13 @@ class RankRecordsResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param  int  $id
      * @param  array<string, mixed>  $data
-     * @return Response
      */
     public function update(int $id, array $data): Response
     {
         return $this->connector->send(new UpdateUserRankRecordRequest($this->relationId, $id, $data));
     }
 
-    /**
-     * @param  int  $id
-     * @return Response
-     */
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteUserRankRecordRequest($this->relationId, $id));

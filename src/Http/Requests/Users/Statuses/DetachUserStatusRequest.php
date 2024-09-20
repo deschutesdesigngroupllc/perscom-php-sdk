@@ -8,10 +8,6 @@ use Perscom\Http\Requests\AbstractRelationalDetachRequest;
 
 class DetachUserStatusRequest extends AbstractRelationalDetachRequest
 {
-    /**
-     * @param  int  $relationId
-     * @return string
-     */
     protected function getResource(int $relationId): string
     {
         return "users/$relationId/status-records";

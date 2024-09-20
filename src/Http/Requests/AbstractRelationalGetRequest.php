@@ -13,8 +13,6 @@ abstract class AbstractRelationalGetRequest extends Request
     protected Method $method = Method::GET;
 
     /**
-     * @param  int  $relationId
-     * @param  int  $resourceId
      * @param  string|array<string>  $include
      */
     public function __construct(public int $relationId, public int $resourceId, public string|array $include = [])
@@ -22,19 +20,12 @@ abstract class AbstractRelationalGetRequest extends Request
         $this->include = Arr::wrap($this->include);
     }
 
-    /**
-     * @return string
-     */
+    abstract protected function getResource(int $relationId): string;
+
     public function resolveEndpoint(): string
     {
         return "{$this->getResource($this->relationId)}/$this->resourceId";
     }
-
-    /**
-     * @param  int  $relationId
-     * @return string
-     */
-    abstract protected function getResource(int $relationId): string;
 
     /**
      * @return array<string, mixed>

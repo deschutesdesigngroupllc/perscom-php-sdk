@@ -18,10 +18,7 @@ abstract class AbstractRelationalSyncRequest extends Request implements HasBody
     protected Method $method = Method::PATCH;
 
     /**
-     * @param  int  $relationId
      * @param  ResourceObject|array<ResourceObject>  $resources
-     * @param  string|array  $include
-     * @param  bool  $allowDetaching
      */
     public function __construct(
         public int $relationId,
@@ -33,19 +30,12 @@ abstract class AbstractRelationalSyncRequest extends Request implements HasBody
         $this->include = Arr::wrap($this->include);
     }
 
-    /**
-     * @return string
-     */
+    abstract protected function getResource(int $relationId): string;
+
     public function resolveEndpoint(): string
     {
         return "{$this->getResource($this->relationId)}/sync";
     }
-
-    /**
-     * @param  int  $relationId
-     * @return string
-     */
-    abstract protected function getResource(int $relationId): string;
 
     /**
      * @return array<string, mixed>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Perscom\Http\Requests\Users\ProfilePhoto;
 
 use Saloon\Contracts\Body\HasBody;
@@ -13,17 +15,11 @@ class DeleteUserProfilePhotoRequest extends Request implements HasBody
 
     protected Method $method = Method::PUT;
 
-    /**
-     * @param  int  $relationId
-     */
     public function __construct(public int $relationId)
     {
         //
     }
 
-    /**
-     * @return string
-     */
     public function resolveEndpoint(): string
     {
         return "users/$this->relationId";

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
@@ -27,9 +29,6 @@ class UserResource extends Resource implements ResourceContract
 {
     /**
      * @param  string|array<string>  $include
-     * @param  int  $page
-     * @param  int  $limit
-     * @return Response
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
@@ -37,14 +36,10 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param  string|null  $value
      * @param  SortObject|array<SortObject>|null  $sort
      * @param  FilterObject|array<FilterObject>|null  $filter
      * @param  ScopeObject|array<ScopeObject>|null  $scope
      * @param  string|array<string>  $include
-     * @param  int  $page
-     * @param  int  $limit
-     * @return Response
      */
     public function search(
         ?string $value = null,
@@ -59,9 +54,7 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param  int  $id
      * @param  string|array<string>  $include
-     * @return Response
      */
     public function get(int $id, string|array $include = []): Response
     {
@@ -70,7 +63,6 @@ class UserResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
-     * @return Response
      */
     public function create(array $data): Response
     {
@@ -78,100 +70,58 @@ class UserResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param  int  $id
      * @param  array<string, mixed>  $data
-     * @return Response
      */
     public function update(int $id, array $data): Response
     {
         return $this->connector->send(new UpdateUserRequest($id, $data));
     }
 
-    /**
-     * @param  int  $id
-     * @return Response
-     */
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteUserRequest($id));
     }
 
-    /**
-     * @param  int  $id
-     * @return ProfilePhotoResource
-     */
     public function profile_photo(int $id): ProfilePhotoResource
     {
         return new ProfilePhotoResource($this->connector, $id);
     }
 
-    /**
-     * @param  int  $id
-     * @return CoverPhotoResource
-     */
     public function cover_photo(int $id): CoverPhotoResource
     {
         return new CoverPhotoResource($this->connector, $id);
     }
 
-    /**
-     * @param  int  $id
-     * @return AssignmentRecordsResource
-     */
     public function assignment_records(int $id): AssignmentRecordsResource
     {
         return new AssignmentRecordsResource($this->connector, $id);
     }
 
-    /**
-     * @param  int  $id
-     * @return AwardRecordsResource
-     */
     public function award_records(int $id): AwardRecordsResource
     {
         return new AwardRecordsResource($this->connector, $id);
     }
 
-    /**
-     * @param  int  $id
-     * @return CombatRecordsResource
-     */
     public function combat_records(int $id): CombatRecordsResource
     {
         return new CombatRecordsResource($this->connector, $id);
     }
 
-    /**
-     * @param  int  $id
-     * @return QualificationRecordsResource
-     */
     public function qualification_records(int $id): QualificationRecordsResource
     {
         return new QualificationRecordsResource($this->connector, $id);
     }
 
-    /**
-     * @param  int  $id
-     * @return RankRecordsResource
-     */
     public function rank_records(int $id): RankRecordsResource
     {
         return new RankRecordsResource($this->connector, $id);
     }
 
-    /**
-     * @param  int  $id
-     * @return ServiceRecordsResource
-     */
     public function service_records(int $id): ServiceRecordsResource
     {
         return new ServiceRecordsResource($this->connector, $id);
     }
 
-    /**
-     * @param  int  $id
-     * @return StatusResource
-     */
     public function statuses(int $id): StatusResource
     {
         return new StatusResource($this->connector, $id);

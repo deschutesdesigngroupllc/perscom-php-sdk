@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Perscom\Data;
 
 use Saloon\Contracts\Arrayable;
@@ -7,7 +9,6 @@ use Saloon\Contracts\Arrayable;
 class SortObject implements Arrayable
 {
     /**
-     * @param  string  $field
      * @param  string  $direction  The supported directions are 'asc' and 'desc'.
      */
     public function __construct(public string $field, public string $direction = 'asc')

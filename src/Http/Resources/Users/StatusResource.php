@@ -14,10 +14,6 @@ use Saloon\Contracts\Response;
 
 class StatusResource extends Resource
 {
-    /**
-     * @param  Connector  $connector
-     * @param  int  $relationId
-     */
     public function __construct(Connector $connector, protected int $relationId)
     {
         parent::__construct($connector);
@@ -26,8 +22,6 @@ class StatusResource extends Resource
     /**
      * @param  ResourceObject|array<ResourceObject>  $resources
      * @param  string|array<string>  $include
-     * @param  bool  $allowDuplicates
-     * @return Response
      */
     public function attach(ResourceObject|array $resources, string|array $include = [], bool $allowDuplicates = false): Response
     {
@@ -37,7 +31,6 @@ class StatusResource extends Resource
     /**
      * @param  ResourceObject|array<ResourceObject>  $resources
      * @param  string|array<string>  $include
-     * @return Response
      */
     public function detach(ResourceObject|array $resources, string|array $include = []): Response
     {
@@ -47,8 +40,6 @@ class StatusResource extends Resource
     /**
      * @param  ResourceObject|array<ResourceObject>  $resources
      * @param  string|array<string>  $include
-     * @param  bool  $allowDetaching
-     * @return Response
      */
     public function sync(ResourceObject|array $resources, string|array $include = [], bool $allowDetaching = true): Response
     {

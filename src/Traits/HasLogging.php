@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Perscom\Traits;
 
 use Saloon\Http\PendingRequest;

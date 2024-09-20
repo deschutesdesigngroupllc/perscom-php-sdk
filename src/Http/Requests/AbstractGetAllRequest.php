@@ -14,26 +14,18 @@ abstract class AbstractGetAllRequest extends Request
 
     /**
      * @param  string|array<string>  $include
-     * @param  int  $page
-     * @param  int  $limit
      */
     public function __construct(public string|array $include = [], public int $page = 1, public int $limit = 20)
     {
         $this->include = Arr::wrap($this->include);
     }
 
-    /**
-     * @return string
-     */
+    abstract protected function getResource(): string;
+
     public function resolveEndpoint(): string
     {
         return $this->getResource();
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function getResource(): string;
 
     /**
      * @return array<string, mixed>

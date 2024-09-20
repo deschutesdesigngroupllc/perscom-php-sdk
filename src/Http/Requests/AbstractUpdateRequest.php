@@ -16,7 +16,6 @@ abstract class AbstractUpdateRequest extends Request implements HasBody
     protected Method $method = Method::PUT;
 
     /**
-     * @param  int  $id
      * @param  array<string, mixed>  $data
      */
     public function __construct(public int $id, public array $data)
@@ -24,18 +23,12 @@ abstract class AbstractUpdateRequest extends Request implements HasBody
         //
     }
 
-    /**
-     * @return string
-     */
+    abstract protected function getResource(): string;
+
     public function resolveEndpoint(): string
     {
         return "{$this->getResource()}/$this->id";
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function getResource(): string;
 
     /**
      * @return array<string, mixed>
