@@ -8,7 +8,7 @@ use Perscom\PerscomConnection;
 
 final class ApiUrl
 {
-    public static function withoutApiVersion(callable $callback)
+    public static function withoutApiVersion(callable $callback): string
     {
         $baseUrl = parse_url(PerscomConnection::$apiUrl);
 

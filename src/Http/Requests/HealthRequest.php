@@ -14,6 +14,6 @@ class HealthRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return ApiUrl::withoutApiVersion(fn ($baseUrl) => "$baseUrl/health");
+        return ApiUrl::withoutApiVersion(fn (string $baseUrl): string => "$baseUrl/health");
     }
 }
