@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace Perscom\Data;
 
-use Saloon\Contracts\Arrayable;
+use Illuminate\Contracts\Support\Arrayable;
 
-class ResourceObject implements Arrayable
+final class ResourceObject implements Arrayable
 {
-    /**
-     * @param  int  $id
-     * @param  array  $data
-     */
     public function __construct(
         public int $id,
         public array $data = [],

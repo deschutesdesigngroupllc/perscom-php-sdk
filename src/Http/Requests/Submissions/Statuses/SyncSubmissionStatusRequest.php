@@ -8,10 +8,6 @@ use Perscom\Http\Requests\AbstractRelationalSyncRequest;
 
 class SyncSubmissionStatusRequest extends AbstractRelationalSyncRequest
 {
-    /**
-     * @param  int  $relationId
-     * @return string
-     */
     protected function getResource(int $relationId): string
     {
         return "submissions/$relationId/statuses";

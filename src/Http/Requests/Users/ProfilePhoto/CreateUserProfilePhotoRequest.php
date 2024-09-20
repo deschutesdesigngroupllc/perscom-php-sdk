@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Perscom\Http\Requests\Users\ProfilePhoto;
 
 use Saloon\Contracts\Body\HasBody;
@@ -15,18 +17,11 @@ class CreateUserProfilePhotoRequest extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
-    /**
-     * @param  int  $relationId
-     * @param  string  $filePath
-     */
     public function __construct(public int $relationId, public string $filePath)
     {
         //
     }
 
-    /**
-     * @return string
-     */
     public function resolveEndpoint(): string
     {
         return "users/$this->relationId";

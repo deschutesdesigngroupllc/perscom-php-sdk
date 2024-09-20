@@ -20,13 +20,9 @@ abstract class AbstractSearchRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     /**
-     * @param  string|null  $value
      * @param  SortObject|array<SortObject>|null  $sort
      * @param  FilterObject|array<FilterObject>|null  $filter
      * @param  ScopeObject|array<ScopeObject>|null  $scope
-     * @param  string|array  $include
-     * @param  int  $limit
-     * @param  int  $page
      */
     public function __construct(
         public ?string $value = null,
@@ -43,18 +39,12 @@ abstract class AbstractSearchRequest extends Request implements HasBody
         $this->include = Arr::wrap($this->include);
     }
 
-    /**
-     * @return string
-     */
+    abstract protected function getResource(): string;
+
     public function resolveEndpoint(): string
     {
         return "{$this->getResource()}/search";
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function getResource(): string;
 
     /**
      * @return array<string, mixed>

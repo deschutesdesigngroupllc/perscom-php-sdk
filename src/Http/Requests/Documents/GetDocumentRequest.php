@@ -8,9 +8,6 @@ use Perscom\Http\Requests\AbstractGetRequest;
 
 class GetDocumentRequest extends AbstractGetRequest
 {
-    /**
-     * @return string
-     */
     protected function getResource(): string
     {
         return 'documents';

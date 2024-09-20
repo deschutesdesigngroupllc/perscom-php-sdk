@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordRequest
 use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordsRequest;
 use Perscom\Http\Requests\Users\AssignmentRecords\UpdateUserAssignmentRecordRequest;
 use Perscom\PerscomConnection;
-use Saloon\Contracts\Request;
-use Saloon\Helpers\Config;
+use Saloon\Http\Request;
+use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Response;

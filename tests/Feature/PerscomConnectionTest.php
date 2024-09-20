@@ -5,7 +5,7 @@ use Perscom\PerscomConnection;
 test('it will resolve the default base url', function () {
     $connection = new PerscomConnection('foo', 'bar');
 
-    expect($connection->resolveBaseUrl())->toEqual('https://api.perscom.io/v1');
+    expect($connection->resolveBaseUrl())->toEqual('https://api.perscom.io/v2');
 });
 
 test('it will resolve a custom base url', function () {
@@ -24,4 +24,10 @@ test('it will set the correct headers', function () {
             'X-Perscom-Id',
             'X-Perscom-Sdk-Version',
         ]);
+});
+
+test('it can remove the version from the base url', function () {
+    $connection = new PerscomConnection('foo', 'bar');
+
+    expect($connection->health());
 });

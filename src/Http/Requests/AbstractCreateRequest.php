@@ -23,18 +23,12 @@ abstract class AbstractCreateRequest extends Request implements HasBody
         //
     }
 
-    /**
-     * @return string
-     */
+    abstract protected function getResource(): string;
+
     public function resolveEndpoint(): string
     {
         return $this->getResource();
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function getResource(): string;
 
     /**
      * @return array<string, mixed>

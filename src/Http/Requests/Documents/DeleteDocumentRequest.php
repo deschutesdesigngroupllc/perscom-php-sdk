@@ -8,9 +8,6 @@ use Perscom\Http\Requests\AbstractDeleteRequest;
 
 class DeleteDocumentRequest extends AbstractDeleteRequest
 {
-    /**
-     * @return string
-     */
     protected function getResource(): string
     {
         return 'documents';

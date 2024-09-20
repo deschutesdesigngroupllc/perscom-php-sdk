@@ -8,9 +8,6 @@ use Perscom\Http\Requests\AbstractUpdateRequest;
 
 class UpdateDocumentRequest extends AbstractUpdateRequest
 {
-    /**
-     * @return string
-     */
     protected function getResource(): string
     {
         return 'documents';

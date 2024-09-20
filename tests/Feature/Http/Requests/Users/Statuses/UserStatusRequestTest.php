@@ -5,8 +5,8 @@ use Perscom\Http\Requests\Users\Statuses\AttachUserStatusRequest;
 use Perscom\Http\Requests\Users\Statuses\DetachUserStatusRequest;
 use Perscom\Http\Requests\Users\Statuses\SyncUserStatusRequest;
 use Perscom\PerscomConnection;
-use Saloon\Contracts\Response;
-use Saloon\Helpers\Config;
+use Saloon\Http\Response;
+use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 

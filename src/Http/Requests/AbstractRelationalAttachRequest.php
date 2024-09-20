@@ -18,9 +18,7 @@ abstract class AbstractRelationalAttachRequest extends Request implements HasBod
     protected Method $method = Method::POST;
 
     /**
-     * @param  int  $relationId
      * @param  ResourceObject|array<ResourceObject>  $resources
-     * @param  string|array  $include
      */
     public function __construct(
         public int $relationId,
@@ -32,19 +30,12 @@ abstract class AbstractRelationalAttachRequest extends Request implements HasBod
         $this->include = Arr::wrap($this->include);
     }
 
-    /**
-     * @return string
-     */
+    abstract protected function getResource(int $relationId): string;
+
     public function resolveEndpoint(): string
     {
         return "{$this->getResource($this->relationId)}/attach";
     }
-
-    /**
-     * @param  int  $relationId
-     * @return string
-     */
-    abstract protected function getResource(int $relationId): string;
 
     /**
      * @return array<string, mixed>

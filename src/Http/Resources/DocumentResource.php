@@ -14,15 +14,16 @@ use Perscom\Http\Requests\Documents\GetDocumentRequest;
 use Perscom\Http\Requests\Documents\GetDocumentsRequest;
 use Perscom\Http\Requests\Documents\SearchDocumentsRequest;
 use Perscom\Http\Requests\Documents\UpdateDocumentRequest;
-use Saloon\Contracts\Response;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
+use Saloon\Http\Response;
 
 class DocumentResource extends Resource implements ResourceContract
 {
     /**
      * @param  string|array<string>  $include
-     * @param  int  $page
-     * @param  int  $limit
-     * @return Response
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
@@ -30,14 +31,12 @@ class DocumentResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param  string|null  $value
      * @param  SortObject|array<SortObject>|null  $sort
      * @param  FilterObject|array<FilterObject>|null  $filter
      * @param  ScopeObject|array<ScopeObject>|null  $scope
      * @param  string|array<string>  $include
-     * @param  int  $page
-     * @param  int  $limit
-     * @return Response
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function search(
         ?string $value = null,
@@ -52,9 +51,9 @@ class DocumentResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param  int  $id
      * @param  string|array<string>  $include
-     * @return Response
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function get(int $id, string|array $include = []): Response
     {
@@ -63,7 +62,8 @@ class DocumentResource extends Resource implements ResourceContract
 
     /**
      * @param  array<string, mixed>  $data
-     * @return Response
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function create(array $data): Response
     {
@@ -71,9 +71,9 @@ class DocumentResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param  int  $id
      * @param  array<string, mixed>  $data
-     * @return Response
+     *
+     * @throws FatalRequestException|RequestException
      */
     public function update(int $id, array $data): Response
     {
@@ -81,8 +81,7 @@ class DocumentResource extends Resource implements ResourceContract
     }
 
     /**
-     * @param  int  $id
-     * @return Response
+     * @throws FatalRequestException|RequestException
      */
     public function delete(int $id): Response
     {

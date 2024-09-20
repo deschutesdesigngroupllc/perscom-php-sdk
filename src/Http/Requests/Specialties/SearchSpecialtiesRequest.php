@@ -8,9 +8,6 @@ use Perscom\Http\Requests\AbstractSearchRequest;
 
 class SearchSpecialtiesRequest extends AbstractSearchRequest
 {
-    /**
-     * {@inheritDoc}
-     */
     protected function getResource(): string
     {
         return 'specialties';

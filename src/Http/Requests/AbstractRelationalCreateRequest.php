@@ -15,28 +15,17 @@ abstract class AbstractRelationalCreateRequest extends Request implements HasBod
 
     protected Method $method = Method::POST;
 
-    /**
-     * @param  int  $relationId
-     * @param  array  $data
-     */
     public function __construct(public int $relationId, public array $data)
     {
         //
     }
 
-    /**
-     * @return string
-     */
+    abstract protected function getResource(int $relationId): string;
+
     public function resolveEndpoint(): string
     {
         return $this->getResource($this->relationId);
     }
-
-    /**
-     * @param  int  $relationId
-     * @return string
-     */
-    abstract protected function getResource(int $relationId): string;
 
     /**
      * @return array<string, mixed>

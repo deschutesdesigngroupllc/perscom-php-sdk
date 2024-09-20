@@ -3,10 +3,10 @@
 use Perscom\Http\Requests\Users\CoverPhoto\CreateUserCoverPhotoRequest;
 use Perscom\Http\Requests\Users\CoverPhoto\DeleteUserCoverPhotoRequest;
 use Perscom\PerscomConnection;
-use Saloon\Contracts\Request;
+use Saloon\Http\Request;
 use Saloon\Data\MultipartValue;
 use Saloon\Exceptions\SaloonException;
-use Saloon\Helpers\Config;
+use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Response;

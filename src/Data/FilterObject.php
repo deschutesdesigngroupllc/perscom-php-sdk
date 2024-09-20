@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Perscom\Data;
 
-use Saloon\Contracts\Arrayable;
+use Illuminate\Contracts\Support\Arrayable;
 
-class FilterObject implements Arrayable
+final class FilterObject implements Arrayable
 {
     /**
-     * @param  string  $field
      * @param  string  $operator  The supported operators are '<', '<=', '>', '>=', '=', '!=', 'like', 'not like', 'in', 'not in'.
-     * @param  mixed  $value
      * @param  string  $type  The supported types are 'or' and 'and'. Defaults to OR.
      */
     public function __construct(
