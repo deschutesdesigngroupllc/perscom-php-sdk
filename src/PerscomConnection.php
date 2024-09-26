@@ -37,6 +37,7 @@ use Perscom\Http\Resources\UnitResource;
 use Perscom\Http\Resources\UserResource;
 use Perscom\Support\Composer;
 use Perscom\Traits\HasLogging;
+use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\Http\Response;
 use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
@@ -56,9 +57,11 @@ class PerscomConnection extends Connector
 
     public static string $apiUrl = 'https://api.perscom.io/v2';
 
-    public function __construct(protected string $apiKey, protected string $perscomId, protected ?string $baseUrl = null)
+    public function __construct(
+        protected string $apiKey,
+        protected ?string $perscomId = null,
+        protected ?string $baseUrl = null)
     {
-        $this->withTokenAuth($this->apiKey);
     }
 
     public function resolveBaseUrl(): string
@@ -223,6 +226,11 @@ class PerscomConnection extends Connector
         return parent::getRequestException($response, $senderException);
     }
 
+    protected function defaultAuth(): TokenAuthenticator
+    {
+        return new TokenAuthenticator($this->apiKey);
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -230,8 +238,11 @@ class PerscomConnection extends Connector
     {
         $headers = [
             'X-Perscom-Sdk' => true,
-            'X-Perscom-Id' => $this->perscomId,
         ];
+
+        if (! is_null($this->perscomId)) {
+            $headers['X-Perscom-Id'] = $this->perscomId;
+        }
 
         if ($version = Composer::getPerscomPackageVersion()) {
             $headers['X-Perscom-Sdk-Version'] = $version;
