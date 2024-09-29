@@ -1,23 +1,13 @@
-
 <?php
 
-use Perscom\Exceptions\AuthenticationException;
-use Perscom\Exceptions\NotFoundHttpException;
-use Perscom\Exceptions\TenantCouldNotBeIdentifiedException;
-use Perscom\Http\Requests\HealthRequest;
+declare(strict_types=1);
+
 use Perscom\Http\Requests\SettingsRequest;
-use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordRequest;
-use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordsRequest;
-use Perscom\Http\Requests\Users\GetUserRequest;
-use Perscom\Http\Requests\Users\GetUsersRequest;
 use Perscom\PerscomConnection;
-use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Repositories\ArrayStore;
 
 beforeEach(function () {
     Config::preventStrayRequests();
@@ -34,7 +24,7 @@ test('it can get settings', function () {
     $response = $this->connector->settings()->all();
 
     expect($response->status())->toEqual(200)
-       ->and($response)->toBeInstanceOf(Response::class);
+        ->and($response)->toBeInstanceOf(Response::class);
 
     $this->mockClient->assertSent(SettingsRequest::class);
 });

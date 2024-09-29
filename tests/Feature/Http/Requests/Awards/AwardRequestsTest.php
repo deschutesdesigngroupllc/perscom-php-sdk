@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Awards\CreateAwardRequest;
 use Perscom\Http\Requests\Awards\DeleteAwardRequest;
 use Perscom\Http\Requests\Awards\GetAwardRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Awards\GetAwardsRequest;
 use Perscom\Http\Requests\Awards\SearchAwardsRequest;
 use Perscom\Http\Requests\Awards\UpdateAwardRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

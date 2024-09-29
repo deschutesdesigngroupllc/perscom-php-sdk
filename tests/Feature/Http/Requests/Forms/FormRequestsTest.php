@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Forms\CreateFormRequest;
 use Perscom\Http\Requests\Forms\DeleteFormRequest;
 use Perscom\Http\Requests\Forms\GetFormRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Forms\GetFormsRequest;
 use Perscom\Http\Requests\Forms\SearchFormsRequest;
 use Perscom\Http\Requests\Forms\UpdateFormRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

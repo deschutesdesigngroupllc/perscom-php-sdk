@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Specialties\CreateSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\DeleteSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\GetSpecialtiesRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Specialties\GetSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\SearchSpecialtiesRequest;
 use Perscom\Http\Requests\Specialties\UpdateSpecialtyRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Users\AssignmentRecords\CreateUserAssignmentRecordRequest;
 use Perscom\Http\Requests\Users\AssignmentRecords\DeleteUserAssignmentRecordRequest;
 use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordRequest;
 use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordsRequest;
 use Perscom\Http\Requests\Users\AssignmentRecords\UpdateUserAssignmentRecordRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

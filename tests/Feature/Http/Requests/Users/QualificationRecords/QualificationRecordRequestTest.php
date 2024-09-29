@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Users\QualificationRecords\CreateUserQualificationRecordRequest;
 use Perscom\Http\Requests\Users\QualificationRecords\DeleteUserQualificationRecordRequest;
 use Perscom\Http\Requests\Users\QualificationRecords\GetUserQualificationRecordRequest;
 use Perscom\Http\Requests\Users\QualificationRecords\GetUserQualificationRecordsRequest;
 use Perscom\Http\Requests\Users\QualificationRecords\UpdateUserQualificationRecordRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

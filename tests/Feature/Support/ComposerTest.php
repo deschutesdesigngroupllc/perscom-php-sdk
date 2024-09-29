@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Support\Composer;
 
 test('it can retrieve the installed package version', function () {

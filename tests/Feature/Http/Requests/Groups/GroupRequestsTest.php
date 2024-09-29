@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Groups\CreateGroupRequest;
 use Perscom\Http\Requests\Groups\DeleteGroupRequest;
 use Perscom\Http\Requests\Groups\GetGroupRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Groups\GetGroupsRequest;
 use Perscom\Http\Requests\Groups\SearchGroupsRequest;
 use Perscom\Http\Requests\Groups\UpdateGroupRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

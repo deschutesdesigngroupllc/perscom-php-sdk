@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Documents\CreateDocumentRequest;
 use Perscom\Http\Requests\Documents\DeleteDocumentRequest;
 use Perscom\Http\Requests\Documents\GetDocumentRequest;

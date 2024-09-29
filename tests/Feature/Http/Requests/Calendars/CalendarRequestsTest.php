@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Calendars\CreateCalendarRequest;
 use Perscom\Http\Requests\Calendars\DeleteCalendarRequest;
 use Perscom\Http\Requests\Calendars\GetCalendarRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Calendars\GetCalendarsRequest;
 use Perscom\Http\Requests\Calendars\SearchCalendarsRequest;
 use Perscom\Http\Requests\Calendars\UpdateCalendarRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

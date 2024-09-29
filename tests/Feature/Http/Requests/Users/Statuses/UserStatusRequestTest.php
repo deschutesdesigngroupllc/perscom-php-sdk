@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\Users\Statuses\AttachUserStatusRequest;
 use Perscom\Http\Requests\Users\Statuses\DetachUserStatusRequest;
 use Perscom\Http\Requests\Users\Statuses\SyncUserStatusRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Response;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Response;
 
 beforeEach(function () {
     Config::preventStrayRequests();

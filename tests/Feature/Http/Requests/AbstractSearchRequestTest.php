@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Perscom\Test\Feature\Http\Requests;
 
 use Perscom\Data\FilterObject;
@@ -27,10 +29,10 @@ test('can properly format the query parameters', function () {
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchUsersRequest
             && $request->query() instanceof ArrayStore
-            && $request->query()->all() == [
-                'include' => 'foo',
-                'page' => 3,
+            && $request->query()->all() === [
                 'limit' => 100,
+                'page' => 3,
+                'include' => 'foo',
             ];
     });
 });
@@ -49,7 +51,7 @@ test('can properly format a search value argument', function () {
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchUsersRequest
             && $request->body() instanceof JsonBodyRepository
-            && $request->body()->all() == [
+            && $request->body()->all() === [
                 'search' => [
                     'value' => 'foo',
                 ],
@@ -71,7 +73,7 @@ test('can properly format a single sort argument', function () {
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchUsersRequest
             && $request->body() instanceof JsonBodyRepository
-            && $request->body()->all() == [
+            && $request->body()->all() === [
                 'sort' => [
                     ['field' => 'foo', 'direction' => 'asc'],
                 ],
@@ -93,7 +95,7 @@ test('can properly format an array of sort arguments', function () {
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchUsersRequest
             && $request->body() instanceof JsonBodyRepository
-            && $request->body()->all() == [
+            && $request->body()->all() === [
                 'sort' => [
                     ['field' => 'foo', 'direction' => 'asc'],
                     ['field' => 'bar', 'direction' => 'desc'],
@@ -116,7 +118,7 @@ test('can properly format a single filter argument', function () {
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchUsersRequest
             && $request->body() instanceof JsonBodyRepository
-            && $request->body()->all() == [
+            && $request->body()->all() === [
                 'filters' => [
                     ['field' => 'foo', 'operator' => '=', 'value' => 'bar', 'type' => 'or'],
                 ],
@@ -138,7 +140,7 @@ test('can properly format an array of filter arguments', function () {
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchUsersRequest
             && $request->body() instanceof JsonBodyRepository
-            && $request->body()->all() == [
+            && $request->body()->all() === [
                 'filters' => [
                     ['field' => 'foo', 'operator' => '=', 'value' => 'bar', 'type' => 'or'],
                     ['field' => 'bar', 'operator' => '=', 'value' => 'foo', 'type' => 'and'],
@@ -161,7 +163,7 @@ test('can properly format a single scope argument', function () {
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchUsersRequest
             && $request->body() instanceof JsonBodyRepository
-            && $request->body()->all() == [
+            && $request->body()->all() === [
                 'scopes' => [
                     ['name' => 'foo', 'parameters' => ['bar']],
                 ],
@@ -183,7 +185,7 @@ test('can properly format an array of scope arguments', function () {
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchUsersRequest
             && $request->body() instanceof JsonBodyRepository
-            && $request->body()->all() == [
+            && $request->body()->all() === [
                 'scopes' => [
                     ['name' => 'foo'],
                     ['name' => 'bar'],

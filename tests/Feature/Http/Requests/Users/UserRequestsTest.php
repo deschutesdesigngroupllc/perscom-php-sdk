@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Users\CreateUserRequest;
 use Perscom\Http\Requests\Users\DeleteUserRequest;
 use Perscom\Http\Requests\Users\GetUserRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Users\GetUsersRequest;
 use Perscom\Http\Requests\Users\SearchUsersRequest;
 use Perscom\Http\Requests\Users\UpdateUserRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

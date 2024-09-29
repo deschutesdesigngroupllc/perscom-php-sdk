@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Statuses\CreateStatusRequest;
 use Perscom\Http\Requests\Statuses\DeleteStatusRequest;
 use Perscom\Http\Requests\Statuses\GetStatusesRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Statuses\GetStatusRequest;
 use Perscom\Http\Requests\Statuses\SearchStatusesRequest;
 use Perscom\Http\Requests\Statuses\UpdateStatusRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {
