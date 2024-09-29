@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Users\CombatRecords\CreateUserCombatRecordRequest;
 use Perscom\Http\Requests\Users\CombatRecords\DeleteUserCombatRecordRequest;
 use Perscom\Http\Requests\Users\CombatRecords\GetUserCombatRecordRequest;
 use Perscom\Http\Requests\Users\CombatRecords\GetUserCombatRecordsRequest;
 use Perscom\Http\Requests\Users\CombatRecords\UpdateUserCombatRecordRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

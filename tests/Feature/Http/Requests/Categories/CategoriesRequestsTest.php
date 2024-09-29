@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Categories\CreateCategoryRequest;
 use Perscom\Http\Requests\Categories\DeleteCategoryRequest;
-use Perscom\Http\Requests\Categories\GetCategoryRequest;
 use Perscom\Http\Requests\Categories\GetCategoriesRequest;
+use Perscom\Http\Requests\Categories\GetCategoryRequest;
 use Perscom\Http\Requests\Categories\SearchCategoriesRequest;
 use Perscom\Http\Requests\Categories\UpdateCategoryRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

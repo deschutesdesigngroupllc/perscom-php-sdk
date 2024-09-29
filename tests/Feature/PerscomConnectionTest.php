@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\PerscomConnection;
 
 test('it will resolve the default base url', function () {

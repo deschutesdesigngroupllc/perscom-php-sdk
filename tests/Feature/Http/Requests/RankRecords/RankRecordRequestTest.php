@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\RankRecords\CreateRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\DeleteRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\GetRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\GetRankRecordsRequest;
 use Perscom\Http\Requests\RankRecords\UpdateRankRecordRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

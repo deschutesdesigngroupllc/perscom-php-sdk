@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Qualifications\CreateQualificationRequest;
 use Perscom\Http\Requests\Qualifications\DeleteQualificationRequest;
 use Perscom\Http\Requests\Qualifications\GetQualificationRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Qualifications\GetQualificationsRequest;
 use Perscom\Http\Requests\Qualifications\SearchQualificationsRequest;
 use Perscom\Http\Requests\Qualifications\UpdateQualificationRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

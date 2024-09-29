@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Events\CreateEventRequest;
 use Perscom\Http\Requests\Events\DeleteEventRequest;
 use Perscom\Http\Requests\Events\GetEventRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Events\GetEventsRequest;
 use Perscom\Http\Requests\Events\SearchEventsRequest;
 use Perscom\Http\Requests\Events\UpdateEventRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Exceptions\AuthenticationException;
 use Perscom\Exceptions\NotFoundHttpException;
 use Perscom\Exceptions\TenantCouldNotBeIdentifiedException;
@@ -8,8 +10,8 @@ use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordsReques
 use Perscom\Http\Requests\Users\GetUserRequest;
 use Perscom\Http\Requests\Users\GetUsersRequest;
 use Perscom\PerscomConnection;
-use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
 use Saloon\Config;
+use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Request;
@@ -102,7 +104,7 @@ test('it will send the proper parameters in a get all request', function () {
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof GetUsersRequest
             && $request->query() instanceof ArrayStore
-            && $request->query()->all() == [
+            && $request->query()->all() === [
                 'limit' => 2,
                 'page' => 5,
                 'include' => 'rank',
@@ -125,7 +127,7 @@ test('it will send the proper parameters in a get request', function () {
         return $request instanceof GetUserRequest
             && $request->id === 1
             && $request->query() instanceof ArrayStore
-            && $request->query()->all() == [
+            && $request->query()->all() === [
                 'include' => 'rank',
             ];
     });
@@ -146,7 +148,7 @@ test('it will send the proper parameters in a relational get all request', funct
         return $request instanceof GetUserAssignmentRecordsRequest
             && $request->relationId === 1
             && $request->query() instanceof ArrayStore
-            && $request->query()->all() == [
+            && $request->query()->all() === [
                 'limit' => 2,
                 'page' => 5,
                 'include' => 'rank',
@@ -170,7 +172,7 @@ test('it will send the proper parameters in a relational get request', function 
             && $request->relationId === 1
             && $request->resourceId === 1
             && $request->query() instanceof ArrayStore
-            && $request->query()->all() == [
+            && $request->query()->all() === [
                 'include' => 'rank',
             ];
     });

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Images\CreateImageRequest;
 use Perscom\Http\Requests\Images\DeleteImageRequest;
 use Perscom\Http\Requests\Images\GetImageRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Images\GetImagesRequest;
 use Perscom\Http\Requests\Images\SearchImagesRequest;
 use Perscom\Http\Requests\Images\UpdateImageRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\ServiceRecords\CreateServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\DeleteServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\GetServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\GetServiceRecordsRequest;
 use Perscom\Http\Requests\ServiceRecords\UpdateServiceRecordRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

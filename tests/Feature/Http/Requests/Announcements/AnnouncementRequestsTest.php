@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Announcements\CreateAnnouncementRequest;
 use Perscom\Http\Requests\Announcements\DeleteAnnouncementRequest;
 use Perscom\Http\Requests\Announcements\GetAnnouncementRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Announcements\GetAnnouncementsRequest;
 use Perscom\Http\Requests\Announcements\SearchAnnouncementsRequest;
 use Perscom\Http\Requests\Announcements\UpdateAnnouncementRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

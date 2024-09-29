@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Ranks\CreateRankRequest;
 use Perscom\Http\Requests\Ranks\DeleteRankRequest;
 use Perscom\Http\Requests\Ranks\GetRankRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Ranks\GetRanksRequest;
 use Perscom\Http\Requests\Ranks\SearchRanksRequest;
 use Perscom\Http\Requests\Ranks\UpdateRankRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Users\AwardRecords\CreateUserAwardRecordRequest;
 use Perscom\Http\Requests\Users\AwardRecords\DeleteUserAwardRecordRequest;
 use Perscom\Http\Requests\Users\AwardRecords\GetUserAwardRecordRequest;
 use Perscom\Http\Requests\Users\AwardRecords\GetUserAwardRecordsRequest;
 use Perscom\Http\Requests\Users\AwardRecords\UpdateUserAwardRecordRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {

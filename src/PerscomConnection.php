@@ -27,6 +27,7 @@ use Perscom\Http\Resources\QualificationRecordsResource;
 use Perscom\Http\Resources\QualificationResource;
 use Perscom\Http\Resources\RankRecordsResource;
 use Perscom\Http\Resources\RankResource;
+use Perscom\Http\Resources\RosterResource;
 use Perscom\Http\Resources\ServiceRecordsResource;
 use Perscom\Http\Resources\SettingsResource;
 use Perscom\Http\Resources\SpecialtyResource;
@@ -167,6 +168,11 @@ class PerscomConnection extends Connector
     public function ranks(): RankResource
     {
         return new RankResource($this);
+    }
+
+    public function roster(): RosterResource
+    {
+        return new RosterResource($this);
     }
 
     public function serviceRecords(): ServiceRecordsResource

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Perscom\Http\Requests\Attachments\CreateAttachmentRequest;
 use Perscom\Http\Requests\Attachments\DeleteAttachmentRequest;
 use Perscom\Http\Requests\Attachments\GetAttachmentRequest;
@@ -7,10 +9,10 @@ use Perscom\Http\Requests\Attachments\GetAttachmentsRequest;
 use Perscom\Http\Requests\Attachments\SearchAttachmentsRequest;
 use Perscom\Http\Requests\Attachments\UpdateAttachmentRequest;
 use Perscom\PerscomConnection;
-use Saloon\Http\Request;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\Request;
 use Saloon\Http\Response;
 
 beforeEach(function () {
