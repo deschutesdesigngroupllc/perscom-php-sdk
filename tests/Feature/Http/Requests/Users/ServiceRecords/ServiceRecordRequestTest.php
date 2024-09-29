@@ -20,19 +20,19 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetUserServiceRecordsRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
         GetUserServiceRecordRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         CreateUserServiceRecordRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         UpdateUserServiceRecordRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         DeleteUserServiceRecordRequest::class => MockResponse::make([], 201),
     ]);
 

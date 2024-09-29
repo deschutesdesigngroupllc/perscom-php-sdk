@@ -24,19 +24,19 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetCombatRecordsRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
         GetCombatRecordRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         CreateCombatRecordRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         UpdateCombatRecordRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         DeleteCombatRecordRequest::class => MockResponse::make([], 201),
         BatchCreateCombatRecordRequest::class => MockResponse::make([
             'data' => [

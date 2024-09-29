@@ -12,7 +12,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        HealthRequest::class => MockResponse::make(status: 200),
+        HealthRequest::class => MockResponse::make(),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');

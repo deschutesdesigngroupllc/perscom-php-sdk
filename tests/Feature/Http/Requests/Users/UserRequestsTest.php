@@ -25,7 +25,7 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
         SearchUsersRequest::class => MockResponse::make([
             'data' => [
                 [
@@ -34,19 +34,19 @@ beforeEach(function () {
                     'status' => null,
                 ],
             ],
-        ], 200),
+        ]),
         GetUserRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         CreateUserRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         UpdateUserRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         DeleteUserRequest::class => MockResponse::make([], 201),
         BatchCreateUserRequest::class => MockResponse::make([
             'data' => [
