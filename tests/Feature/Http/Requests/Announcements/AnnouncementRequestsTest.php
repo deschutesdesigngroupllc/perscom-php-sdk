@@ -82,7 +82,7 @@ test('it can search announcements', function () {
     $this->mockClient->assertSent(SearchAnnouncementsRequest::class);
 });
 
-test('it can get a announcement', function () {
+test('it can get an announcement', function () {
     $response = $this->connector->announcements()->get(1);
 
     $data = $response->json();
@@ -100,7 +100,7 @@ test('it can get a announcement', function () {
     });
 });
 
-test('it can create a announcement', function () {
+test('it can create an announcement', function () {
     $response = $this->connector->announcements()->create([
         'foo' => 'bar',
     ]);
@@ -120,7 +120,7 @@ test('it can create a announcement', function () {
     });
 });
 
-test('it can update a announcement', function () {
+test('it can update an announcement', function () {
     $response = $this->connector->announcements()->update(1, [
         'foo' => 'bar',
     ]);
@@ -141,7 +141,7 @@ test('it can update a announcement', function () {
     });
 });
 
-test('it can delete a announcement', function () {
+test('it can delete an announcement', function () {
     $response = $this->connector->announcements()->delete(1);
 
     $data = $response->json();

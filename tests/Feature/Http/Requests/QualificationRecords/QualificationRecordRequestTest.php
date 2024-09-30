@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\QualificationRecords\BatchCreateQualificationRecordRequest;
+use Perscom\Http\Requests\QualificationRecords\BatchDeleteQualificationRecordRequest;
+use Perscom\Http\Requests\QualificationRecords\BatchUpdateQualificationRecordRequest;
 use Perscom\Http\Requests\QualificationRecords\CreateQualificationRecordRequest;
 use Perscom\Http\Requests\QualificationRecords\DeleteQualificationRecordRequest;
 use Perscom\Http\Requests\QualificationRecords\GetQualificationRecordRequest;
@@ -34,6 +38,24 @@ beforeEach(function () {
             'name' => 'foo',
         ], 200),
         DeleteQualificationRecordRequest::class => MockResponse::make([], 201),
+        BatchCreateQualificationRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateQualificationRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteQualificationRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -125,5 +147,66 @@ test('it can delete a qualification record', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteQualificationRecordRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create qualification records', function () {
+    $response = $this->connector->qualificationRecords()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateQualificationRecordRequest;
+    });
+});
+
+test('it can batch update qualification records', function () {
+    $response = $this->connector->qualificationRecords()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateQualificationRecordRequest;
+    });
+});
+
+test('it can batch delete qualification records', function () {
+    $response = $this->connector->qualificationRecords()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteQualificationRecordRequest;
     });
 });

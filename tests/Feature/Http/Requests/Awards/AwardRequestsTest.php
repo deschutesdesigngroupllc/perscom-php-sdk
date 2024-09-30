@@ -82,7 +82,7 @@ test('it can search awards', function () {
     $this->mockClient->assertSent(SearchAwardsRequest::class);
 });
 
-test('it can get a award', function () {
+test('it can get an award', function () {
     $response = $this->connector->awards()->get(1);
 
     $data = $response->json();
@@ -100,7 +100,7 @@ test('it can get a award', function () {
     });
 });
 
-test('it can create a award', function () {
+test('it can create an award', function () {
     $response = $this->connector->awards()->create([
         'foo' => 'bar',
     ]);
@@ -120,7 +120,7 @@ test('it can create a award', function () {
     });
 });
 
-test('it can update a award', function () {
+test('it can update an award', function () {
     $response = $this->connector->awards()->update(1, [
         'foo' => 'bar',
     ]);
@@ -141,7 +141,7 @@ test('it can update a award', function () {
     });
 });
 
-test('it can delete a award', function () {
+test('it can delete an award', function () {
     $response = $this->connector->awards()->delete(1);
 
     $data = $response->json();

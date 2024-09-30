@@ -6,8 +6,12 @@ namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
 use Perscom\Data\FilterObject;
+use Perscom\Data\ResourceObject;
 use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
+use Perscom\Http\Requests\Users\BatchCreateUserRequest;
+use Perscom\Http\Requests\Users\BatchDeleteUserRequest;
+use Perscom\Http\Requests\Users\BatchUpdateUserRequest;
 use Perscom\Http\Requests\Users\CreateUserRequest;
 use Perscom\Http\Requests\Users\DeleteUserRequest;
 use Perscom\Http\Requests\Users\GetUserRequest;
@@ -50,9 +54,9 @@ class UserResource extends Resource implements ResourceContract
      */
     public function search(
         ?string $value = null,
-        mixed $sort = null,
-        mixed $filter = null,
-        mixed $scope = null,
+        SortObject|array|null $sort = null,
+        FilterObject|array|null $filter = null,
+        ScopeObject|array|null $scope = null,
         string|array $include = [],
         int $page = 1,
         int $limit = 20,
@@ -96,6 +100,36 @@ class UserResource extends Resource implements ResourceContract
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteUserRequest($id));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchCreate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchCreateUserRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchUpdate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchUpdateUserRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchDelete(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchDeleteUserRequest($data));
     }
 
     public function profile_photo(int $id): ProfilePhotoResource

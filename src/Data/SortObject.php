@@ -9,10 +9,13 @@ use Illuminate\Contracts\Support\Arrayable;
 final class SortObject implements Arrayable
 {
     /**
+     * @param  string  $field  The field to sort by.
      * @param  string  $direction  The supported directions are 'asc' and 'desc'.
      */
-    public function __construct(public string $field, public string $direction = 'asc')
-    {
+    public function __construct(
+        public string $field,
+        public string $direction = 'asc'
+    ) {
         //
     }
 

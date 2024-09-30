@@ -26,9 +26,9 @@ abstract class AbstractSearchRequest extends Request implements HasBody
      */
     public function __construct(
         public ?string $value = null,
-        public mixed $sort = null,
-        public mixed $filter = null,
-        public mixed $scope = null,
+        public SortObject|array|null $sort = null,
+        public FilterObject|array|null $filter = null,
+        public ScopeObject|array|null $scope = null,
         public string|array $include = [],
         public int $page = 1,
         public int $limit = 20,

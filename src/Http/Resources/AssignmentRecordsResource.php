@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\AssignmentRecords\BatchCreateAssignmentRecordRequest;
+use Perscom\Http\Requests\AssignmentRecords\BatchDeleteAssignmentRecordRequest;
+use Perscom\Http\Requests\AssignmentRecords\BatchUpdateAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\CreateAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\DeleteAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\GetAssignmentRecordRequest;
@@ -68,5 +72,35 @@ class AssignmentRecordsResource extends Resource implements ResourceContract
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteAssignmentRecordRequest($id));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchCreate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchCreateAssignmentRecordRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchUpdate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchUpdateAssignmentRecordRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchDelete(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchDeleteAssignmentRecordRequest($data));
     }
 }
