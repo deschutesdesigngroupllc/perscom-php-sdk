@@ -16,6 +16,6 @@ class HealthResource extends Resource
      */
     public function get(): Response
     {
-        return $this->connector->send(new HealthRequest());
+        return $this->connector->send(new HealthRequest);
     }
 }
