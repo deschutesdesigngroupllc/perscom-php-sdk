@@ -8,8 +8,14 @@ use Illuminate\Contracts\Support\Arrayable;
 
 final class ScopeObject implements Arrayable
 {
-    public function __construct(public string $name, public array $parameters = [])
-    {
+    /**
+     * @param  string  $name  The name of the scope to use.
+     * @param  array  $parameters  Parameters if required by the scope to operate.
+     */
+    public function __construct(
+        public string $name,
+        public array $parameters = []
+    ) {
         //
     }
 

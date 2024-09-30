@@ -82,7 +82,7 @@ test('it can search attachments', function () {
     $this->mockClient->assertSent(SearchAttachmentsRequest::class);
 });
 
-test('it can get a attachment', function () {
+test('it can get an attachment', function () {
     $response = $this->connector->attachments()->get(1);
 
     $data = $response->json();
@@ -100,7 +100,7 @@ test('it can get a attachment', function () {
     });
 });
 
-test('it can create a attachment', function () {
+test('it can create an attachment', function () {
     $response = $this->connector->attachments()->create([
         'foo' => 'bar',
     ]);
@@ -120,7 +120,7 @@ test('it can create a attachment', function () {
     });
 });
 
-test('it can update a attachment', function () {
+test('it can update an attachment', function () {
     $response = $this->connector->attachments()->update(1, [
         'foo' => 'bar',
     ]);
@@ -141,7 +141,7 @@ test('it can update a attachment', function () {
     });
 });
 
-test('it can delete a attachment', function () {
+test('it can delete an attachment', function () {
     $response = $this->connector->attachments()->delete(1);
 
     $data = $response->json();

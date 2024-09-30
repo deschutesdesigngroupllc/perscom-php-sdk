@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\ServiceRecords\BatchCreateServiceRecordRequest;
+use Perscom\Http\Requests\ServiceRecords\BatchDeleteServiceRecordRequest;
+use Perscom\Http\Requests\ServiceRecords\BatchUpdateServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\CreateServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\DeleteServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\GetServiceRecordRequest;
@@ -34,6 +38,24 @@ beforeEach(function () {
             'name' => 'foo',
         ], 200),
         DeleteServiceRecordRequest::class => MockResponse::make([], 201),
+        BatchCreateServiceRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateServiceRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteServiceRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -125,5 +147,66 @@ test('it can delete a service record', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteServiceRecordRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create service records', function () {
+    $response = $this->connector->serviceRecords()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateServiceRecordRequest;
+    });
+});
+
+test('it can batch update service records', function () {
+    $response = $this->connector->serviceRecords()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateServiceRecordRequest;
+    });
+});
+
+test('it can batch delete service records', function () {
+    $response = $this->connector->serviceRecords()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteServiceRecordRequest;
     });
 });

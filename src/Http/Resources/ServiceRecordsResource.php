@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\ServiceRecords\BatchCreateServiceRecordRequest;
+use Perscom\Http\Requests\ServiceRecords\BatchDeleteServiceRecordRequest;
+use Perscom\Http\Requests\ServiceRecords\BatchUpdateServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\CreateServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\DeleteServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\GetServiceRecordRequest;
@@ -68,5 +72,35 @@ class ServiceRecordsResource extends Resource implements ResourceContract
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteServiceRecordRequest($id));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchCreate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchCreateServiceRecordRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchUpdate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchUpdateServiceRecordRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchDelete(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchDeleteServiceRecordRequest($data));
     }
 }

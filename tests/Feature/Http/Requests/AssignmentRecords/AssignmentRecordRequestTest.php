@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\AssignmentRecords\BatchCreateAssignmentRecordRequest;
+use Perscom\Http\Requests\AssignmentRecords\BatchDeleteAssignmentRecordRequest;
+use Perscom\Http\Requests\AssignmentRecords\BatchUpdateAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\CreateAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\DeleteAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\GetAssignmentRecordRequest;
@@ -34,6 +38,24 @@ beforeEach(function () {
             'name' => 'foo',
         ], 200),
         DeleteAssignmentRecordRequest::class => MockResponse::make([], 201),
+        BatchCreateAssignmentRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateAssignmentRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteAssignmentRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -125,5 +147,66 @@ test('it can delete an assignment record', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteAssignmentRecordRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create assignment records', function () {
+    $response = $this->connector->assignmentRecords()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateAssignmentRecordRequest;
+    });
+});
+
+test('it can batch update assignment records', function () {
+    $response = $this->connector->assignmentRecords()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateAssignmentRecordRequest;
+    });
+});
+
+test('it can batch delete assignment records', function () {
+    $response = $this->connector->assignmentRecords()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteAssignmentRecordRequest;
     });
 });

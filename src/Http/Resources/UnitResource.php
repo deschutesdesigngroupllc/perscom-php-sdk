@@ -40,9 +40,9 @@ class UnitResource extends Resource implements ResourceContract
      */
     public function search(
         ?string $value = null,
-        mixed $sort = null,
-        mixed $filter = null,
-        mixed $scope = null,
+        SortObject|array|null $sort = null,
+        FilterObject|array|null $filter = null,
+        ScopeObject|array|null $scope = null,
         string|array $include = [],
         int $page = 1,
         int $limit = 20,

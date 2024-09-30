@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Users\BatchCreateUserRequest;
+use Perscom\Http\Requests\Users\BatchDeleteUserRequest;
+use Perscom\Http\Requests\Users\BatchUpdateUserRequest;
 use Perscom\Http\Requests\Users\CreateUserRequest;
 use Perscom\Http\Requests\Users\DeleteUserRequest;
 use Perscom\Http\Requests\Users\GetUserRequest;
@@ -44,6 +48,24 @@ beforeEach(function () {
             'name' => 'foo',
         ], 200),
         DeleteUserRequest::class => MockResponse::make([], 201),
+        BatchCreateUserRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateUserRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteUserRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -155,5 +177,66 @@ test('it can delete a user', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteUserRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create users', function () {
+    $response = $this->connector->users()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateUserRequest;
+    });
+});
+
+test('it can batch update users', function () {
+    $response = $this->connector->users()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateUserRequest;
+    });
+});
+
+test('it can batch delete users', function () {
+    $response = $this->connector->users()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteUserRequest;
     });
 });

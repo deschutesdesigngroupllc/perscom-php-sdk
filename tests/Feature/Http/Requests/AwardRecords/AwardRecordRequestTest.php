@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\AwardRecords\BatchCreateAwardRecordRequest;
+use Perscom\Http\Requests\AwardRecords\BatchDeleteAwardRecordRequest;
+use Perscom\Http\Requests\AwardRecords\BatchUpdateAwardRecordRequest;
 use Perscom\Http\Requests\AwardRecords\CreateAwardRecordRequest;
 use Perscom\Http\Requests\AwardRecords\DeleteAwardRecordRequest;
 use Perscom\Http\Requests\AwardRecords\GetAwardRecordRequest;
@@ -34,6 +38,24 @@ beforeEach(function () {
             'name' => 'foo',
         ], 200),
         DeleteAwardRecordRequest::class => MockResponse::make([], 201),
+        BatchCreateAwardRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateAwardRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteAwardRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -125,5 +147,66 @@ test('it can delete an award record', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteAwardRecordRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create award records', function () {
+    $response = $this->connector->awardRecords()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateAwardRecordRequest;
+    });
+});
+
+test('it can batch update award records', function () {
+    $response = $this->connector->awardRecords()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateAwardRecordRequest;
+    });
+});
+
+test('it can batch delete award records', function () {
+    $response = $this->connector->awardRecords()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteAwardRecordRequest;
     });
 });

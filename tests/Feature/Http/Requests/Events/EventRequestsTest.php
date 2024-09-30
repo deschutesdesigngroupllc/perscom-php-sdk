@@ -82,7 +82,7 @@ test('it can search events', function () {
     $this->mockClient->assertSent(SearchEventsRequest::class);
 });
 
-test('it can get a event', function () {
+test('it can get an event', function () {
     $response = $this->connector->events()->get(1);
 
     $data = $response->json();
@@ -100,7 +100,7 @@ test('it can get a event', function () {
     });
 });
 
-test('it can create a event', function () {
+test('it can create an event', function () {
     $response = $this->connector->events()->create([
         'foo' => 'bar',
     ]);
@@ -120,7 +120,7 @@ test('it can create a event', function () {
     });
 });
 
-test('it can update a event', function () {
+test('it can update an event', function () {
     $response = $this->connector->events()->update(1, [
         'foo' => 'bar',
     ]);
@@ -141,7 +141,7 @@ test('it can update a event', function () {
     });
 });
 
-test('it can delete a event', function () {
+test('it can delete an event', function () {
     $response = $this->connector->events()->delete(1);
 
     $data = $response->json();

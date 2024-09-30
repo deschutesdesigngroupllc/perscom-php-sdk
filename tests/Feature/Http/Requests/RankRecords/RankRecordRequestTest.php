@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\RankRecords\BatchCreateRankRecordRequest;
+use Perscom\Http\Requests\RankRecords\BatchDeleteRankRecordRequest;
+use Perscom\Http\Requests\RankRecords\BatchUpdateRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\CreateRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\DeleteRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\GetRankRecordRequest;
@@ -34,6 +38,24 @@ beforeEach(function () {
             'name' => 'foo',
         ], 200),
         DeleteRankRecordRequest::class => MockResponse::make([], 201),
+        BatchCreateRankRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateRankRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteRankRecordRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -125,5 +147,66 @@ test('it can delete a rank record', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteRankRecordRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create rank records', function () {
+    $response = $this->connector->rankRecords()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateRankRecordRequest;
+    });
+});
+
+test('it can batch update rank records', function () {
+    $response = $this->connector->rankRecords()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateRankRecordRequest;
+    });
+});
+
+test('it can batch delete rank records', function () {
+    $response = $this->connector->rankRecords()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteRankRecordRequest;
     });
 });
