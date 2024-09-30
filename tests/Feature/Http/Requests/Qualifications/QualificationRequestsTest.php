@@ -21,7 +21,7 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetQualificationsRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
         SearchQualificationsRequest::class => MockResponse::make([
             'data' => [
                 [
@@ -29,19 +29,19 @@ beforeEach(function () {
                     'name' => 'foo',
                 ],
             ],
-        ], 200),
+        ]),
         GetQualificationRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         CreateQualificationRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         UpdateQualificationRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         DeleteQualificationRequest::class => MockResponse::make([], 201),
     ]);
 

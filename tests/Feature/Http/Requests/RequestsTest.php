@@ -94,7 +94,7 @@ test('it will send the proper parameters in a get all request', function () {
     $mockClient = new MockClient([
         GetUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -116,7 +116,7 @@ test('it will send the proper parameters in a get request', function () {
     $mockClient = new MockClient([
         GetUserRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -137,7 +137,7 @@ test('it will send the proper parameters in a relational get all request', funct
     $mockClient = new MockClient([
         GetUserAssignmentRecordsRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -160,7 +160,7 @@ test('it will send the proper parameters in a relational get request', function 
     $mockClient = new MockClient([
         GetUserAssignmentRecordRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');

@@ -21,7 +21,7 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetImagesRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
         SearchImagesRequest::class => MockResponse::make([
             'data' => [
                 [
@@ -29,19 +29,19 @@ beforeEach(function () {
                     'name' => 'foo',
                 ],
             ],
-        ], 200),
+        ]),
         GetImageRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         CreateImageRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         UpdateImageRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         DeleteImageRequest::class => MockResponse::make([], 201),
     ]);
 

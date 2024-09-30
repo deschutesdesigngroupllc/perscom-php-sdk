@@ -19,7 +19,7 @@ test('can properly format the query parameters', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -41,7 +41,7 @@ test('can properly format a search value argument', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -63,7 +63,7 @@ test('can properly format a single sort argument', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -85,7 +85,7 @@ test('can properly format an array of sort arguments', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -108,7 +108,7 @@ test('can properly format a single filter argument', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -130,7 +130,7 @@ test('can properly format an array of filter arguments', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -153,7 +153,7 @@ test('can properly format a single scope argument', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -175,7 +175,7 @@ test('can properly format an array of scope arguments', function () {
     $mockClient = new MockClient([
         SearchUsersRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');

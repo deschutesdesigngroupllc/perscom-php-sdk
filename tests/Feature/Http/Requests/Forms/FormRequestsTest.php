@@ -21,7 +21,7 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetFormsRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
         SearchFormsRequest::class => MockResponse::make([
             'data' => [
                 [
@@ -29,19 +29,19 @@ beforeEach(function () {
                     'name' => 'foo',
                 ],
             ],
-        ], 200),
+        ]),
         GetFormRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         CreateFormRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         UpdateFormRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         DeleteFormRequest::class => MockResponse::make([], 201),
     ]);
 

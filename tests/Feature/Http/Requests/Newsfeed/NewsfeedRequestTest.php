@@ -12,7 +12,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetNewsfeedRequest::class => MockResponse::make(status: 200),
+        GetNewsfeedRequest::class => MockResponse::make(),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');

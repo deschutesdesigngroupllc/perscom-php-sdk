@@ -21,7 +21,7 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetAttachmentsRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
         SearchAttachmentsRequest::class => MockResponse::make([
             'data' => [
                 [
@@ -29,19 +29,19 @@ beforeEach(function () {
                     'name' => 'foo',
                 ],
             ],
-        ], 200),
+        ]),
         GetAttachmentRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         CreateAttachmentRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         UpdateAttachmentRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         DeleteAttachmentRequest::class => MockResponse::make([], 201),
     ]);
 

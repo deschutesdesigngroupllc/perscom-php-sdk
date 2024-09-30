@@ -21,7 +21,7 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetSpecialtiesRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
         SearchSpecialtiesRequest::class => MockResponse::make([
             'data' => [
                 [
@@ -29,19 +29,19 @@ beforeEach(function () {
                     'name' => 'foo',
                 ],
             ],
-        ], 200),
+        ]),
         GetSpecialtyRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         CreateSpecialtyRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         UpdateSpecialtyRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         DeleteSpecialtyRequest::class => MockResponse::make([], 201),
     ]);
 

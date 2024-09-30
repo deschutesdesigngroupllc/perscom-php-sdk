@@ -24,19 +24,19 @@ beforeEach(function () {
     $this->mockClient = new MockClient([
         GetQualificationRecordsRequest::class => MockResponse::make([
             'name' => 'foo',
-        ], 200),
+        ]),
         GetQualificationRecordRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         CreateQualificationRecordRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         UpdateQualificationRecordRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
-        ], 200),
+        ]),
         DeleteQualificationRecordRequest::class => MockResponse::make([], 201),
         BatchCreateQualificationRecordRequest::class => MockResponse::make([
             'data' => [
