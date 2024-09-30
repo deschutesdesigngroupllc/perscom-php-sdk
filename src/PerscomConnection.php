@@ -263,7 +263,7 @@ class PerscomConnection extends Connector
     protected function resolveLimits(): array
     {
         return [
-            Limit::allow(60)->everyMinute(),
+            Limit::allow(1000)->everyMinute(),
         ];
     }
 
