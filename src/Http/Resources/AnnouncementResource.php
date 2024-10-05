@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
+use Perscom\Contracts\Searchable;
 use Perscom\Data\FilterObject;
 use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
@@ -18,7 +19,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
-class AnnouncementResource extends Resource implements ResourceContract
+class AnnouncementResource extends Resource implements ResourceContract, Searchable
 {
     /**
      * @param  string|array<string>  $include

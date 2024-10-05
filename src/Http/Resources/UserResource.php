@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Resources;
 
+use Perscom\Contracts\Batchable;
 use Perscom\Contracts\ResourceContract;
+use Perscom\Contracts\Searchable;
 use Perscom\Data\FilterObject;
 use Perscom\Data\ResourceObject;
 use Perscom\Data\ScopeObject;
@@ -32,7 +34,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
-class UserResource extends Resource implements ResourceContract
+class UserResource extends Resource implements Batchable, ResourceContract, Searchable
 {
     /**
      * @param  string|array<string>  $include
