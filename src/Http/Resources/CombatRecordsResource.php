@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Resources;
 
+use Perscom\Contracts\Batchable;
 use Perscom\Contracts\ResourceContract;
 use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\CombatRecords\BatchCreateCombatRecordRequest;
@@ -19,7 +20,7 @@ use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Connector;
 use Saloon\Http\Response;
 
-class CombatRecordsResource extends Resource implements ResourceContract
+class CombatRecordsResource extends Resource implements Batchable, ResourceContract
 {
     public function __construct(protected Connector $connector)
     {
