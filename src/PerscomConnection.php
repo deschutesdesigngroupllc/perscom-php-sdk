@@ -61,9 +61,7 @@ class PerscomConnection extends Connector
     public function __construct(
         protected string $apiKey,
         protected ?string $perscomId = null,
-        protected ?string $baseUrl = null)
-    {
-    }
+        protected ?string $baseUrl = null) {}
 
     public function resolveBaseUrl(): string
     {
@@ -218,15 +216,15 @@ class PerscomConnection extends Connector
     public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
     {
         if ($response->json('error.type') === 'TenantCouldNotBeIdentified') {
-            return new TenantCouldNotBeIdentifiedException();
+            return new TenantCouldNotBeIdentifiedException;
         }
 
         if ($response->json('error.type') === 'AuthenticationException') {
-            return new AuthenticationException();
+            return new AuthenticationException;
         }
 
         if ($response->json('error.type') === 'NotFoundHttpException') {
-            return new NotFoundHttpException();
+            return new NotFoundHttpException;
         }
 
         return parent::getRequestException($response, $senderException);
@@ -269,6 +267,6 @@ class PerscomConnection extends Connector
 
     protected function resolveRateLimitStore(): RateLimitStore
     {
-        return new MemoryStore();
+        return new MemoryStore;
     }
 }
