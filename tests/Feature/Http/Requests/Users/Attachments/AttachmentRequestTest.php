@@ -9,10 +9,12 @@ use Perscom\Http\Requests\Users\Attachments\GetUserAttachmentsRequest;
 use Perscom\Http\Requests\Users\Attachments\UpdateUserAttachmentRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
+use Saloon\Data\MultipartValue;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use Saloon\Contracts\Body\HasBody;
 
 beforeEach(function () {
     Config::preventStrayRequests();
@@ -80,8 +82,13 @@ test('it can create a users attachment', function () {
 
     $data = $response->json();
 
+    /** @var HasBody $request */
+    $request = $response->getRequest();
+
     expect($response->status())->toEqual(200)
         ->and($response)->toBeInstanceOf(Response::class)
+        ->and($request->body()->all())->toContainOnlyInstancesOf(MultipartValue::class)
+        ->and($request->body()->all())->toBeArray()
         ->and($data)->toEqual([
             'name' => 'foo',
             'id' => 1,

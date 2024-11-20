@@ -12,6 +12,7 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use Saloon\Contracts\Body\HasBody;
 
 beforeEach(function () {
     Config::preventStrayRequests();
@@ -29,16 +30,20 @@ beforeEach(function () {
 
 test('it will throw an exception if the file does not exist', function () {
     $this->connector->users()->cover_photo(1)->create('foobar');
-})->expectException(SaloonException::class);
+})->throws(SaloonException::class);
 
 test('it can get set the users profile_photo', function () {
     $response = $this->connector->users()->profile_photo(1)->create(dirname(__FILE__).'/image.png');
 
     $data = $response->json();
 
+    /** @var HasBody $request */
+    $request = $response->getRequest();
+
     expect($response->status())->toEqual(200)
         ->and($response)->toBeInstanceOf(Response::class)
-        ->and($response->getRequest()->query()->all())->toContainOnlyInstancesOf(MultipartValue::class)
+        ->and($request->body()->all())->toContainOnlyInstancesOf(MultipartValue::class)
+        ->and($request->body()->all())->toBeArray()
         ->and($data)->toEqual([
             'profile_photo' => 'foo',
         ]);

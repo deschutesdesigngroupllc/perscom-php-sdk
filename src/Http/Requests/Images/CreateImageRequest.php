@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests\Images;
 
+use Illuminate\Support\Collection;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Enums\Method;
@@ -34,7 +35,10 @@ class CreateImageRequest extends Request implements HasBody
      */
     protected function defaultBody(): array
     {
-        return collect($this->data)->map(fn ($value, $key) => new MultipartValue(
+        /** @var Collection<string, mixed> $data */
+        $data = collect($this->data);
+
+        return $data->map(fn (mixed $value, string $key): MultipartValue => new MultipartValue(
             name: $key,
             value: $value
         ))->toArray();
