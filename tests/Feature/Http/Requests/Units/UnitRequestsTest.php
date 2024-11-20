@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Units\BatchCreateUnitRequest;
+use Perscom\Http\Requests\Units\BatchDeleteUnitRequest;
+use Perscom\Http\Requests\Units\BatchUpdateUnitRequest;
 use Perscom\Http\Requests\Units\CreateUnitRequest;
 use Perscom\Http\Requests\Units\DeleteUnitRequest;
 use Perscom\Http\Requests\Units\GetUnitRequest;
@@ -43,6 +47,24 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteUnitRequest::class => MockResponse::make([], 201),
+        BatchCreateUnitRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateUnitRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteUnitRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -153,5 +175,66 @@ test('it can delete a unit', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteUnitRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create units', function () {
+    $response = $this->connector->units()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateUnitRequest;
+    });
+});
+
+test('it can batch update units', function () {
+    $response = $this->connector->units()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateUnitRequest;
+    });
+});
+
+test('it can batch delete units', function () {
+    $response = $this->connector->units()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteUnitRequest;
     });
 });
