@@ -15,12 +15,14 @@ use Perscom\Http\Resources\AwardResource;
 use Perscom\Http\Resources\CalendarResource;
 use Perscom\Http\Resources\CategoriesResource;
 use Perscom\Http\Resources\CombatRecordsResource;
+use Perscom\Http\Resources\CommentResource;
 use Perscom\Http\Resources\DocumentResource;
 use Perscom\Http\Resources\EventResource;
 use Perscom\Http\Resources\FormResource;
 use Perscom\Http\Resources\GroupResource;
 use Perscom\Http\Resources\HealthResource;
 use Perscom\Http\Resources\ImageResource;
+use Perscom\Http\Resources\MessageResource;
 use Perscom\Http\Resources\NewsfeedResource;
 use Perscom\Http\Resources\PositionResource;
 use Perscom\Http\Resources\QualificationRecordsResource;
@@ -108,6 +110,11 @@ class PerscomConnection extends Connector
         return new CombatRecordsResource($this);
     }
 
+    public function comments(): CommentResource
+    {
+        return new CommentResource($this);
+    }
+
     public function documents(): DocumentResource
     {
         return new DocumentResource($this);
@@ -136,6 +143,11 @@ class PerscomConnection extends Connector
     public function images(): ImageResource
     {
         return new ImageResource($this);
+    }
+
+    public function messages(): MessageResource
+    {
+        return new MessageResource($this);
     }
 
     public function newsfeed(): NewsfeedResource
