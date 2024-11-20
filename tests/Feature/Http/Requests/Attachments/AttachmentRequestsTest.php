@@ -10,12 +10,12 @@ use Perscom\Http\Requests\Attachments\SearchAttachmentsRequest;
 use Perscom\Http\Requests\Attachments\UpdateAttachmentRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Contracts\Body\HasBody;
 
 beforeEach(function () {
     Config::preventStrayRequests();

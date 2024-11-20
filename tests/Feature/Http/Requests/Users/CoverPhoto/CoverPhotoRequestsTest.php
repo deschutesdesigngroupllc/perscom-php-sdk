@@ -6,13 +6,13 @@ use Perscom\Http\Requests\Users\ProfilePhoto\CreateUserProfilePhotoRequest;
 use Perscom\Http\Requests\Users\ProfilePhoto\DeleteUserProfilePhotoRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Exceptions\SaloonException;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Contracts\Body\HasBody;
 
 beforeEach(function () {
     Config::preventStrayRequests();
