@@ -7,8 +7,12 @@ namespace Perscom\Http\Resources;
 use Perscom\Contracts\ResourceContract;
 use Perscom\Contracts\Searchable;
 use Perscom\Data\FilterObject;
+use Perscom\Data\ResourceObject;
 use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
+use Perscom\Http\Requests\Specialties\BatchCreateSpecialtyRequest;
+use Perscom\Http\Requests\Specialties\BatchDeleteSpecialtyRequest;
+use Perscom\Http\Requests\Specialties\BatchUpdateSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\CreateSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\DeleteSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\GetSpecialtiesRequest;
@@ -87,5 +91,35 @@ class SpecialtyResource extends Resource implements ResourceContract, Searchable
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteSpecialtyRequest($id));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchCreate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchCreateSpecialtyRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchUpdate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchUpdateSpecialtyRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchDelete(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchDeleteSpecialtyRequest($data));
     }
 }

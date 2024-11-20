@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Specialties\BatchCreateSpecialtyRequest;
+use Perscom\Http\Requests\Specialties\BatchDeleteSpecialtyRequest;
+use Perscom\Http\Requests\Specialties\BatchUpdateSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\CreateSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\DeleteSpecialtyRequest;
 use Perscom\Http\Requests\Specialties\GetSpecialtiesRequest;
@@ -43,6 +47,24 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteSpecialtyRequest::class => MockResponse::make([], 201),
+        BatchCreateSpecialtyRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateSpecialtyRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteSpecialtyRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -153,5 +175,66 @@ test('it can delete a specialty', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteSpecialtyRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create specialties', function () {
+    $response = $this->connector->specialties()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateSpecialtyRequest;
+    });
+});
+
+test('it can batch update specialties', function () {
+    $response = $this->connector->specialties()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateSpecialtyRequest;
+    });
+});
+
+test('it can batch delete specialties', function () {
+    $response = $this->connector->specialties()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteSpecialtyRequest;
     });
 });

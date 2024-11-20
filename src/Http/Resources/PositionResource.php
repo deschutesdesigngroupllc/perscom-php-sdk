@@ -7,8 +7,12 @@ namespace Perscom\Http\Resources;
 use Perscom\Contracts\ResourceContract;
 use Perscom\Contracts\Searchable;
 use Perscom\Data\FilterObject;
+use Perscom\Data\ResourceObject;
 use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
+use Perscom\Http\Requests\Positions\BatchCreatePositionRequest;
+use Perscom\Http\Requests\Positions\BatchDeletePositionRequest;
+use Perscom\Http\Requests\Positions\BatchUpdatePositionRequest;
 use Perscom\Http\Requests\Positions\CreatePositionRequest;
 use Perscom\Http\Requests\Positions\DeletePositionRequest;
 use Perscom\Http\Requests\Positions\GetPositionRequest;
@@ -87,5 +91,35 @@ class PositionResource extends Resource implements ResourceContract, Searchable
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeletePositionRequest($id));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchCreate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchCreatePositionRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchUpdate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchUpdatePositionRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchDelete(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchDeletePositionRequest($data));
     }
 }
