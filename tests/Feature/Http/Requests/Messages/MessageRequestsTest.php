@@ -2,29 +2,27 @@
 
 declare(strict_types=1);
 
-use Perscom\Http\Requests\Images\CreateImageRequest;
-use Perscom\Http\Requests\Images\DeleteImageRequest;
-use Perscom\Http\Requests\Images\GetImageRequest;
-use Perscom\Http\Requests\Images\GetImagesRequest;
-use Perscom\Http\Requests\Images\SearchImagesRequest;
-use Perscom\Http\Requests\Images\UpdateImageRequest;
+use Perscom\Http\Requests\Messages\CreateMessageRequest;
+use Perscom\Http\Requests\Messages\DeleteMessageRequest;
+use Perscom\Http\Requests\Messages\GetMessageRequest;
+use Perscom\Http\Requests\Messages\GetMessagesRequest;
+use Perscom\Http\Requests\Messages\SearchMessagesRequest;
+use Perscom\Http\Requests\Messages\UpdateMessageRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
-use Saloon\Data\MultipartValue;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use Saloon\Contracts\Body\HasBody;
 
 beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetImagesRequest::class => MockResponse::make([
+        GetMessagesRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchImagesRequest::class => MockResponse::make([
+        SearchMessagesRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -32,27 +30,27 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetImageRequest::class => MockResponse::make([
+        GetMessageRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateImageRequest::class => MockResponse::make([
+        CreateMessageRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateImageRequest::class => MockResponse::make([
+        UpdateMessageRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteImageRequest::class => MockResponse::make([], 201),
+        DeleteMessageRequest::class => MockResponse::make([], 201),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
     $this->connector->withMockClient($this->mockClient);
 });
 
-test('it can get all images', function () {
-    $response = $this->connector->images()->all();
+test('it can get all messages', function () {
+    $response = $this->connector->messages()->all();
 
     $data = $response->json();
 
@@ -62,11 +60,11 @@ test('it can get all images', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetImagesRequest::class);
+    $this->mockClient->assertSent(GetMessagesRequest::class);
 });
 
-test('it can search images', function () {
-    $response = $this->connector->images()->search('foo');
+test('it can search messages', function () {
+    $response = $this->connector->messages()->search('foo');
 
     $data = $response->json();
 
@@ -81,11 +79,11 @@ test('it can search images', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchImagesRequest::class);
+    $this->mockClient->assertSent(SearchMessagesRequest::class);
 });
 
-test('it can get an image', function () {
-    $response = $this->connector->images()->get(1);
+test('it can get an message', function () {
+    $response = $this->connector->messages()->get(1);
 
     $data = $response->json();
 
@@ -97,38 +95,33 @@ test('it can get an image', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetImageRequest
+        return $request instanceof GetMessageRequest
             && $request->id === 1;
     });
 });
 
-test('it can create an image', function () {
-    $response = $this->connector->images()->create([
+test('it can create an message', function () {
+    $response = $this->connector->messages()->create([
         'foo' => 'bar',
     ]);
 
     $data = $response->json();
 
-    /** @var HasBody $request */
-    $request = $response->getRequest();
-
     expect($response->status())->toEqual(200)
         ->and($response)->toBeInstanceOf(Response::class)
-        ->and($request->body()->all())->toContainOnlyInstancesOf(MultipartValue::class)
-        ->and($request->body()->all())->toBeArray()
         ->and($data)->toEqual([
             'name' => 'foo',
             'id' => 1,
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateImageRequest
+        return $request instanceof CreateMessageRequest
             && $request->data['foo'] === 'bar';
     });
 });
 
-test('it can update an image', function () {
-    $response = $this->connector->images()->update(1, [
+test('it can update an message', function () {
+    $response = $this->connector->messages()->update(1, [
         'foo' => 'bar',
     ]);
 
@@ -142,14 +135,14 @@ test('it can update an image', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateImageRequest
+        return $request instanceof UpdateMessageRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
 });
 
-test('it can delete an image', function () {
-    $response = $this->connector->images()->delete(1);
+test('it can delete an message', function () {
+    $response = $this->connector->messages()->delete(1);
 
     $data = $response->json();
 
@@ -158,7 +151,7 @@ test('it can delete an image', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteImageRequest
+        return $request instanceof DeleteMessageRequest
             && $request->id === 1;
     });
 });
