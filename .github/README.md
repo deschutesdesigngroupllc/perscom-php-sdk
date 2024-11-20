@@ -23,33 +23,73 @@ The PERSCOM PHP SDK is a powerful tool that enables seamless integration with th
 ```php
 <?php
 
-$perscom = new PerscomConnection('api-token', 'perscom-id');
+// The following are examples on the user resource, but the same principles
+// can be applied to any PERSCOM resource. 
+$perscom = new PerscomConnection('YOUR_API_KEY');
 
 // Get a list of a specific resource
 $response = $perscom->users()->all();
 
-// Creating a resource
+// Get a specific resource
+$response = $perscom->users()->get(id: 1);
+
+// Create a resource
 $response = $perscom->users()->create(data: [
-    'name' => 'My New User'
-])
+    'name' => 'User 1',
+    'email' => 'user1@email.com'
+]);
 
-// Updating a resource
+// Update a resource
 $response = $perscom->users()->update(id: 1, data: [
-    'name' => 'My New Name'
-])
+    'name' => 'User 1 New Name'
+]);
 
-// Deleting a resource
-$response = $perscom->users()->delete(id: 1)
+// Delete a resource
+$response = $perscom->users()->delete(id: 1);
 
-// Searching for a resource
+// Search for a resource
 $response = $perscom->users()->search(
     value: 'foobar', 
     sort: new SortObject('first_name', 'asc'), 
     filter: new FilterObject('created_at', '<', '2024-01-01')
-)
+);
+
+// Batch create a resource
+$response = $perscom->users()->batchCreate([
+    new ResourceObject(data: [
+        'name' => 'User 1',
+        'email' => 'user1@email.com'
+    ]),
+    new ResourceObject(data: [
+        'name' => 'User 2',
+        'email' => 'user2@email.com'
+    ])
+]);
+
+// Batch update a resource
+$response = $perscom->users()->batchUpdate([
+    new ResourceObject(id: 1, data: [
+        'name' => 'User 1 New Name'
+    ]),
+    new ResourceObject(id: 2, data: [
+        'name' => 'User 2 New Name'
+    ])
+]);
+
+// Batch delete a resource
+$response = $perscom->users()->batchDelete([
+    new ResourceObject(id: 1),
+    new ResourceObject(id: 2)
+]);
+
+// Uploading an attachment
+$response = $perscom->users()->attachments(id: 1)->create(data: [
+    'name' => 'Attachment 1',
+    'file' => fopen('/../file.pdf', 'r')
+]);
 
 // Other examples
-$response = $perscom->users()->profile_photo(id: 1)->create(filePath: 'image.jpg')
+$response = $perscom->users()->profile_photo(id: 1)->create(filePath: 'image.jpg');
 $response = $perscom->users()->assignment_records(id: 1)->delete();
 
 // Parse the response into a usable array
