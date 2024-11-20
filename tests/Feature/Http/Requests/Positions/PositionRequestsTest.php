@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Positions\BatchCreatePositionRequest;
+use Perscom\Http\Requests\Positions\BatchDeletePositionRequest;
+use Perscom\Http\Requests\Positions\BatchUpdatePositionRequest;
 use Perscom\Http\Requests\Positions\CreatePositionRequest;
 use Perscom\Http\Requests\Positions\DeletePositionRequest;
 use Perscom\Http\Requests\Positions\GetPositionRequest;
@@ -43,6 +47,24 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeletePositionRequest::class => MockResponse::make([], 201),
+        BatchCreatePositionRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdatePositionRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeletePositionRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -153,5 +175,66 @@ test('it can delete a position', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeletePositionRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create positions', function () {
+    $response = $this->connector->positions()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreatePositionRequest;
+    });
+});
+
+test('it can batch update positions', function () {
+    $response = $this->connector->positions()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdatePositionRequest;
+    });
+});
+
+test('it can batch delete positions', function () {
+    $response = $this->connector->positions()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeletePositionRequest;
     });
 });

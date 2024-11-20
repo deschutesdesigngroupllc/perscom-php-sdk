@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Statuses\BatchCreateStatusRequest;
+use Perscom\Http\Requests\Statuses\BatchDeleteStatusRequest;
+use Perscom\Http\Requests\Statuses\BatchUpdateStatusRequest;
 use Perscom\Http\Requests\Statuses\CreateStatusRequest;
 use Perscom\Http\Requests\Statuses\DeleteStatusRequest;
 use Perscom\Http\Requests\Statuses\GetStatusesRequest;
@@ -43,6 +47,24 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteStatusRequest::class => MockResponse::make([], 201),
+        BatchCreateStatusRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateStatusRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteStatusRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -153,5 +175,66 @@ test('it can delete a status', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteStatusRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create statuses', function () {
+    $response = $this->connector->statuses()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateStatusRequest;
+    });
+});
+
+test('it can batch update statuses', function () {
+    $response = $this->connector->statuses()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateStatusRequest;
+    });
+});
+
+test('it can batch delete statuses', function () {
+    $response = $this->connector->statuses()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteStatusRequest;
     });
 });

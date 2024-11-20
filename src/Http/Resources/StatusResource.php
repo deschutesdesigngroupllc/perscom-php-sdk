@@ -7,8 +7,12 @@ namespace Perscom\Http\Resources;
 use Perscom\Contracts\ResourceContract;
 use Perscom\Contracts\Searchable;
 use Perscom\Data\FilterObject;
+use Perscom\Data\ResourceObject;
 use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
+use Perscom\Http\Requests\Statuses\BatchCreateStatusRequest;
+use Perscom\Http\Requests\Statuses\BatchDeleteStatusRequest;
+use Perscom\Http\Requests\Statuses\BatchUpdateStatusRequest;
 use Perscom\Http\Requests\Statuses\CreateStatusRequest;
 use Perscom\Http\Requests\Statuses\DeleteStatusRequest;
 use Perscom\Http\Requests\Statuses\GetStatusesRequest;
@@ -87,5 +91,35 @@ class StatusResource extends Resource implements ResourceContract, Searchable
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteStatusRequest($id));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchCreate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchCreateStatusRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchUpdate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchUpdateStatusRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchDelete(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchDeleteStatusRequest($data));
     }
 }

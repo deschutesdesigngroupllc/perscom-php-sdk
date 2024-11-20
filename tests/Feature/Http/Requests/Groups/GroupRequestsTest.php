@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Groups\BatchCreateGroupRequest;
+use Perscom\Http\Requests\Groups\BatchDeleteGroupRequest;
+use Perscom\Http\Requests\Groups\BatchUpdateGroupRequest;
 use Perscom\Http\Requests\Groups\CreateGroupRequest;
 use Perscom\Http\Requests\Groups\DeleteGroupRequest;
 use Perscom\Http\Requests\Groups\GetGroupRequest;
@@ -43,6 +47,24 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteGroupRequest::class => MockResponse::make([], 201),
+        BatchCreateGroupRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateGroupRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteGroupRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -153,5 +175,66 @@ test('it can delete a group', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof DeleteGroupRequest
             && $request->id === 1;
+    });
+});
+
+test('it can batch create groups', function () {
+    $response = $this->connector->groups()->batchCreate(new ResourceObject(data: [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchCreateGroupRequest;
+    });
+});
+
+test('it can batch update groups', function () {
+    $response = $this->connector->groups()->batchUpdate(new ResourceObject(1, [
+        'foo' => 'bar',
+    ]));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchUpdateGroupRequest;
+    });
+});
+
+test('it can batch delete groups', function () {
+    $response = $this->connector->groups()->batchDelete(new ResourceObject(1));
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof BatchDeleteGroupRequest;
     });
 });

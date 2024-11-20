@@ -7,8 +7,12 @@ namespace Perscom\Http\Resources;
 use Perscom\Contracts\ResourceContract;
 use Perscom\Contracts\Searchable;
 use Perscom\Data\FilterObject;
+use Perscom\Data\ResourceObject;
 use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
+use Perscom\Http\Requests\Ranks\BatchCreateRankRequest;
+use Perscom\Http\Requests\Ranks\BatchDeleteRankRequest;
+use Perscom\Http\Requests\Ranks\BatchUpdateRankRequest;
 use Perscom\Http\Requests\Ranks\CreateRankRequest;
 use Perscom\Http\Requests\Ranks\DeleteRankRequest;
 use Perscom\Http\Requests\Ranks\GetRankRequest;
@@ -87,5 +91,35 @@ class RankResource extends Resource implements ResourceContract, Searchable
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteRankRequest($id));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchCreate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchCreateRankRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchUpdate(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchUpdateRankRequest($data));
+    }
+
+    /**
+     * @param  ResourceObject|array<ResourceObject>  $data
+     *
+     * @throws FatalRequestException|RequestException
+     */
+    public function batchDelete(ResourceObject|array $data): Response
+    {
+        return $this->connector->send(new BatchDeleteRankRequest($data));
     }
 }
