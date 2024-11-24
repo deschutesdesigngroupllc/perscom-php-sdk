@@ -12,6 +12,7 @@ use Perscom\Http\Resources\AssignmentRecordsResource;
 use Perscom\Http\Resources\AttachmentResource;
 use Perscom\Http\Resources\AwardRecordsResource;
 use Perscom\Http\Resources\AwardResource;
+use Perscom\Http\Resources\CacheResource;
 use Perscom\Http\Resources\CalendarResource;
 use Perscom\Http\Resources\CategoriesResource;
 use Perscom\Http\Resources\CombatRecordsResource;
@@ -103,6 +104,11 @@ class PerscomConnection extends Connector
     public function categories(): CategoriesResource
     {
         return new CategoriesResource($this);
+    }
+
+    public function cache(): CacheResource
+    {
+        return new CacheResource($this);
     }
 
     public function combatRecords(): CombatRecordsResource
