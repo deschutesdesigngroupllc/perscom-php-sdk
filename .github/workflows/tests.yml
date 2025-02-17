@@ -17,9 +17,13 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [ 8.2, 8.3, 8.4 ]
+        php: [ 8.2, 8.3 ]
+        illuminate: [ 10, 11 ]
+        include:
+          - php: 8.4
+            illuminate: 11
 
-    name: Run Tests - PHP ${{ matrix.php }}
+    name: Run Tests - PHP ${{ matrix.php }} - Illuminate ${{ matrix.illuminate }}
 
     steps:
       - name: Checkout Source
@@ -34,7 +38,7 @@ jobs:
           coverage: xdebug
 
       - name: Install Composer Dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+        run: composer update --prefer-dist --no-interaction --no-progress --with="illuminate/support=^${{ matrix.illuminate }}"
 
       - name: Execute Tests
         run: composer run test
