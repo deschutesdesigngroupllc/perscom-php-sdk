@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom;
 
+use Perscom\Enums\RosterType;
 use Perscom\Exceptions\AuthenticationException;
 use Perscom\Exceptions\NotFoundHttpException;
 use Perscom\Exceptions\TenantCouldNotBeIdentifiedException;
@@ -186,9 +187,11 @@ class PerscomConnection extends Connector
         return new RankResource($this);
     }
 
-    public function roster(): RosterResource
+    public function roster(RosterType $type = RosterType::Automatic): RosterResource
     {
-        return new RosterResource($this);
+        $roster = new RosterResource($this);
+
+        return $roster->setType($type);
     }
 
     public function serviceRecords(): ServiceRecordsResource

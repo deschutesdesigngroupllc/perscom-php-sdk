@@ -46,6 +46,7 @@
     },
     "scripts": {
         "herd:test": "herd coverage ./vendor/bin/pest --coverage --min=100",
+        "herd:test:filter": "@herd:test --filter",
         "lint": "./vendor/bin/pint src",
         "test": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=100",
         "test:lint": "./vendor/bin/pint src --test",

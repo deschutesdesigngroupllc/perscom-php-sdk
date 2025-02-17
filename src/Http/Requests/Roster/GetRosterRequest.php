@@ -4,12 +4,47 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests\Roster;
 
-use Perscom\Http\Requests\AbstractGetAllRequest;
+use Illuminate\Support\Arr;
+use Perscom\Enums\RosterType;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
 
-class GetRosterRequest extends AbstractGetAllRequest
+class GetRosterRequest extends Request
 {
-    public function getResource(): string
+    protected Method $method = Method::GET;
+
+    /**
+     * @param  string|array<string>  $include
+     */
+    public function __construct(
+        public string|array $include = [],
+        public int $page = 1,
+        public int $limit = 20,
+        public RosterType $type = RosterType::Automatic,
+    ) {
+        $this->include = Arr::wrap($this->include);
+    }
+
+    public function resolveEndpoint(): string
     {
         return 'roster';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaultQuery(): array
+    {
+        $query = [
+            'limit' => $this->limit,
+            'page' => $this->page,
+            'type' => $this->type->value,
+        ];
+
+        if (filled($this->include)) {
+            $query['include'] = implode(',', $this->include);
+        }
+
+        return $query;
     }
 }
