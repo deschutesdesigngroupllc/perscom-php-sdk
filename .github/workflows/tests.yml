@@ -38,7 +38,7 @@ jobs:
           coverage: xdebug
 
       - name: Install Composer Dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress --with="illuminate/support=^${{ matrix.illuminate }}"
+        run: composer update --prefer-dist --no-interaction --no-progress --with="illuminate/support=^${{ matrix.illuminate }}"
 
       - name: Execute Tests
         run: composer run test
