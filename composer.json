@@ -18,7 +18,7 @@
     "require": {
         "php": "^8.2",
         "saloonphp/saloon": "^3.13.0",
-        "illuminate/support": "^10 | ^11.42.1",
+        "illuminate/support": "^10 | ^11 | ^12",
         "saloonphp/rate-limit-plugin": "^2.0"
     },
     "autoload": {

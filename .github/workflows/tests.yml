@@ -17,11 +17,14 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [ 8.2, 8.3 ]
-        illuminate: [ 10, 11 ]
+        php: [ 8.2, 8.3, 8.4 ]
+        illuminate: [ 10, 11, 12 ]
         include:
+          - php: 8.1
+          - illuminate: 10
+        exclude:
           - php: 8.4
-            illuminate: 11
+          - illuminate: 10
 
     name: Run Tests - PHP ${{ matrix.php }} - Illuminate ${{ matrix.illuminate }}
 
