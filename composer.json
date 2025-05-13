@@ -17,8 +17,8 @@
     ],
     "require": {
         "php": "^8.2",
-        "saloonphp/saloon": "^v3.10.0",
-        "illuminate/support": "^10 | ^11",
+        "saloonphp/saloon": "^3.13.0",
+        "illuminate/support": "^10 | ^11.42.1",
         "saloonphp/rate-limit-plugin": "^2.0"
     },
     "autoload": {
@@ -32,12 +32,12 @@
         }
     },
     "require-dev": {
-        "pestphp/pest": "^3.7.4",
-        "laravel/pint": "^1.20",
+        "pestphp/pest": "^3.8.2",
+        "laravel/pint": "^1.22.1",
         "phpstan/phpstan": "1.12.4",
         "mockery/mockery": "^1.6.7",
         "pestphp/pest-plugin-type-coverage": "^3.0",
-        "pestphp/pest-plugin-arch": "^3.0"
+        "pestphp/pest-plugin-arch": "^3.1.1"
     },
     "config": {
         "allow-plugins": {
