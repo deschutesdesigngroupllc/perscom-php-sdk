@@ -38,6 +38,7 @@ use Perscom\Http\Resources\SpecialtyResource;
 use Perscom\Http\Resources\StatusResource;
 use Perscom\Http\Resources\SubmissionResource;
 use Perscom\Http\Resources\TaskResource;
+use Perscom\Http\Resources\TrainingRecordsResource;
 use Perscom\Http\Resources\UnitResource;
 use Perscom\Http\Resources\UserResource;
 use Perscom\Support\Composer;
@@ -197,6 +198,11 @@ class PerscomConnection extends Connector
     public function serviceRecords(): ServiceRecordsResource
     {
         return new ServiceRecordsResource($this);
+    }
+
+    public function trainingRecords(): TrainingRecordsResource
+    {
+        return new TrainingRecordsResource($this);
     }
 
     public function settings(): SettingsResource

@@ -30,6 +30,7 @@ use Perscom\Http\Resources\Users\QualificationRecordsResource;
 use Perscom\Http\Resources\Users\RankRecordsResource;
 use Perscom\Http\Resources\Users\ServiceRecordsResource;
 use Perscom\Http\Resources\Users\StatusResource;
+use Perscom\Http\Resources\Users\TrainingRecordsResource;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
@@ -177,6 +178,11 @@ class UserResource extends Resource implements Batchable, ResourceContract, Sear
     public function service_records(int $id): ServiceRecordsResource
     {
         return new ServiceRecordsResource($this->connector, $id);
+    }
+
+    public function training_records(int $id): TrainingRecordsResource
+    {
+        return new TrainingRecordsResource($this->connector, $id);
     }
 
     public function statuses(int $id): StatusResource
