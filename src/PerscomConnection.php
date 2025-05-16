@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Perscom;
 
+use JsonException;
 use Perscom\Enums\RosterType;
 use Perscom\Exceptions\AuthenticationException;
+use Perscom\Exceptions\ForbiddenException;
 use Perscom\Exceptions\NotFoundHttpException;
-use Perscom\Exceptions\TenantCouldNotBeIdentifiedException;
+use Perscom\Exceptions\PaymentRequiredException;
+use Perscom\Exceptions\RateLimitException;
+use Perscom\Exceptions\ServerErrorException;
+use Perscom\Exceptions\ServiceUnavailableException;
 use Perscom\Http\Resources\AnnouncementResource;
 use Perscom\Http\Resources\AssignmentRecordsResource;
 use Perscom\Http\Resources\AttachmentResource;
@@ -18,12 +23,15 @@ use Perscom\Http\Resources\CalendarResource;
 use Perscom\Http\Resources\CategoriesResource;
 use Perscom\Http\Resources\CombatRecordsResource;
 use Perscom\Http\Resources\CommentResource;
+use Perscom\Http\Resources\CompetencyResource;
+use Perscom\Http\Resources\CredentialResource;
 use Perscom\Http\Resources\DocumentResource;
 use Perscom\Http\Resources\EventResource;
 use Perscom\Http\Resources\FormResource;
 use Perscom\Http\Resources\GroupResource;
 use Perscom\Http\Resources\HealthResource;
 use Perscom\Http\Resources\ImageResource;
+use Perscom\Http\Resources\IssuerResource;
 use Perscom\Http\Resources\MessageResource;
 use Perscom\Http\Resources\NewsfeedResource;
 use Perscom\Http\Resources\PositionResource;
@@ -38,6 +46,7 @@ use Perscom\Http\Resources\SpecialtyResource;
 use Perscom\Http\Resources\StatusResource;
 use Perscom\Http\Resources\SubmissionResource;
 use Perscom\Http\Resources\TaskResource;
+use Perscom\Http\Resources\TrainingRecordsResource;
 use Perscom\Http\Resources\UnitResource;
 use Perscom\Http\Resources\UserResource;
 use Perscom\Support\Composer;
@@ -45,10 +54,6 @@ use Perscom\Traits\HasLogging;
 use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\Http\Response;
-use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
-use Saloon\RateLimitPlugin\Limit;
-use Saloon\RateLimitPlugin\Stores\MemoryStore;
-use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Plugins\AcceptsJson;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Throwable;
@@ -58,7 +63,6 @@ class PerscomConnection extends Connector
     use AcceptsJson;
     use AlwaysThrowOnErrors;
     use HasLogging;
-    use HasRateLimits;
 
     public static string $apiUrl = 'https://api.perscom.io/v2';
 
@@ -122,6 +126,16 @@ class PerscomConnection extends Connector
         return new CommentResource($this);
     }
 
+    public function competencies(): CompetencyResource
+    {
+        return new CompetencyResource($this);
+    }
+
+    public function credentials(): CredentialResource
+    {
+        return new CredentialResource($this);
+    }
+
     public function documents(): DocumentResource
     {
         return new DocumentResource($this);
@@ -150,6 +164,11 @@ class PerscomConnection extends Connector
     public function images(): ImageResource
     {
         return new ImageResource($this);
+    }
+
+    public function issuers(): IssuerResource
+    {
+        return new IssuerResource($this);
     }
 
     public function messages(): MessageResource
@@ -199,6 +218,11 @@ class PerscomConnection extends Connector
         return new ServiceRecordsResource($this);
     }
 
+    public function trainingRecords(): TrainingRecordsResource
+    {
+        return new TrainingRecordsResource($this);
+    }
+
     public function settings(): SettingsResource
     {
         return new SettingsResource($this);
@@ -234,21 +258,35 @@ class PerscomConnection extends Connector
         return new UserResource($this);
     }
 
+    /**
+     * @throws JsonException
+     */
     public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
     {
-        if ($response->json('error.type') === 'TenantCouldNotBeIdentified') {
-            return new TenantCouldNotBeIdentifiedException;
-        }
-
-        if ($response->json('error.type') === 'AuthenticationException') {
-            return new AuthenticationException;
-        }
-
-        if ($response->json('error.type') === 'NotFoundHttpException') {
-            return new NotFoundHttpException;
-        }
-
-        return parent::getRequestException($response, $senderException);
+        return match ($response->status()) {
+            401 => new AuthenticationException(
+                message: $response->json('error.message') ?? 'You are not authenticated. Please provide a valid API key that contains your PERSCOM ID to continue.',
+            ),
+            402 => new PaymentRequiredException(
+                message: $response->json('error.message') ?? 'A valid subscription is required to complete this request.',
+            ),
+            403 => new ForbiddenException(
+                message: $response->json('error.message') ?? 'he API key provided does not have the correct permissions and/or scopes to perform the requested action.',
+            ),
+            404 => new NotFoundHttpException(
+                message: $response->json('error.message') ?? 'The requested resource or endpoint could not be found.',
+            ),
+            429 => new RateLimitException(
+                message: $response->json('error.message') ?? 'You have exceeded the API rate limit. Please wait a minute before trying again.',
+            ),
+            500 => new ServerErrorException(
+                message: $response->json('error.message') ?? 'There was a server error with your last request. Please try again.',
+            ),
+            503 => new ServiceUnavailableException(
+                message: $response->json('error.message') ?? 'The API is currently down for maintenance. Please check back later.',
+            ),
+            default => parent::getRequestException($response, $senderException)
+        };
     }
 
     protected function defaultAuth(): TokenAuthenticator
@@ -274,20 +312,5 @@ class PerscomConnection extends Connector
         }
 
         return $headers;
-    }
-
-    /**
-     * @return array<Limit>
-     */
-    protected function resolveLimits(): array
-    {
-        return [
-            Limit::allow(1000)->everyMinute(),
-        ];
-    }
-
-    protected function resolveRateLimitStore(): RateLimitStore
-    {
-        return new MemoryStore;
     }
 }
