@@ -6,4 +6,4 @@ namespace Perscom\Exceptions;
 
 use Exception;
 
-final class AuthenticationException extends Exception {}
+final class PaymentRequiredException extends Exception {}

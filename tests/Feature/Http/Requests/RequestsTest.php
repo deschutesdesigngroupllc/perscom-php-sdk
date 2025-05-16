@@ -3,8 +3,12 @@
 declare(strict_types=1);
 
 use Perscom\Exceptions\AuthenticationException;
+use Perscom\Exceptions\ForbiddenException;
 use Perscom\Exceptions\NotFoundHttpException;
-use Perscom\Exceptions\TenantCouldNotBeIdentifiedException;
+use Perscom\Exceptions\PaymentRequiredException;
+use Perscom\Exceptions\RateLimitException;
+use Perscom\Exceptions\ServerErrorException;
+use Perscom\Exceptions\ServiceUnavailableException;
 use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordRequest;
 use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordsRequest;
 use Perscom\Http\Requests\Users\GetUserRequest;
@@ -22,29 +26,6 @@ beforeEach(function () {
     Config::preventStrayRequests();
 });
 
-test('it will throw an exception on a failed request', function () {
-    $mockClient = new MockClient([
-        MockResponse::make([
-            'error' => [
-                'message' => 'foo',
-                'type' => 'bar',
-            ],
-        ], 401),
-    ]);
-
-    $connector = new PerscomConnection('foo', 'bar');
-    $connector->withMockClient($mockClient);
-    $response = $connector->users()->all();
-
-    $data = $response->json();
-
-    expect($response->status())->toEqual(401)
-        ->and($response)->toBeInstanceOf(Response::class)
-        ->and($data)->toEqual([
-            'message' => 'Unauthenticated',
-        ]);
-})->throws(UnauthorizedException::class);
-
 test('it will throw an authentication exception', function () {
     $mockClient = new MockClient([
         MockResponse::make([
@@ -60,6 +41,36 @@ test('it will throw an authentication exception', function () {
     $connector->users()->all();
 })->throws(AuthenticationException::class);
 
+test('it will throw a payment require exception', function () {
+    $mockClient = new MockClient([
+        MockResponse::make([
+            'error' => [
+                'message' => 'foo bar',
+                'type' => 'AuthenticationException',
+            ],
+        ], 402),
+    ]);
+
+    $connector = new PerscomConnection('foo', 'bar');
+    $connector->withMockClient($mockClient);
+    $connector->users()->all();
+})->throws(PaymentRequiredException::class);
+
+test('it will throw a forbidden exception', function () {
+    $mockClient = new MockClient([
+        MockResponse::make([
+            'error' => [
+                'message' => 'foo bar',
+                'type' => 'AuthenticationException',
+            ],
+        ], 403),
+    ]);
+
+    $connector = new PerscomConnection('foo', 'bar');
+    $connector->withMockClient($mockClient);
+    $connector->users()->all();
+})->throws(ForbiddenException::class);
+
 test('it will throw a not found exception', function () {
     $mockClient = new MockClient([
         MockResponse::make([
@@ -67,7 +78,7 @@ test('it will throw a not found exception', function () {
                 'message' => 'foo bar',
                 'type' => 'NotFoundHttpException',
             ],
-        ], 401),
+        ], 404),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
@@ -75,20 +86,50 @@ test('it will throw a not found exception', function () {
     $connector->users()->all();
 })->throws(NotFoundHttpException::class);
 
-test('it will throw a tenant not identified exception', function () {
+test('it will throw a rate limiter exception', function () {
     $mockClient = new MockClient([
         MockResponse::make([
             'error' => [
                 'message' => 'foo bar',
-                'type' => 'TenantCouldNotBeIdentified',
+                'type' => 'NotFoundHttpException',
             ],
-        ], 401),
+        ], 429),
     ]);
 
     $connector = new PerscomConnection('foo', 'bar');
     $connector->withMockClient($mockClient);
     $connector->users()->all();
-})->throws(TenantCouldNotBeIdentifiedException::class);
+})->throws(RateLimitException::class);
+
+test('it will throw a server error exception', function () {
+    $mockClient = new MockClient([
+        MockResponse::make([
+            'error' => [
+                'message' => 'foo bar',
+                'type' => 'NotFoundHttpException',
+            ],
+        ], 500),
+    ]);
+
+    $connector = new PerscomConnection('foo', 'bar');
+    $connector->withMockClient($mockClient);
+    $connector->users()->all();
+})->throws(ServerErrorException::class);
+
+test('it will throw a service unavailable exception', function () {
+    $mockClient = new MockClient([
+        MockResponse::make([
+            'error' => [
+                'message' => 'foo bar',
+                'type' => 'NotFoundHttpException',
+            ],
+        ], 503),
+    ]);
+
+    $connector = new PerscomConnection('foo', 'bar');
+    $connector->withMockClient($mockClient);
+    $connector->users()->all();
+})->throws(ServiceUnavailableException::class);
 
 test('it will send the proper parameters in a get all request', function () {
     $mockClient = new MockClient([
