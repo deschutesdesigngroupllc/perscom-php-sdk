@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Resources;
 
+use Perscom\Contracts\Batchable;
 use Perscom\Contracts\ResourceContract;
 use Perscom\Contracts\Searchable;
 use Perscom\Data\FilterObject;
@@ -23,7 +24,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
-class AwardResource extends Resource implements ResourceContract, Searchable
+class AwardResource extends Resource implements Batchable, ResourceContract, Searchable
 {
     /**
      * @param  string|array<string>  $include
