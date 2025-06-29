@@ -20,14 +20,14 @@ use Perscom\Http\Requests\Qualifications\GetQualificationRequest;
 use Perscom\Http\Requests\Qualifications\GetQualificationsRequest;
 use Perscom\Http\Requests\Qualifications\SearchQualificationsRequest;
 use Perscom\Http\Requests\Qualifications\UpdateQualificationRequest;
-use Perscom\Traits\HasImage;
+use Perscom\Traits\HasImageEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
 class QualificationResource extends Resource implements Batchable, ResourceContract, Searchable
 {
-    use HasImage;
+    use HasImageEndpoints;
 
     public function getResource(): string
     {

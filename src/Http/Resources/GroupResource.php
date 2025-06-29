@@ -19,14 +19,14 @@ use Perscom\Http\Requests\Groups\GetGroupRequest;
 use Perscom\Http\Requests\Groups\GetGroupsRequest;
 use Perscom\Http\Requests\Groups\SearchGroupsRequest;
 use Perscom\Http\Requests\Groups\UpdateGroupRequest;
-use Perscom\Traits\HasImage;
+use Perscom\Traits\HasImageEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
 class GroupResource extends Resource implements ResourceContract, Searchable
 {
-    use HasImage;
+    use HasImageEndpoints;
 
     public function getResource(): string
     {

@@ -16,7 +16,7 @@ use Saloon\Http\Response;
 /**
  * @mixin Resource
  */
-trait HasImage
+trait HasImageEndpoints
 {
     abstract public function getResource(): string;
 
