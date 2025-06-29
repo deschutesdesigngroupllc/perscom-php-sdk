@@ -15,11 +15,9 @@ use Perscom\Http\Requests\Users\GetUserRequest;
 use Perscom\Http\Requests\Users\GetUsersRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
-use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Request;
-use Saloon\Http\Response;
 use Saloon\Repositories\ArrayStore;
 
 beforeEach(function () {

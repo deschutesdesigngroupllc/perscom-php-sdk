@@ -29,6 +29,11 @@ class RankResource extends Resource implements Batchable, ResourceContract, Sear
 {
     use HasImage;
 
+    public function getResource(): string
+    {
+        return 'ranks';
+    }
+
     /**
      * @param  string|array<string>  $include
      *

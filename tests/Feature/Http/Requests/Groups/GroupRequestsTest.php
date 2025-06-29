@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Common\CreateImageRequest;
+use Perscom\Http\Requests\Common\DeleteImageRequest;
+use Perscom\Http\Requests\Common\GetImageRequest;
+use Perscom\Http\Requests\Common\UpdateImageRequest;
 use Perscom\Http\Requests\Groups\BatchCreateGroupRequest;
 use Perscom\Http\Requests\Groups\BatchDeleteGroupRequest;
 use Perscom\Http\Requests\Groups\BatchUpdateGroupRequest;
@@ -60,6 +64,30 @@ beforeEach(function () {
             ],
         ]),
         BatchDeleteGroupRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        GetImageRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        CreateImageRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        DeleteImageRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        UpdateImageRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -236,5 +264,91 @@ test('it can batch delete groups', function () {
 
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof BatchDeleteGroupRequest;
+    });
+});
+
+test('it can get the group image', function () {
+    $response = $this->connector->groups()->imageGet(1, [
+        'foo' => 'bar',
+    ]);
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof GetImageRequest;
+    });
+});
+
+test('it can create the group image', function () {
+    $response = $this->connector->groups()->imageCreate(1, [
+        'foo' => 'bar',
+    ]);
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof CreateImageRequest;
+    });
+});
+
+test('it can delete the group image', function () {
+    $response = $this->connector->groups()->imageDelete(1, [
+        'foo' => 'bar',
+    ]);
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof DeleteImageRequest;
+    });
+});
+
+test('it can update the group image', function () {
+    $response = $this->connector->groups()->imageUpdate(1, [
+        'foo' => 'bar',
+    ], [
+        'foo' => 'bar',
+    ]);
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof UpdateImageRequest;
     });
 });

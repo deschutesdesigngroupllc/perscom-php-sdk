@@ -20,12 +20,20 @@ use Perscom\Http\Requests\Awards\GetAwardRequest;
 use Perscom\Http\Requests\Awards\GetAwardsRequest;
 use Perscom\Http\Requests\Awards\SearchAwardsRequest;
 use Perscom\Http\Requests\Awards\UpdateAwardRequest;
+use Perscom\Traits\HasImage;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
 class AwardResource extends Resource implements Batchable, ResourceContract, Searchable
 {
+    use HasImage;
+
+    public function getResource(): string
+    {
+        return 'awards';
+    }
+
     /**
      * @param  string|array<string>  $include
      *
