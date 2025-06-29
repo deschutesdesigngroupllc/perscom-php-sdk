@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\Issuers\CreateIssuerRequest;
 use Perscom\Http\Requests\Issuers\DeleteIssuerRequest;
 use Perscom\Http\Requests\Issuers\GetIssuerRequest;

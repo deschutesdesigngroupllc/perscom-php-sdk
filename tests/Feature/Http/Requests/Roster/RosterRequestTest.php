@@ -108,7 +108,7 @@ test('it can get a roster by group and roster type with included relations', fun
             && $request->query() instanceof ArrayStore
             && $request->query()->all() === [
                 'type' => RosterType::Manual->value,
-                'include' => 'foo,bar'
+                'include' => 'foo,bar',
             ];
     });
 });

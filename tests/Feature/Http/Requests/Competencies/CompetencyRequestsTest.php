@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Perscom\Http\Requests\Competencies\CreateCompetencyRequest;
 use Perscom\Http\Requests\Competencies\DeleteCompetencyRequest;
-use Perscom\Http\Requests\Competencies\GetCompetencyRequest;
 use Perscom\Http\Requests\Competencies\GetCompetenciesRequest;
+use Perscom\Http\Requests\Competencies\GetCompetencyRequest;
 use Perscom\Http\Requests\Competencies\SearchCompetenciesRequest;
 use Perscom\Http\Requests\Competencies\UpdateCompetencyRequest;
 use Perscom\PerscomConnection;

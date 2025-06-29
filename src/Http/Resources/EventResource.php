@@ -15,12 +15,20 @@ use Perscom\Http\Requests\Events\GetEventRequest;
 use Perscom\Http\Requests\Events\GetEventsRequest;
 use Perscom\Http\Requests\Events\SearchEventsRequest;
 use Perscom\Http\Requests\Events\UpdateEventRequest;
+use Perscom\Traits\HasImageEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
 class EventResource extends Resource implements ResourceContract, Searchable
 {
+    use HasImageEndpoints;
+
+    public function getResource(): string
+    {
+        return 'events';
+    }
+
     /**
      * @param  string|array<string>  $include
      *

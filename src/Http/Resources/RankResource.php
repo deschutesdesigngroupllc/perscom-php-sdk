@@ -20,12 +20,20 @@ use Perscom\Http\Requests\Ranks\GetRankRequest;
 use Perscom\Http\Requests\Ranks\GetRanksRequest;
 use Perscom\Http\Requests\Ranks\SearchRanksRequest;
 use Perscom\Http\Requests\Ranks\UpdateRankRequest;
+use Perscom\Traits\HasImageEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
 class RankResource extends Resource implements Batchable, ResourceContract, Searchable
 {
+    use HasImageEndpoints;
+
+    public function getResource(): string
+    {
+        return 'ranks';
+    }
+
     /**
      * @param  string|array<string>  $include
      *

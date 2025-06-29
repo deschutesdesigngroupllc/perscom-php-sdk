@@ -20,12 +20,20 @@ use Perscom\Http\Requests\Units\GetUnitRequest;
 use Perscom\Http\Requests\Units\GetUnitsRequest;
 use Perscom\Http\Requests\Units\SearchUnitsRequest;
 use Perscom\Http\Requests\Units\UpdateUnitRequest;
+use Perscom\Traits\HasImageEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
 class UnitResource extends Resource implements Batchable, ResourceContract, Searchable
 {
+    use HasImageEndpoints;
+
+    public function getResource(): string
+    {
+        return 'units';
+    }
+
     /**
      * @param  string|array<string>  $include
      *
