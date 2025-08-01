@@ -14,17 +14,11 @@ use Perscom\Http\Requests\Categories\UpdateCategoryRequest;
 use Perscom\Traits\HasSearchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
-use Saloon\Http\Connector;
 use Saloon\Http\Response;
 
 class CategoriesResource extends Resource implements ResourceContract, Searchable
 {
     use HasSearchEndpoints;
-
-    public function __construct(protected Connector $connector)
-    {
-        parent::__construct($connector);
-    }
 
     public function getResource(): string
     {
