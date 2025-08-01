@@ -6,15 +6,12 @@ namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\Batchable;
 use Perscom\Contracts\ResourceContract;
-use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\QualificationRecords\BatchCreateQualificationRecordRequest;
-use Perscom\Http\Requests\QualificationRecords\BatchDeleteQualificationRecordRequest;
-use Perscom\Http\Requests\QualificationRecords\BatchUpdateQualificationRecordRequest;
 use Perscom\Http\Requests\QualificationRecords\CreateQualificationRecordRequest;
 use Perscom\Http\Requests\QualificationRecords\DeleteQualificationRecordRequest;
 use Perscom\Http\Requests\QualificationRecords\GetQualificationRecordRequest;
 use Perscom\Http\Requests\QualificationRecords\GetQualificationRecordsRequest;
 use Perscom\Http\Requests\QualificationRecords\UpdateQualificationRecordRequest;
+use Perscom\Traits\HasBatchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Connector;
@@ -22,9 +19,16 @@ use Saloon\Http\Response;
 
 class QualificationRecordsResource extends Resource implements Batchable, ResourceContract
 {
+    use HasBatchEndpoints;
+
     public function __construct(protected Connector $connector)
     {
         parent::__construct($connector);
+    }
+
+    public function getResource(): string
+    {
+        return 'qualification-records';
     }
 
     /**
@@ -73,35 +77,5 @@ class QualificationRecordsResource extends Resource implements Batchable, Resour
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteQualificationRecordRequest($id));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchCreate(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchCreateQualificationRecordRequest($data));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchUpdate(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchUpdateQualificationRecordRequest($data));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchDelete(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchDeleteQualificationRecordRequest($data));
     }
 }

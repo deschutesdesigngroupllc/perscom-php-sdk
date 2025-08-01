@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\Http\Requests\Submissions\CreateSubmissionRequest;
 use Perscom\Http\Requests\Submissions\DeleteSubmissionRequest;
 use Perscom\Http\Requests\Submissions\GetSubmissionRequest;
 use Perscom\Http\Requests\Submissions\GetSubmissionsRequest;
-use Perscom\Http\Requests\Submissions\SearchSubmissionsRequest;
 use Perscom\Http\Requests\Submissions\UpdateSubmissionRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetSubmissionsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchSubmissionsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search submissions', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchSubmissionsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a submission', function () {

@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Competencies\CreateCompetencyRequest;
 use Perscom\Http\Requests\Competencies\DeleteCompetencyRequest;
 use Perscom\Http\Requests\Competencies\GetCompetenciesRequest;
 use Perscom\Http\Requests\Competencies\GetCompetencyRequest;
-use Perscom\Http\Requests\Competencies\SearchCompetenciesRequest;
 use Perscom\Http\Requests\Competencies\UpdateCompetencyRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetCompetenciesRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchCompetenciesRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search competencies', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchCompetenciesRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a competency', function () {

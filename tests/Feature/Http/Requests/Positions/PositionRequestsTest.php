@@ -3,15 +3,15 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\Positions\BatchCreatePositionRequest;
-use Perscom\Http\Requests\Positions\BatchDeletePositionRequest;
-use Perscom\Http\Requests\Positions\BatchUpdatePositionRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
 use Perscom\Http\Requests\Positions\CreatePositionRequest;
 use Perscom\Http\Requests\Positions\DeletePositionRequest;
 use Perscom\Http\Requests\Positions\GetPositionRequest;
 use Perscom\Http\Requests\Positions\GetPositionsRequest;
-use Perscom\Http\Requests\Positions\SearchPositionsRequest;
 use Perscom\Http\Requests\Positions\UpdatePositionRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -26,7 +26,7 @@ beforeEach(function () {
         GetPositionsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchPositionsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -47,19 +47,19 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeletePositionRequest::class => MockResponse::make([], 201),
-        BatchCreatePositionRequest::class => MockResponse::make([
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdatePositionRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeletePositionRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -101,7 +101,7 @@ test('it can search positions', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchPositionsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a position', function () {
@@ -195,7 +195,8 @@ test('it can batch create positions', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreatePositionRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'positions';
     });
 });
 
@@ -216,7 +217,8 @@ test('it can batch update positions', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdatePositionRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'positions';
     });
 });
 
@@ -235,6 +237,7 @@ test('it can batch delete positions', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeletePositionRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'positions';
     });
 });

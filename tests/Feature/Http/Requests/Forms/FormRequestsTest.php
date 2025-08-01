@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Forms\CreateFormRequest;
 use Perscom\Http\Requests\Forms\DeleteFormRequest;
 use Perscom\Http\Requests\Forms\GetFormRequest;
 use Perscom\Http\Requests\Forms\GetFormsRequest;
-use Perscom\Http\Requests\Forms\SearchFormsRequest;
 use Perscom\Http\Requests\Forms\UpdateFormRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetFormsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchFormsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search forms', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchFormsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a form', function () {

@@ -7,18 +7,10 @@ namespace Perscom\Http\Resources;
 use Perscom\Contracts\Batchable;
 use Perscom\Contracts\ResourceContract;
 use Perscom\Contracts\Searchable;
-use Perscom\Data\FilterObject;
-use Perscom\Data\ResourceObject;
-use Perscom\Data\ScopeObject;
-use Perscom\Data\SortObject;
-use Perscom\Http\Requests\Users\BatchCreateUserRequest;
-use Perscom\Http\Requests\Users\BatchDeleteUserRequest;
-use Perscom\Http\Requests\Users\BatchUpdateUserRequest;
 use Perscom\Http\Requests\Users\CreateUserRequest;
 use Perscom\Http\Requests\Users\DeleteUserRequest;
 use Perscom\Http\Requests\Users\GetUserRequest;
 use Perscom\Http\Requests\Users\GetUsersRequest;
-use Perscom\Http\Requests\Users\SearchUsersRequest;
 use Perscom\Http\Requests\Users\UpdateUserRequest;
 use Perscom\Http\Resources\Users\AssignmentRecordsResource;
 use Perscom\Http\Resources\Users\AttachmentsResource;
@@ -31,12 +23,22 @@ use Perscom\Http\Resources\Users\RankRecordsResource;
 use Perscom\Http\Resources\Users\ServiceRecordsResource;
 use Perscom\Http\Resources\Users\StatusResource;
 use Perscom\Http\Resources\Users\TrainingRecordsResource;
+use Perscom\Traits\HasBatchEndpoints;
+use Perscom\Traits\HasSearchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
 class UserResource extends Resource implements Batchable, ResourceContract, Searchable
 {
+    use HasBatchEndpoints;
+    use HasSearchEndpoints;
+
+    public function getResource(): string
+    {
+        return 'users';
+    }
+
     /**
      * @param  string|array<string>  $include
      *
@@ -45,26 +47,6 @@ class UserResource extends Resource implements Batchable, ResourceContract, Sear
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetUsersRequest($include, $page, $limit));
-    }
-
-    /**
-     * @param  SortObject|array<SortObject>|null  $sort
-     * @param  FilterObject|array<FilterObject>|null  $filter
-     * @param  ScopeObject|array<ScopeObject>|null  $scope
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function search(
-        ?string $value = null,
-        SortObject|array|null $sort = null,
-        FilterObject|array|null $filter = null,
-        ScopeObject|array|null $scope = null,
-        string|array $include = [],
-        int $page = 1,
-        int $limit = 20,
-    ): Response {
-        return $this->connector->send(new SearchUsersRequest($value, $sort, $filter, $scope, $include, $page, $limit));
     }
 
     /**
@@ -103,36 +85,6 @@ class UserResource extends Resource implements Batchable, ResourceContract, Sear
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteUserRequest($id));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchCreate(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchCreateUserRequest($data));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchUpdate(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchUpdateUserRequest($data));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchDelete(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchDeleteUserRequest($data));
     }
 
     public function profile_photo(int $id): ProfilePhotoResource

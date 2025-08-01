@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\AssignmentRecords\BatchCreateAssignmentRecordRequest;
-use Perscom\Http\Requests\AssignmentRecords\BatchDeleteAssignmentRecordRequest;
-use Perscom\Http\Requests\AssignmentRecords\BatchUpdateAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\CreateAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\DeleteAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\GetAssignmentRecordRequest;
 use Perscom\Http\Requests\AssignmentRecords\GetAssignmentRecordsRequest;
 use Perscom\Http\Requests\AssignmentRecords\UpdateAssignmentRecordRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -38,19 +38,19 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteAssignmentRecordRequest::class => MockResponse::make([], 201),
-        BatchCreateAssignmentRecordRequest::class => MockResponse::make([
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateAssignmentRecordRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteAssignmentRecordRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -167,7 +167,8 @@ test('it can batch create assignment records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateAssignmentRecordRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'assignment-records';
     });
 });
 
@@ -188,7 +189,8 @@ test('it can batch update assignment records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateAssignmentRecordRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'assignment-records';
     });
 });
 
@@ -207,6 +209,7 @@ test('it can batch delete assignment records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteAssignmentRecordRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'assignment-records';
     });
 });

@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Attachments\CreateAttachmentRequest;
 use Perscom\Http\Requests\Attachments\DeleteAttachmentRequest;
 use Perscom\Http\Requests\Attachments\GetAttachmentRequest;
 use Perscom\Http\Requests\Attachments\GetAttachmentsRequest;
-use Perscom\Http\Requests\Attachments\SearchAttachmentsRequest;
 use Perscom\Http\Requests\Attachments\UpdateAttachmentRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Contracts\Body\HasBody;
@@ -24,7 +24,7 @@ beforeEach(function () {
         GetAttachmentsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchAttachmentsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -81,7 +81,7 @@ test('it can search attachments', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchAttachmentsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get an attachment', function () {

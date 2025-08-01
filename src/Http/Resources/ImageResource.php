@@ -6,21 +6,25 @@ namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
 use Perscom\Contracts\Searchable;
-use Perscom\Data\FilterObject;
-use Perscom\Data\ScopeObject;
-use Perscom\Data\SortObject;
 use Perscom\Http\Requests\Images\CreateImageRequest;
 use Perscom\Http\Requests\Images\DeleteImageRequest;
 use Perscom\Http\Requests\Images\GetImageRequest;
 use Perscom\Http\Requests\Images\GetImagesRequest;
-use Perscom\Http\Requests\Images\SearchImagesRequest;
 use Perscom\Http\Requests\Images\UpdateImageRequest;
+use Perscom\Traits\HasSearchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
 class ImageResource extends Resource implements ResourceContract, Searchable
 {
+    use HasSearchEndpoints;
+
+    public function getResource(): string
+    {
+        return 'images';
+    }
+
     /**
      * @param  string|array<string>  $include
      *
@@ -29,26 +33,6 @@ class ImageResource extends Resource implements ResourceContract, Searchable
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetImagesRequest($include, $page, $limit));
-    }
-
-    /**
-     * @param  SortObject|array<SortObject>|null  $sort
-     * @param  FilterObject|array<FilterObject>|null  $filter
-     * @param  ScopeObject|array<ScopeObject>|null  $scope
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function search(
-        ?string $value = null,
-        SortObject|array|null $sort = null,
-        FilterObject|array|null $filter = null,
-        ScopeObject|array|null $scope = null,
-        string|array $include = [],
-        int $page = 1,
-        int $limit = 20,
-    ): Response {
-        return $this->connector->send(new SearchImagesRequest($value, $sort, $filter, $scope, $include, $page, $limit));
     }
 
     /**

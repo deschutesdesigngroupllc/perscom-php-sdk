@@ -6,22 +6,26 @@ namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\ResourceContract;
 use Perscom\Contracts\Searchable;
-use Perscom\Data\FilterObject;
-use Perscom\Data\ScopeObject;
-use Perscom\Data\SortObject;
 use Perscom\Http\Requests\Submissions\CreateSubmissionRequest;
 use Perscom\Http\Requests\Submissions\DeleteSubmissionRequest;
 use Perscom\Http\Requests\Submissions\GetSubmissionRequest;
 use Perscom\Http\Requests\Submissions\GetSubmissionsRequest;
-use Perscom\Http\Requests\Submissions\SearchSubmissionsRequest;
 use Perscom\Http\Requests\Submissions\UpdateSubmissionRequest;
 use Perscom\Http\Resources\Submissions\StatusResource;
+use Perscom\Traits\HasSearchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
 class SubmissionResource extends Resource implements ResourceContract, Searchable
 {
+    use HasSearchEndpoints;
+
+    public function getResource(): string
+    {
+        return 'submissions';
+    }
+
     /**
      * @param  string|array<string>  $include
      *
@@ -30,26 +34,6 @@ class SubmissionResource extends Resource implements ResourceContract, Searchabl
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
     {
         return $this->connector->send(new GetSubmissionsRequest($include, $page, $limit));
-    }
-
-    /**
-     * @param  SortObject|array<SortObject>|null  $sort
-     * @param  FilterObject|array<FilterObject>|null  $filter
-     * @param  ScopeObject|array<ScopeObject>|null  $scope
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function search(
-        ?string $value = null,
-        SortObject|array|null $sort = null,
-        FilterObject|array|null $filter = null,
-        ScopeObject|array|null $scope = null,
-        string|array $include = [],
-        int $page = 1,
-        int $limit = 20,
-    ): Response {
-        return $this->connector->send(new SearchSubmissionsRequest($value, $sort, $filter, $scope, $include, $page, $limit));
     }
 
     /**

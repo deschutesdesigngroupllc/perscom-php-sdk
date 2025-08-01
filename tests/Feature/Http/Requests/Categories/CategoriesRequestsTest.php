@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Categories\CreateCategoryRequest;
 use Perscom\Http\Requests\Categories\DeleteCategoryRequest;
 use Perscom\Http\Requests\Categories\GetCategoriesRequest;
 use Perscom\Http\Requests\Categories\GetCategoryRequest;
-use Perscom\Http\Requests\Categories\SearchCategoriesRequest;
 use Perscom\Http\Requests\Categories\UpdateCategoryRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetCategoriesRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchCategoriesRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search categories', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchCategoriesRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a category', function () {

@@ -3,19 +3,19 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
 use Perscom\Http\Requests\Common\CreateImageRequest;
 use Perscom\Http\Requests\Common\DeleteImageRequest;
 use Perscom\Http\Requests\Common\GetImageRequest;
 use Perscom\Http\Requests\Common\UpdateImageRequest;
-use Perscom\Http\Requests\Groups\BatchCreateGroupRequest;
-use Perscom\Http\Requests\Groups\BatchDeleteGroupRequest;
-use Perscom\Http\Requests\Groups\BatchUpdateGroupRequest;
 use Perscom\Http\Requests\Groups\CreateGroupRequest;
 use Perscom\Http\Requests\Groups\DeleteGroupRequest;
 use Perscom\Http\Requests\Groups\GetGroupRequest;
 use Perscom\Http\Requests\Groups\GetGroupsRequest;
-use Perscom\Http\Requests\Groups\SearchGroupsRequest;
 use Perscom\Http\Requests\Groups\UpdateGroupRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -30,7 +30,7 @@ beforeEach(function () {
         GetGroupsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchGroupsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -51,19 +51,19 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteGroupRequest::class => MockResponse::make([], 201),
-        BatchCreateGroupRequest::class => MockResponse::make([
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateGroupRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteGroupRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -129,7 +129,7 @@ test('it can search groups', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchGroupsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a group', function () {
@@ -223,7 +223,8 @@ test('it can batch create groups', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateGroupRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'groups';
     });
 });
 
@@ -244,7 +245,8 @@ test('it can batch update groups', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateGroupRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'groups';
     });
 });
 
@@ -263,7 +265,8 @@ test('it can batch delete groups', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteGroupRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'groups';
     });
 });
 

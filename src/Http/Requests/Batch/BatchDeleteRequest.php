@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Perscom\Http\Requests;
+namespace Perscom\Http\Requests\Batch;
 
 use Illuminate\Support\Arr;
 use Perscom\Data\ResourceObject;
@@ -11,25 +11,25 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
-abstract class AbstractBatchCreateRequest extends Request implements HasBody
+class BatchDeleteRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
-    protected Method $method = Method::POST;
+    protected Method $method = Method::DELETE;
 
     /**
      * @param  ResourceObject|array<ResourceObject>  $data
      */
-    public function __construct(public ResourceObject|array $data)
-    {
+    public function __construct(
+        public string $resource,
+        public ResourceObject|array $data
+    ) {
         $this->data = Arr::wrap($this->data);
     }
 
-    abstract protected function getResource(): string;
-
     public function resolveEndpoint(): string
     {
-        return "{$this->getResource()}/batch";
+        return "{$this->resource}/batch";
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class AbstractBatchCreateRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         return [
-            'resources' => collect($this->data)->map(fn (ResourceObject $resourceObject): array => $resourceObject->toArray())->toArray(),
+            'resources' => collect($this->data)->map(fn (ResourceObject $object) => $object->id),
         ];
     }
 }

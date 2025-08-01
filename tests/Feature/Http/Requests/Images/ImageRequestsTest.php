@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Images\CreateImageRequest;
 use Perscom\Http\Requests\Images\DeleteImageRequest;
 use Perscom\Http\Requests\Images\GetImageRequest;
 use Perscom\Http\Requests\Images\GetImagesRequest;
-use Perscom\Http\Requests\Images\SearchImagesRequest;
 use Perscom\Http\Requests\Images\UpdateImageRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Contracts\Body\HasBody;
@@ -24,7 +24,7 @@ beforeEach(function () {
         GetImagesRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchImagesRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -81,7 +81,7 @@ test('it can search images', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchImagesRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get an image', function () {

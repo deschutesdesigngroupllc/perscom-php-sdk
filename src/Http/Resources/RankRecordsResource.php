@@ -6,15 +6,12 @@ namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\Batchable;
 use Perscom\Contracts\ResourceContract;
-use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\RankRecords\BatchCreateRankRecordRequest;
-use Perscom\Http\Requests\RankRecords\BatchDeleteRankRecordRequest;
-use Perscom\Http\Requests\RankRecords\BatchUpdateRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\CreateRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\DeleteRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\GetRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\GetRankRecordsRequest;
 use Perscom\Http\Requests\RankRecords\UpdateRankRecordRequest;
+use Perscom\Traits\HasBatchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Connector;
@@ -22,9 +19,16 @@ use Saloon\Http\Response;
 
 class RankRecordsResource extends Resource implements Batchable, ResourceContract
 {
+    use HasBatchEndpoints;
+
     public function __construct(protected Connector $connector)
     {
         parent::__construct($connector);
+    }
+
+    public function getResource(): string
+    {
+        return 'rank-records';
     }
 
     /**
@@ -73,35 +77,5 @@ class RankRecordsResource extends Resource implements Batchable, ResourceContrac
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteRankRecordRequest($id));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchCreate(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchCreateRankRecordRequest($data));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchUpdate(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchUpdateRankRecordRequest($data));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchDelete(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchDeleteRankRecordRequest($data));
     }
 }

@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\Users\BatchCreateUserRequest;
-use Perscom\Http\Requests\Users\BatchDeleteUserRequest;
-use Perscom\Http\Requests\Users\BatchUpdateUserRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\Http\Requests\Users\CreateUserRequest;
 use Perscom\Http\Requests\Users\DeleteUserRequest;
 use Perscom\Http\Requests\Users\GetUserRequest;
 use Perscom\Http\Requests\Users\GetUsersRequest;
-use Perscom\Http\Requests\Users\SearchUsersRequest;
 use Perscom\Http\Requests\Users\UpdateUserRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -26,7 +26,7 @@ beforeEach(function () {
         GetUsersRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchUsersRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -48,19 +48,19 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteUserRequest::class => MockResponse::make([], 201),
-        BatchCreateUserRequest::class => MockResponse::make([
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateUserRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteUserRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -103,7 +103,7 @@ test('it can search users', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchUsersRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a user', function () {
@@ -197,7 +197,8 @@ test('it can batch create users', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateUserRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'users';
     });
 });
 
@@ -218,7 +219,8 @@ test('it can batch update users', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateUserRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'users';
     });
 });
 
@@ -237,6 +239,7 @@ test('it can batch delete users', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteUserRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'users';
     });
 });

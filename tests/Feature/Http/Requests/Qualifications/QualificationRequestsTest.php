@@ -3,19 +3,19 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
 use Perscom\Http\Requests\Common\CreateImageRequest;
 use Perscom\Http\Requests\Common\DeleteImageRequest;
 use Perscom\Http\Requests\Common\GetImageRequest;
 use Perscom\Http\Requests\Common\UpdateImageRequest;
-use Perscom\Http\Requests\Qualifications\BatchCreateQualificationRequest;
-use Perscom\Http\Requests\Qualifications\BatchDeleteQualificationRequest;
-use Perscom\Http\Requests\Qualifications\BatchUpdateQualificationRequest;
 use Perscom\Http\Requests\Qualifications\CreateQualificationRequest;
 use Perscom\Http\Requests\Qualifications\DeleteQualificationRequest;
 use Perscom\Http\Requests\Qualifications\GetQualificationRequest;
 use Perscom\Http\Requests\Qualifications\GetQualificationsRequest;
-use Perscom\Http\Requests\Qualifications\SearchQualificationsRequest;
 use Perscom\Http\Requests\Qualifications\UpdateQualificationRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -30,7 +30,7 @@ beforeEach(function () {
         GetQualificationsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchQualificationsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -51,19 +51,19 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteQualificationRequest::class => MockResponse::make([], 201),
-        BatchCreateQualificationRequest::class => MockResponse::make([
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateQualificationRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteQualificationRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -129,7 +129,7 @@ test('it can search qualifications', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchQualificationsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a qualification', function () {
@@ -223,7 +223,8 @@ test('it can batch create qualifications', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateQualificationRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'qualifications';
     });
 });
 
@@ -244,7 +245,8 @@ test('it can batch update qualifications', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateQualificationRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'qualifications';
     });
 });
 
@@ -263,7 +265,8 @@ test('it can batch delete qualifications', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteQualificationRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'qualifications';
     });
 });
 

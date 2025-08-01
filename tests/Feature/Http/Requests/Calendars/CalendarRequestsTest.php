@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Calendars\CreateCalendarRequest;
 use Perscom\Http\Requests\Calendars\DeleteCalendarRequest;
 use Perscom\Http\Requests\Calendars\GetCalendarRequest;
 use Perscom\Http\Requests\Calendars\GetCalendarsRequest;
-use Perscom\Http\Requests\Calendars\SearchCalendarsRequest;
 use Perscom\Http\Requests\Calendars\UpdateCalendarRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetCalendarsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchCalendarsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search calendars', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchCalendarsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a calendar', function () {

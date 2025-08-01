@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\Http\Requests\Tasks\CreateTaskRequest;
 use Perscom\Http\Requests\Tasks\DeleteTaskRequest;
 use Perscom\Http\Requests\Tasks\GetTaskRequest;
 use Perscom\Http\Requests\Tasks\GetTasksRequest;
-use Perscom\Http\Requests\Tasks\SearchTasksRequest;
 use Perscom\Http\Requests\Tasks\UpdateTaskRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetTasksRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchTasksRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search tasks', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchTasksRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a task', function () {

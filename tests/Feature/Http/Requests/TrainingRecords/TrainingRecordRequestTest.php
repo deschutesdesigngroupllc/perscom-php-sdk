@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\TrainingRecords\BatchCreateTrainingRecordRequest;
-use Perscom\Http\Requests\TrainingRecords\BatchDeleteTrainingRecordRequest;
-use Perscom\Http\Requests\TrainingRecords\BatchUpdateTrainingRecordRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
 use Perscom\Http\Requests\TrainingRecords\CreateTrainingRecordRequest;
 use Perscom\Http\Requests\TrainingRecords\DeleteTrainingRecordRequest;
 use Perscom\Http\Requests\TrainingRecords\GetTrainingRecordRequest;
@@ -38,19 +38,19 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteTrainingRecordRequest::class => MockResponse::make([], 201),
-        BatchCreateTrainingRecordRequest::class => MockResponse::make([
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateTrainingRecordRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteTrainingRecordRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -167,7 +167,8 @@ test('it can batch create training records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateTrainingRecordRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'training-records';
     });
 });
 
@@ -188,7 +189,8 @@ test('it can batch update training records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateTrainingRecordRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'training-records';
     });
 });
 
@@ -207,6 +209,7 @@ test('it can batch delete training records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteTrainingRecordRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'training-records';
     });
 });

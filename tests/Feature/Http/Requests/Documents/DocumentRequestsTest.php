@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Documents\CreateDocumentRequest;
 use Perscom\Http\Requests\Documents\DeleteDocumentRequest;
 use Perscom\Http\Requests\Documents\GetDocumentRequest;
 use Perscom\Http\Requests\Documents\GetDocumentsRequest;
-use Perscom\Http\Requests\Documents\SearchDocumentsRequest;
 use Perscom\Http\Requests\Documents\UpdateDocumentRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetDocumentsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchDocumentsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search documents', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchDocumentsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a document', function () {

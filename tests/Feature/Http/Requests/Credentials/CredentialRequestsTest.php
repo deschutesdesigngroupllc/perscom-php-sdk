@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Credentials\CreateCredentialRequest;
 use Perscom\Http\Requests\Credentials\DeleteCredentialRequest;
 use Perscom\Http\Requests\Credentials\GetCredentialRequest;
 use Perscom\Http\Requests\Credentials\GetCredentialsRequest;
-use Perscom\Http\Requests\Credentials\SearchCredentialsRequest;
 use Perscom\Http\Requests\Credentials\UpdateCredentialRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetCredentialsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchCredentialsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search credentials', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchCredentialsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a credential', function () {

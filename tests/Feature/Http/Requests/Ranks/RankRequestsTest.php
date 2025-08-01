@@ -3,19 +3,19 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
 use Perscom\Http\Requests\Common\CreateImageRequest;
 use Perscom\Http\Requests\Common\DeleteImageRequest;
 use Perscom\Http\Requests\Common\GetImageRequest;
 use Perscom\Http\Requests\Common\UpdateImageRequest;
-use Perscom\Http\Requests\Ranks\BatchCreateRankRequest;
-use Perscom\Http\Requests\Ranks\BatchDeleteRankRequest;
-use Perscom\Http\Requests\Ranks\BatchUpdateRankRequest;
 use Perscom\Http\Requests\Ranks\CreateRankRequest;
 use Perscom\Http\Requests\Ranks\DeleteRankRequest;
 use Perscom\Http\Requests\Ranks\GetRankRequest;
 use Perscom\Http\Requests\Ranks\GetRanksRequest;
-use Perscom\Http\Requests\Ranks\SearchRanksRequest;
 use Perscom\Http\Requests\Ranks\UpdateRankRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -30,7 +30,7 @@ beforeEach(function () {
         GetRanksRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchRanksRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -51,19 +51,19 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteRankRequest::class => MockResponse::make([], 201),
-        BatchCreateRankRequest::class => MockResponse::make([
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateRankRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteRankRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -129,7 +129,7 @@ test('it can search ranks', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchRanksRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a rank', function () {
@@ -223,7 +223,8 @@ test('it can batch create ranks', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateRankRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'ranks';
     });
 });
 
@@ -244,7 +245,8 @@ test('it can batch update ranks', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateRankRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'ranks';
     });
 });
 
@@ -263,7 +265,8 @@ test('it can batch delete ranks', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteRankRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'ranks';
     });
 });
 

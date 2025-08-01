@@ -10,8 +10,8 @@ use Perscom\Http\Requests\Events\CreateEventRequest;
 use Perscom\Http\Requests\Events\DeleteEventRequest;
 use Perscom\Http\Requests\Events\GetEventRequest;
 use Perscom\Http\Requests\Events\GetEventsRequest;
-use Perscom\Http\Requests\Events\SearchEventsRequest;
 use Perscom\Http\Requests\Events\UpdateEventRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -26,7 +26,7 @@ beforeEach(function () {
         GetEventsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchEventsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -107,7 +107,7 @@ test('it can search events', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchEventsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get an event', function () {

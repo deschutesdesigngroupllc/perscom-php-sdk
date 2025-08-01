@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Announcements\CreateAnnouncementRequest;
 use Perscom\Http\Requests\Announcements\DeleteAnnouncementRequest;
 use Perscom\Http\Requests\Announcements\GetAnnouncementRequest;
 use Perscom\Http\Requests\Announcements\GetAnnouncementsRequest;
-use Perscom\Http\Requests\Announcements\SearchAnnouncementsRequest;
 use Perscom\Http\Requests\Announcements\UpdateAnnouncementRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetAnnouncementsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchAnnouncementsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search announcements', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchAnnouncementsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get an announcement', function () {

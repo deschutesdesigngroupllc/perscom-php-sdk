@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Comments\CreateCommentRequest;
 use Perscom\Http\Requests\Comments\DeleteCommentRequest;
 use Perscom\Http\Requests\Comments\GetCommentRequest;
 use Perscom\Http\Requests\Comments\GetCommentsRequest;
-use Perscom\Http\Requests\Comments\SearchCommentsRequest;
 use Perscom\Http\Requests\Comments\UpdateCommentRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetCommentsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchCommentsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search comments', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchCommentsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get an comment', function () {

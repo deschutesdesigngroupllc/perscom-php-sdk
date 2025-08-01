@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Messages\CreateMessageRequest;
 use Perscom\Http\Requests\Messages\DeleteMessageRequest;
 use Perscom\Http\Requests\Messages\GetMessageRequest;
 use Perscom\Http\Requests\Messages\GetMessagesRequest;
-use Perscom\Http\Requests\Messages\SearchMessagesRequest;
 use Perscom\Http\Requests\Messages\UpdateMessageRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetMessagesRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchMessagesRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search messages', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchMessagesRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get an message', function () {

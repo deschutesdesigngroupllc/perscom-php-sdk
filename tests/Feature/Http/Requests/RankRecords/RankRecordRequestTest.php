@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\RankRecords\BatchCreateRankRecordRequest;
-use Perscom\Http\Requests\RankRecords\BatchDeleteRankRecordRequest;
-use Perscom\Http\Requests\RankRecords\BatchUpdateRankRecordRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
 use Perscom\Http\Requests\RankRecords\CreateRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\DeleteRankRecordRequest;
 use Perscom\Http\Requests\RankRecords\GetRankRecordRequest;
@@ -38,19 +38,19 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteRankRecordRequest::class => MockResponse::make([], 201),
-        BatchCreateRankRecordRequest::class => MockResponse::make([
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateRankRecordRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteRankRecordRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -167,7 +167,8 @@ test('it can batch create rank records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateRankRecordRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'rank-records';
     });
 });
 
@@ -188,7 +189,8 @@ test('it can batch update rank records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateRankRecordRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'rank-records';
     });
 });
 
@@ -207,6 +209,7 @@ test('it can batch delete rank records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteRankRecordRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'rank-records';
     });
 });

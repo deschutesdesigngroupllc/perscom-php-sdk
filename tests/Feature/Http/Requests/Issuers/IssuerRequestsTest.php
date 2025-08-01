@@ -6,8 +6,8 @@ use Perscom\Http\Requests\Issuers\CreateIssuerRequest;
 use Perscom\Http\Requests\Issuers\DeleteIssuerRequest;
 use Perscom\Http\Requests\Issuers\GetIssuerRequest;
 use Perscom\Http\Requests\Issuers\GetIssuersRequest;
-use Perscom\Http\Requests\Issuers\SearchIssuersRequest;
 use Perscom\Http\Requests\Issuers\UpdateIssuerRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,7 +22,7 @@ beforeEach(function () {
         GetIssuersRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchIssuersRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -79,7 +79,7 @@ test('it can search issuers', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchIssuersRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get an issuer', function () {

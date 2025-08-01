@@ -3,18 +3,18 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
 use Perscom\Http\Requests\Common\CreateImageRequest;
 use Perscom\Http\Requests\Common\DeleteImageRequest;
 use Perscom\Http\Requests\Common\GetImageRequest;
 use Perscom\Http\Requests\Common\UpdateImageRequest;
-use Perscom\Http\Requests\Units\BatchCreateUnitRequest;
-use Perscom\Http\Requests\Units\BatchDeleteUnitRequest;
-use Perscom\Http\Requests\Units\BatchUpdateUnitRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\Http\Requests\Units\CreateUnitRequest;
 use Perscom\Http\Requests\Units\DeleteUnitRequest;
 use Perscom\Http\Requests\Units\GetUnitRequest;
 use Perscom\Http\Requests\Units\GetUnitsRequest;
-use Perscom\Http\Requests\Units\SearchUnitsRequest;
 use Perscom\Http\Requests\Units\UpdateUnitRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -30,7 +30,7 @@ beforeEach(function () {
         GetUnitsRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchUnitsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -51,19 +51,19 @@ beforeEach(function () {
             'name' => 'foo',
         ]),
         DeleteUnitRequest::class => MockResponse::make([], 201),
-        BatchCreateUnitRequest::class => MockResponse::make([
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateUnitRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteUnitRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -129,7 +129,7 @@ test('it can search units', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchUnitsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a unit', function () {
@@ -223,7 +223,8 @@ test('it can batch create units', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateUnitRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'units';
     });
 });
 
@@ -244,7 +245,8 @@ test('it can batch update units', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateUnitRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'units';
     });
 });
 
@@ -263,7 +265,8 @@ test('it can batch delete units', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteUnitRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'units';
     });
 });
 

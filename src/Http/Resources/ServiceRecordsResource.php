@@ -6,15 +6,12 @@ namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\Batchable;
 use Perscom\Contracts\ResourceContract;
-use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\ServiceRecords\BatchCreateServiceRecordRequest;
-use Perscom\Http\Requests\ServiceRecords\BatchDeleteServiceRecordRequest;
-use Perscom\Http\Requests\ServiceRecords\BatchUpdateServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\CreateServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\DeleteServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\GetServiceRecordRequest;
 use Perscom\Http\Requests\ServiceRecords\GetServiceRecordsRequest;
 use Perscom\Http\Requests\ServiceRecords\UpdateServiceRecordRequest;
+use Perscom\Traits\HasBatchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Connector;
@@ -22,9 +19,16 @@ use Saloon\Http\Response;
 
 class ServiceRecordsResource extends Resource implements Batchable, ResourceContract
 {
+    use HasBatchEndpoints;
+
     public function __construct(protected Connector $connector)
     {
         parent::__construct($connector);
+    }
+
+    public function getResource(): string
+    {
+        return 'service-records';
     }
 
     /**
@@ -73,35 +77,5 @@ class ServiceRecordsResource extends Resource implements Batchable, ResourceCont
     public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteServiceRecordRequest($id));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchCreate(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchCreateServiceRecordRequest($data));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchUpdate(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchUpdateServiceRecordRequest($data));
-    }
-
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchDelete(ResourceObject|array $data): Response
-    {
-        return $this->connector->send(new BatchDeleteServiceRecordRequest($data));
     }
 }
