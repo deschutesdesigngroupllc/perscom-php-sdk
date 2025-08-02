@@ -5,11 +5,11 @@ declare(strict_types=1);
 use Perscom\Http\Requests\Batch\BatchCreateRequest;
 use Perscom\Http\Requests\Batch\BatchDeleteRequest;
 use Perscom\Http\Requests\Batch\BatchUpdateRequest;
-use Perscom\Http\Requests\Crud\CreateRequest;
 use Perscom\Http\Requests\Crud\DeleteRequest;
 use Perscom\Http\Requests\Crud\GetAllRequest;
 use Perscom\Http\Requests\Crud\GetRequest;
-use Perscom\Http\Requests\Crud\UpdateRequest;
+use Perscom\Http\Requests\Multipart\CreateMultipartRequest;
+use Perscom\Http\Requests\Multipart\UpdateMultipartRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -39,11 +39,11 @@ beforeEach(function () {
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateRequest::class => MockResponse::make([
+        CreateMultipartRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateRequest::class => MockResponse::make([
+        UpdateMultipartRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
@@ -143,7 +143,7 @@ test('it can create an image', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateRequest
+        return $request instanceof CreateMultipartRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -163,7 +163,7 @@ test('it can update an image', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateRequest
+        return $request instanceof UpdateMultipartRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });

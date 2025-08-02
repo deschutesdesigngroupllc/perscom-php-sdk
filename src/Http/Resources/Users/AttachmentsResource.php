@@ -12,6 +12,7 @@ use Perscom\Http\Resources\Resource;
 use Perscom\Traits\HasAttachEndpoints;
 use Perscom\Traits\HasBatchEndpoints;
 use Perscom\Traits\HasCrudEndpoints;
+use Perscom\Traits\HasMultipartCrudEndpoints;
 use Perscom\Traits\HasSearchEndpoints;
 use Saloon\Http\Connector;
 
@@ -20,6 +21,10 @@ class AttachmentsResource extends Resource implements Attachable, Batchable, Cru
     use HasAttachEndpoints;
     use HasBatchEndpoints;
     use HasCrudEndpoints;
+    use HasMultipartCrudEndpoints {
+        HasMultipartCrudEndpoints::create insteadof HasCrudEndpoints;
+        HasMultipartCrudEndpoints::update insteadof HasCrudEndpoints;
+    }
     use HasSearchEndpoints;
 
     public function __construct(protected Connector $connector, protected string $resource)
