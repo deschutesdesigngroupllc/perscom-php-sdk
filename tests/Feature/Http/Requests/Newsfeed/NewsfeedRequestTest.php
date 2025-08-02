@@ -1,7 +1,7 @@
 
 <?php
 
-use Perscom\Http\Requests\Newsfeed\GetNewsfeedRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -12,7 +12,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetNewsfeedRequest::class => MockResponse::make(),
+        GetAllRequest::class => MockResponse::make(),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -25,5 +25,5 @@ test('it can get the newsfeed', function () {
     expect($response->status())->toEqual(200)
         ->and($response)->toBeInstanceOf(Response::class);
 
-    $this->mockClient->assertSent(GetNewsfeedRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });

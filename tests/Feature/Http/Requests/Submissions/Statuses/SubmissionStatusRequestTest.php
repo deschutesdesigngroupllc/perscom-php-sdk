@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\Submissions\Statuses\AttachSubmissionStatusRequest;
-use Perscom\Http\Requests\Submissions\Statuses\DetachSubmissionStatusRequest;
-use Perscom\Http\Requests\Submissions\Statuses\SyncSubmissionStatusRequest;
+use Perscom\Http\Requests\Attach\AttachRequest;
+use Perscom\Http\Requests\Attach\DetachRequest;
+use Perscom\Http\Requests\Attach\SyncRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -16,13 +16,13 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        AttachSubmissionStatusRequest::class => MockResponse::make([
+        AttachRequest::class => MockResponse::make([
             'attached' => [1],
         ]),
-        DetachSubmissionStatusRequest::class => MockResponse::make([
+        DetachRequest::class => MockResponse::make([
             'detached' => [1],
         ]),
-        SyncSubmissionStatusRequest::class => MockResponse::make([
+        SyncRequest::class => MockResponse::make([
             'attached' => [1],
             'detached' => [],
             'updated' => [],
@@ -45,7 +45,7 @@ test('it can attach a status', function () {
             'attached' => [1],
         ]);
 
-    $this->mockClient->assertSent(AttachSubmissionStatusRequest::class);
+    $this->mockClient->assertSent(AttachRequest::class);
 });
 
 test('it can detach a status', function () {
@@ -60,7 +60,7 @@ test('it can detach a status', function () {
             'detached' => [1],
         ]);
 
-    $this->mockClient->assertSent(DetachSubmissionStatusRequest::class);
+    $this->mockClient->assertSent(DetachRequest::class);
 });
 
 test('it can sync a status', function () {
@@ -77,5 +77,5 @@ test('it can sync a status', function () {
             'updated' => [],
         ]);
 
-    $this->mockClient->assertSent(SyncSubmissionStatusRequest::class);
+    $this->mockClient->assertSent(SyncRequest::class);
 });

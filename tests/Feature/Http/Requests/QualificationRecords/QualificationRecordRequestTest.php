@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\QualificationRecords\BatchCreateQualificationRecordRequest;
-use Perscom\Http\Requests\QualificationRecords\BatchDeleteQualificationRecordRequest;
-use Perscom\Http\Requests\QualificationRecords\BatchUpdateQualificationRecordRequest;
-use Perscom\Http\Requests\QualificationRecords\CreateQualificationRecordRequest;
-use Perscom\Http\Requests\QualificationRecords\DeleteQualificationRecordRequest;
-use Perscom\Http\Requests\QualificationRecords\GetQualificationRecordRequest;
-use Perscom\Http\Requests\QualificationRecords\GetQualificationRecordsRequest;
-use Perscom\Http\Requests\QualificationRecords\UpdateQualificationRecordRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,35 +22,35 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetQualificationRecordsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        GetQualificationRecordRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateQualificationRecordRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateQualificationRecordRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteQualificationRecordRequest::class => MockResponse::make([], 201),
-        BatchCreateQualificationRecordRequest::class => MockResponse::make([
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateQualificationRecordRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteQualificationRecordRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -73,7 +73,7 @@ test('it can get all qualification records', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetQualificationRecordsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can get a qualification record', function () {
@@ -89,7 +89,7 @@ test('it can get a qualification record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetQualificationRecordRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -109,7 +109,7 @@ test('it can create a qualification record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateQualificationRecordRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -129,7 +129,7 @@ test('it can update a qualification record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateQualificationRecordRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -145,7 +145,7 @@ test('it can delete a qualification record', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteQualificationRecordRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });
@@ -167,7 +167,8 @@ test('it can batch create qualification records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateQualificationRecordRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'qualification-records';
     });
 });
 
@@ -188,7 +189,8 @@ test('it can batch update qualification records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateQualificationRecordRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'qualification-records';
     });
 });
 
@@ -207,6 +209,7 @@ test('it can batch delete qualification records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteQualificationRecordRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'qualification-records';
     });
 });

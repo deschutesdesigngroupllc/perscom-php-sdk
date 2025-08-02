@@ -9,10 +9,8 @@ use Perscom\Exceptions\PaymentRequiredException;
 use Perscom\Exceptions\RateLimitException;
 use Perscom\Exceptions\ServerErrorException;
 use Perscom\Exceptions\ServiceUnavailableException;
-use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordRequest;
-use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordsRequest;
-use Perscom\Http\Requests\Users\GetUserRequest;
-use Perscom\Http\Requests\Users\GetUsersRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -131,7 +129,7 @@ test('it will throw a service unavailable exception', function () {
 
 test('it will send the proper parameters in a get all request', function () {
     $mockClient = new MockClient([
-        GetUsersRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
     ]);
@@ -141,7 +139,7 @@ test('it will send the proper parameters in a get all request', function () {
     $connector->users()->all(['rank'], 5, 2);
 
     $mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetUsersRequest
+        return $request instanceof GetAllRequest
             && $request->query() instanceof ArrayStore
             && $request->query()->all() === [
                 'limit' => 2,
@@ -153,7 +151,7 @@ test('it will send the proper parameters in a get all request', function () {
 
 test('it will send the proper parameters in a get request', function () {
     $mockClient = new MockClient([
-        GetUserRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
     ]);
@@ -163,7 +161,7 @@ test('it will send the proper parameters in a get request', function () {
     $connector->users()->get(1, ['rank']);
 
     $mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetUserRequest
+        return $request instanceof GetRequest
             && $request->id === 1
             && $request->query() instanceof ArrayStore
             && $request->query()->all() === [
@@ -174,7 +172,7 @@ test('it will send the proper parameters in a get request', function () {
 
 test('it will send the proper parameters in a relational get all request', function () {
     $mockClient = new MockClient([
-        GetUserAssignmentRecordsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
     ]);
@@ -184,8 +182,8 @@ test('it will send the proper parameters in a relational get all request', funct
     $connector->users()->assignment_records(1)->all(['rank'], 5, 2);
 
     $mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetUserAssignmentRecordsRequest
-            && $request->relationId === 1
+        return $request instanceof GetAllRequest
+            && $request->resource === 'users/1/assignment-records'
             && $request->query() instanceof ArrayStore
             && $request->query()->all() === [
                 'limit' => 2,
@@ -197,7 +195,7 @@ test('it will send the proper parameters in a relational get all request', funct
 
 test('it will send the proper parameters in a relational get request', function () {
     $mockClient = new MockClient([
-        GetUserAssignmentRecordRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
     ]);
@@ -207,9 +205,8 @@ test('it will send the proper parameters in a relational get request', function 
     $connector->users()->assignment_records(1)->get(1, ['rank']);
 
     $mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetUserAssignmentRecordRequest
-            && $request->relationId === 1
-            && $request->resourceId === 1
+        return $request instanceof GetRequest
+            && $request->resource === 'users/1/assignment-records'
             && $request->query() instanceof ArrayStore
             && $request->query()->all() === [
                 'include' => 'rank',

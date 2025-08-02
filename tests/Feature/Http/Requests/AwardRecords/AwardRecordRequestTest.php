@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\AwardRecords\BatchCreateAwardRecordRequest;
-use Perscom\Http\Requests\AwardRecords\BatchDeleteAwardRecordRequest;
-use Perscom\Http\Requests\AwardRecords\BatchUpdateAwardRecordRequest;
-use Perscom\Http\Requests\AwardRecords\CreateAwardRecordRequest;
-use Perscom\Http\Requests\AwardRecords\DeleteAwardRecordRequest;
-use Perscom\Http\Requests\AwardRecords\GetAwardRecordRequest;
-use Perscom\Http\Requests\AwardRecords\GetAwardRecordsRequest;
-use Perscom\Http\Requests\AwardRecords\UpdateAwardRecordRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,35 +22,35 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetAwardRecordsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        GetAwardRecordRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateAwardRecordRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateAwardRecordRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteAwardRecordRequest::class => MockResponse::make([], 201),
-        BatchCreateAwardRecordRequest::class => MockResponse::make([
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateAwardRecordRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteAwardRecordRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -73,7 +73,7 @@ test('it can get all award records', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetAwardRecordsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can get an award record', function () {
@@ -89,7 +89,7 @@ test('it can get an award record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetAwardRecordRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -109,7 +109,7 @@ test('it can create an award record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateAwardRecordRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -129,7 +129,7 @@ test('it can update an award record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateAwardRecordRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -145,7 +145,7 @@ test('it can delete an award record', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteAwardRecordRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });
@@ -167,7 +167,8 @@ test('it can batch create award records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateAwardRecordRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'award-records';
     });
 });
 
@@ -188,7 +189,8 @@ test('it can batch update award records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateAwardRecordRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'award-records';
     });
 });
 
@@ -207,6 +209,7 @@ test('it can batch delete award records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteAwardRecordRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'award-records';
     });
 });

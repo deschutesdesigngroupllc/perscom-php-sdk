@@ -3,19 +3,19 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\Common\CreateImageRequest;
-use Perscom\Http\Requests\Common\DeleteImageRequest;
-use Perscom\Http\Requests\Common\GetImageRequest;
-use Perscom\Http\Requests\Common\UpdateImageRequest;
-use Perscom\Http\Requests\Units\BatchCreateUnitRequest;
-use Perscom\Http\Requests\Units\BatchDeleteUnitRequest;
-use Perscom\Http\Requests\Units\BatchUpdateUnitRequest;
-use Perscom\Http\Requests\Units\CreateUnitRequest;
-use Perscom\Http\Requests\Units\DeleteUnitRequest;
-use Perscom\Http\Requests\Units\GetUnitRequest;
-use Perscom\Http\Requests\Units\GetUnitsRequest;
-use Perscom\Http\Requests\Units\SearchUnitsRequest;
-use Perscom\Http\Requests\Units\UpdateUnitRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
+use Perscom\Http\Requests\Image\CreateImageRequest;
+use Perscom\Http\Requests\Image\DeleteImageRequest;
+use Perscom\Http\Requests\Image\GetImageRequest;
+use Perscom\Http\Requests\Image\UpdateImageRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -27,10 +27,10 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetUnitsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchUnitsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -38,32 +38,32 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetUnitRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateUnitRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateUnitRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteUnitRequest::class => MockResponse::make([], 201),
-        BatchCreateUnitRequest::class => MockResponse::make([
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateUnitRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteUnitRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -110,7 +110,7 @@ test('it can get all units', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetUnitsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search units', function () {
@@ -129,7 +129,7 @@ test('it can search units', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchUnitsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get a unit', function () {
@@ -145,7 +145,7 @@ test('it can get a unit', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetUnitRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -165,7 +165,7 @@ test('it can create a unit', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateUnitRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -185,7 +185,7 @@ test('it can update a unit', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateUnitRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -201,7 +201,7 @@ test('it can delete a unit', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteUnitRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });
@@ -223,7 +223,8 @@ test('it can batch create units', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateUnitRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'units';
     });
 });
 
@@ -244,7 +245,8 @@ test('it can batch update units', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateUnitRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'units';
     });
 });
 
@@ -263,7 +265,8 @@ test('it can batch delete units', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteUnitRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'units';
     });
 });
 

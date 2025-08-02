@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-use Perscom\Http\Requests\Attachments\CreateAttachmentRequest;
-use Perscom\Http\Requests\Attachments\DeleteAttachmentRequest;
-use Perscom\Http\Requests\Attachments\GetAttachmentRequest;
-use Perscom\Http\Requests\Attachments\GetAttachmentsRequest;
-use Perscom\Http\Requests\Attachments\SearchAttachmentsRequest;
-use Perscom\Http\Requests\Attachments\UpdateAttachmentRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Multipart\CreateMultipartRequest;
+use Perscom\Http\Requests\Multipart\UpdateMultipartRequest;
+use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Contracts\Body\HasBody;
@@ -21,10 +24,10 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetAttachmentsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        SearchAttachmentsRequest::class => MockResponse::make([
+        SearchRequest::class => MockResponse::make([
             'data' => [
                 [
                     'id' => 1,
@@ -32,19 +35,37 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetAttachmentRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateAttachmentRequest::class => MockResponse::make([
+        CreateMultipartRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateAttachmentRequest::class => MockResponse::make([
+        UpdateMultipartRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteAttachmentRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -62,7 +83,7 @@ test('it can get all attachments', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetAttachmentsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search attachments', function () {
@@ -81,7 +102,7 @@ test('it can search attachments', function () {
             ],
         ]);
 
-    $this->mockClient->assertSent(SearchAttachmentsRequest::class);
+    $this->mockClient->assertSent(SearchRequest::class);
 });
 
 test('it can get an attachment', function () {
@@ -97,7 +118,7 @@ test('it can get an attachment', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetAttachmentRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -122,7 +143,7 @@ test('it can create an attachment', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateAttachmentRequest
+        return $request instanceof CreateMultipartRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -142,7 +163,7 @@ test('it can update an attachment', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateAttachmentRequest
+        return $request instanceof UpdateMultipartRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -158,7 +179,7 @@ test('it can delete an attachment', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteAttachmentRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

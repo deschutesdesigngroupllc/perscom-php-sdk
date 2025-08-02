@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\TrainingRecords\BatchCreateTrainingRecordRequest;
-use Perscom\Http\Requests\TrainingRecords\BatchDeleteTrainingRecordRequest;
-use Perscom\Http\Requests\TrainingRecords\BatchUpdateTrainingRecordRequest;
-use Perscom\Http\Requests\TrainingRecords\CreateTrainingRecordRequest;
-use Perscom\Http\Requests\TrainingRecords\DeleteTrainingRecordRequest;
-use Perscom\Http\Requests\TrainingRecords\GetTrainingRecordRequest;
-use Perscom\Http\Requests\TrainingRecords\GetTrainingRecordsRequest;
-use Perscom\Http\Requests\TrainingRecords\UpdateTrainingRecordRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,35 +22,35 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetTrainingRecordsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        GetTrainingRecordRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateTrainingRecordRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateTrainingRecordRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteTrainingRecordRequest::class => MockResponse::make([], 201),
-        BatchCreateTrainingRecordRequest::class => MockResponse::make([
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchUpdateTrainingRecordRequest::class => MockResponse::make([
+        BatchUpdateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
             ],
         ]),
-        BatchDeleteTrainingRecordRequest::class => MockResponse::make([
+        BatchDeleteRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
                 'name' => 'foo',
@@ -73,7 +73,7 @@ test('it can get all training records', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetTrainingRecordsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can get a training record', function () {
@@ -89,7 +89,7 @@ test('it can get a training record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetTrainingRecordRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -109,7 +109,7 @@ test('it can create a training record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateTrainingRecordRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -129,7 +129,7 @@ test('it can update a training record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateTrainingRecordRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -145,7 +145,7 @@ test('it can delete a training record', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteTrainingRecordRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });
@@ -167,7 +167,8 @@ test('it can batch create training records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchCreateTrainingRecordRequest;
+        return $request instanceof BatchCreateRequest
+            && $request->resource === 'training-records';
     });
 });
 
@@ -188,7 +189,8 @@ test('it can batch update training records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchUpdateTrainingRecordRequest;
+        return $request instanceof BatchUpdateRequest
+            && $request->resource === 'training-records';
     });
 });
 
@@ -207,6 +209,7 @@ test('it can batch delete training records', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof BatchDeleteTrainingRecordRequest;
+        return $request instanceof BatchDeleteRequest
+            && $request->resource === 'training-records';
     });
 });

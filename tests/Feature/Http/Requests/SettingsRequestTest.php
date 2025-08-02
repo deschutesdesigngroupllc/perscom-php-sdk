@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Perscom\Http\Requests\SettingsRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -13,7 +13,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        SettingsRequest::class => MockResponse::make(),
+        GetAllRequest::class => MockResponse::make(),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -26,5 +26,5 @@ test('it can get settings', function () {
     expect($response->status())->toEqual(200)
         ->and($response)->toBeInstanceOf(Response::class);
 
-    $this->mockClient->assertSent(SettingsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
