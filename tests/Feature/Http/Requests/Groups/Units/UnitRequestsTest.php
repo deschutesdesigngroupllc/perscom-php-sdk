@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\Batch\BatchCreateRequest;
 use Perscom\Http\Requests\Batch\BatchDeleteRequest;
 use Perscom\Http\Requests\Batch\BatchUpdateRequest;
