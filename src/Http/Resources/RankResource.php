@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\Batchable;
-use Perscom\Contracts\ResourceContract;
+use Perscom\Contracts\Crudable;
 use Perscom\Contracts\Searchable;
 use Perscom\Http\Requests\Ranks\CreateRankRequest;
 use Perscom\Http\Requests\Ranks\DeleteRankRequest;
@@ -19,7 +19,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
-class RankResource extends Resource implements Batchable, ResourceContract, Searchable
+class RankResource extends Resource implements Batchable, Crudable, Searchable
 {
     use HasBatchEndpoints;
     use HasImageEndpoints;

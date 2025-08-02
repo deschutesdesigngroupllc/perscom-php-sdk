@@ -5,21 +5,24 @@ declare(strict_types=1);
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\Batchable;
-use Perscom\Contracts\ResourceContract;
+use Perscom\Contracts\Crudable;
+use Perscom\Contracts\Searchable;
 use Perscom\Http\Requests\AwardRecords\CreateAwardRecordRequest;
 use Perscom\Http\Requests\AwardRecords\DeleteAwardRecordRequest;
 use Perscom\Http\Requests\AwardRecords\GetAwardRecordRequest;
 use Perscom\Http\Requests\AwardRecords\GetAwardRecordsRequest;
 use Perscom\Http\Requests\AwardRecords\UpdateAwardRecordRequest;
 use Perscom\Traits\HasBatchEndpoints;
+use Perscom\Traits\HasSearchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Connector;
 use Saloon\Http\Response;
 
-class AwardRecordsResource extends Resource implements Batchable, ResourceContract
+class AwardRecordsResource extends Resource implements Batchable, Crudable, Searchable
 {
     use HasBatchEndpoints;
+    use HasSearchEndpoints;
 
     public function __construct(protected Connector $connector)
     {

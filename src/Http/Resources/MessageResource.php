@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Resources;
 
-use Perscom\Contracts\ResourceContract;
+use Perscom\Contracts\Batchable;
+use Perscom\Contracts\Crudable;
 use Perscom\Contracts\Searchable;
 use Perscom\Http\Requests\Messages\CreateMessageRequest;
 use Perscom\Http\Requests\Messages\DeleteMessageRequest;
 use Perscom\Http\Requests\Messages\GetMessageRequest;
 use Perscom\Http\Requests\Messages\GetMessagesRequest;
 use Perscom\Http\Requests\Messages\UpdateMessageRequest;
+use Perscom\Traits\HasBatchEndpoints;
 use Perscom\Traits\HasSearchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
-class MessageResource extends Resource implements ResourceContract, Searchable
+class MessageResource extends Resource implements Batchable, Crudable, Searchable
 {
+    use HasBatchEndpoints;
     use HasSearchEndpoints;
 
     public function getResource(): string

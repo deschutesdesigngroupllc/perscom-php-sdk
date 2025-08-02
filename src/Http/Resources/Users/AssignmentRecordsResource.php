@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Resources\Users;
 
-use Perscom\Contracts\ResourceContract;
+use Perscom\Contracts\Crudable;
 use Perscom\Http\Requests\Users\AssignmentRecords\CreateUserAssignmentRecordRequest;
 use Perscom\Http\Requests\Users\AssignmentRecords\DeleteUserAssignmentRecordRequest;
 use Perscom\Http\Requests\Users\AssignmentRecords\GetUserAssignmentRecordRequest;
@@ -16,7 +16,7 @@ use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Connector;
 use Saloon\Http\Response;
 
-class AssignmentRecordsResource extends Resource implements ResourceContract
+class AssignmentRecordsResource extends Resource implements Crudable
 {
     public function __construct(protected Connector $connector, protected int $relationId)
     {

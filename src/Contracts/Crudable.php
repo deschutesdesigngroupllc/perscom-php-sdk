@@ -6,7 +6,7 @@ namespace Perscom\Contracts;
 
 use Saloon\Http\Response;
 
-interface ResourceContract
+interface Crudable
 {
     /**
      * @param  string|array<string>  $include

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Resources;
 
-use Perscom\Contracts\ResourceContract;
+use Perscom\Contracts\Batchable;
+use Perscom\Contracts\Crudable;
 use Perscom\Contracts\Searchable;
 use Perscom\Http\Requests\Submissions\CreateSubmissionRequest;
 use Perscom\Http\Requests\Submissions\DeleteSubmissionRequest;
@@ -12,13 +13,15 @@ use Perscom\Http\Requests\Submissions\GetSubmissionRequest;
 use Perscom\Http\Requests\Submissions\GetSubmissionsRequest;
 use Perscom\Http\Requests\Submissions\UpdateSubmissionRequest;
 use Perscom\Http\Resources\Submissions\StatusResource;
+use Perscom\Traits\HasBatchEndpoints;
 use Perscom\Traits\HasSearchEndpoints;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
-class SubmissionResource extends Resource implements ResourceContract, Searchable
+class SubmissionResource extends Resource implements Batchable, Crudable, Searchable
 {
+    use HasBatchEndpoints;
     use HasSearchEndpoints;
 
     public function getResource(): string

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\Batchable;
-use Perscom\Contracts\ResourceContract;
+use Perscom\Contracts\Crudable;
 use Perscom\Contracts\Searchable;
 use Perscom\Http\Requests\Positions\CreatePositionRequest;
 use Perscom\Http\Requests\Positions\DeletePositionRequest;
@@ -18,7 +18,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 
-class PositionResource extends Resource implements Batchable, ResourceContract, Searchable
+class PositionResource extends Resource implements Batchable, Crudable, Searchable
 {
     use HasBatchEndpoints;
     use HasSearchEndpoints;
