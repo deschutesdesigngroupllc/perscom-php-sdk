@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-use Perscom\Http\Requests\Documents\CreateDocumentRequest;
-use Perscom\Http\Requests\Documents\DeleteDocumentRequest;
-use Perscom\Http\Requests\Documents\GetDocumentRequest;
-use Perscom\Http\Requests\Documents\GetDocumentsRequest;
-use Perscom\Http\Requests\Documents\UpdateDocumentRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -19,7 +22,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetDocumentsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
         SearchRequest::class => MockResponse::make([
@@ -30,19 +33,37 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetDocumentRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateDocumentRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateDocumentRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteDocumentRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -60,7 +81,7 @@ test('it can get all documents', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetDocumentsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search documents', function () {
@@ -95,7 +116,7 @@ test('it can get a document', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetDocumentRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -115,7 +136,7 @@ test('it can create a document', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateDocumentRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -135,7 +156,7 @@ test('it can update a document', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateDocumentRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -151,7 +172,7 @@ test('it can delete a document', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteDocumentRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

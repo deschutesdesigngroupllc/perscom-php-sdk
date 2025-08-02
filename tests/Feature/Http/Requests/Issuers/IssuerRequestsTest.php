@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-use Perscom\Http\Requests\Issuers\CreateIssuerRequest;
-use Perscom\Http\Requests\Issuers\DeleteIssuerRequest;
-use Perscom\Http\Requests\Issuers\GetIssuerRequest;
-use Perscom\Http\Requests\Issuers\GetIssuersRequest;
-use Perscom\Http\Requests\Issuers\UpdateIssuerRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -19,7 +22,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetIssuersRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
         SearchRequest::class => MockResponse::make([
@@ -30,19 +33,37 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetIssuerRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateIssuerRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateIssuerRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteIssuerRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -60,7 +81,7 @@ test('it can get all issuers', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetIssuersRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search issuers', function () {
@@ -95,7 +116,7 @@ test('it can get an issuer', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetIssuerRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -115,7 +136,7 @@ test('it can create an issuer', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateIssuerRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -135,7 +156,7 @@ test('it can update an issuer', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateIssuerRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -151,7 +172,7 @@ test('it can delete an issuer', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteIssuerRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

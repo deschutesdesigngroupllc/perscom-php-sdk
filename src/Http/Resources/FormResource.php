@@ -7,20 +7,16 @@ namespace Perscom\Http\Resources;
 use Perscom\Contracts\Batchable;
 use Perscom\Contracts\Crudable;
 use Perscom\Contracts\Searchable;
-use Perscom\Http\Requests\Forms\CreateFormRequest;
-use Perscom\Http\Requests\Forms\DeleteFormRequest;
-use Perscom\Http\Requests\Forms\GetFormRequest;
-use Perscom\Http\Requests\Forms\GetFormsRequest;
-use Perscom\Http\Requests\Forms\UpdateFormRequest;
+use Perscom\Http\Resources\Forms\FieldResource;
+use Perscom\Http\Resources\Forms\SubmissionResource;
 use Perscom\Traits\HasBatchEndpoints;
+use Perscom\Traits\HasCrudEndpoints;
 use Perscom\Traits\HasSearchEndpoints;
-use Saloon\Exceptions\Request\FatalRequestException;
-use Saloon\Exceptions\Request\RequestException;
-use Saloon\Http\Response;
 
 class FormResource extends Resource implements Batchable, Crudable, Searchable
 {
     use HasBatchEndpoints;
+    use HasCrudEndpoints;
     use HasSearchEndpoints;
 
     public function getResource(): string
@@ -28,51 +24,19 @@ class FormResource extends Resource implements Batchable, Crudable, Searchable
         return 'forms';
     }
 
-    /**
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
+    public function fields(int $formId): FieldResource
     {
-        return $this->connector->send(new GetFormsRequest($include, $page, $limit));
+        return new FieldResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$formId/fields",
+        );
     }
 
-    /**
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function get(int $id, string|array $include = []): Response
+    public function submissions(int $formId): SubmissionResource
     {
-        return $this->connector->send(new GetFormRequest($id, $include));
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function create(array $data): Response
-    {
-        return $this->connector->send(new CreateFormRequest($data));
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function update(int $id, array $data): Response
-    {
-        return $this->connector->send(new UpdateFormRequest($id, $data));
-    }
-
-    /**
-     * @throws FatalRequestException|RequestException
-     */
-    public function delete(int $id): Response
-    {
-        return $this->connector->send(new DeleteFormRequest($id));
+        return new SubmissionResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$formId/submissions",
+        );
     }
 }

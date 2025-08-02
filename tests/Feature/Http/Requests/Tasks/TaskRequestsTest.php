@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
-use Perscom\Http\Requests\Tasks\CreateTaskRequest;
-use Perscom\Http\Requests\Tasks\DeleteTaskRequest;
-use Perscom\Http\Requests\Tasks\GetTaskRequest;
-use Perscom\Http\Requests\Tasks\GetTasksRequest;
-use Perscom\Http\Requests\Tasks\UpdateTaskRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -19,7 +22,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetTasksRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
         SearchRequest::class => MockResponse::make([
@@ -30,19 +33,37 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetTaskRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateTaskRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateTaskRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteTaskRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -60,7 +81,7 @@ test('it can get all tasks', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetTasksRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search tasks', function () {
@@ -95,7 +116,7 @@ test('it can get a task', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetTaskRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -115,7 +136,7 @@ test('it can create a task', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateTaskRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -135,7 +156,7 @@ test('it can update a task', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateTaskRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -151,7 +172,7 @@ test('it can delete a task', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteTaskRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

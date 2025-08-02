@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-use Perscom\Http\Requests\Announcements\CreateAnnouncementRequest;
-use Perscom\Http\Requests\Announcements\DeleteAnnouncementRequest;
-use Perscom\Http\Requests\Announcements\GetAnnouncementRequest;
-use Perscom\Http\Requests\Announcements\GetAnnouncementsRequest;
-use Perscom\Http\Requests\Announcements\UpdateAnnouncementRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -19,7 +22,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetAnnouncementsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
         SearchRequest::class => MockResponse::make([
@@ -30,19 +33,37 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetAnnouncementRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateAnnouncementRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateAnnouncementRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteAnnouncementRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -60,7 +81,7 @@ test('it can get all announcements', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetAnnouncementsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search announcements', function () {
@@ -95,7 +116,7 @@ test('it can get an announcement', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetAnnouncementRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -115,7 +136,7 @@ test('it can create an announcement', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateAnnouncementRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -135,7 +156,7 @@ test('it can update an announcement', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateAnnouncementRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -151,7 +172,7 @@ test('it can delete an announcement', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteAnnouncementRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

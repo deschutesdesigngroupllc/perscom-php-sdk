@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\Users\Statuses\AttachUserStatusRequest;
-use Perscom\Http\Requests\Users\Statuses\DetachUserStatusRequest;
-use Perscom\Http\Requests\Users\Statuses\SyncUserStatusRequest;
+use Perscom\Http\Requests\Attach\AttachRequest;
+use Perscom\Http\Requests\Attach\DetachRequest;
+use Perscom\Http\Requests\Attach\SyncRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -16,13 +16,13 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        AttachUserStatusRequest::class => MockResponse::make([
+        AttachRequest::class => MockResponse::make([
             'attached' => [1],
         ]),
-        DetachUserStatusRequest::class => MockResponse::make([
+        DetachRequest::class => MockResponse::make([
             'detached' => [1],
         ]),
-        SyncUserStatusRequest::class => MockResponse::make([
+        SyncRequest::class => MockResponse::make([
             'attached' => [1],
             'detached' => [],
             'updated' => [],
@@ -45,7 +45,7 @@ test('it can attach a status', function () {
             'attached' => [1],
         ]);
 
-    $this->mockClient->assertSent(AttachUserStatusRequest::class);
+    $this->mockClient->assertSent(AttachRequest::class);
 });
 
 test('it can detach a status', function () {
@@ -60,7 +60,7 @@ test('it can detach a status', function () {
             'detached' => [1],
         ]);
 
-    $this->mockClient->assertSent(DetachUserStatusRequest::class);
+    $this->mockClient->assertSent(DetachRequest::class);
 });
 
 test('it can sync a status', function () {
@@ -77,5 +77,5 @@ test('it can sync a status', function () {
             'updated' => [],
         ]);
 
-    $this->mockClient->assertSent(SyncUserStatusRequest::class);
+    $this->mockClient->assertSent(SyncRequest::class);
 });

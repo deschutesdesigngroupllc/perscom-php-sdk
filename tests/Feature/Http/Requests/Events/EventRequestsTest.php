@@ -2,15 +2,18 @@
 
 declare(strict_types=1);
 
-use Perscom\Http\Requests\Common\CreateImageRequest;
-use Perscom\Http\Requests\Common\DeleteImageRequest;
-use Perscom\Http\Requests\Common\GetImageRequest;
-use Perscom\Http\Requests\Common\UpdateImageRequest;
-use Perscom\Http\Requests\Events\CreateEventRequest;
-use Perscom\Http\Requests\Events\DeleteEventRequest;
-use Perscom\Http\Requests\Events\GetEventRequest;
-use Perscom\Http\Requests\Events\GetEventsRequest;
-use Perscom\Http\Requests\Events\UpdateEventRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
+use Perscom\Http\Requests\Image\CreateImageRequest;
+use Perscom\Http\Requests\Image\DeleteImageRequest;
+use Perscom\Http\Requests\Image\GetImageRequest;
+use Perscom\Http\Requests\Image\UpdateImageRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -23,7 +26,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetEventsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
         SearchRequest::class => MockResponse::make([
@@ -34,19 +37,37 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetEventRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateEventRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateEventRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteEventRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
         GetImageRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
@@ -88,7 +109,7 @@ test('it can get all events', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetEventsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search events', function () {
@@ -123,7 +144,7 @@ test('it can get an event', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetEventRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -143,7 +164,7 @@ test('it can create an event', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateEventRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -163,7 +184,7 @@ test('it can update an event', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateEventRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -179,7 +200,7 @@ test('it can delete an event', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteEventRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

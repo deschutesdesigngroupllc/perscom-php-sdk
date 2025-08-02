@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-use Perscom\Http\Requests\Users\RankRecords\CreateUserRankRecordRequest;
-use Perscom\Http\Requests\Users\RankRecords\DeleteUserRankRecordRequest;
-use Perscom\Http\Requests\Users\RankRecords\GetUserRankRecordRequest;
-use Perscom\Http\Requests\Users\RankRecords\GetUserRankRecordsRequest;
-use Perscom\Http\Requests\Users\RankRecords\UpdateUserRankRecordRequest;
+use Perscom\Http\Requests\Batch\BatchCreateRequest;
+use Perscom\Http\Requests\Batch\BatchDeleteRequest;
+use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -18,22 +21,40 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetUserRankRecordsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        GetUserRankRecordRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateUserRankRecordRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateUserRankRecordRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteUserRankRecordRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
+        BatchCreateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchUpdateRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        BatchDeleteRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
     ]);
 
     $this->connector = new PerscomConnection('foo', 'bar');
@@ -51,7 +72,7 @@ test('it can get all users rank records', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetUserRankRecordsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can get a users rank record', function () {
@@ -67,9 +88,9 @@ test('it can get a users rank record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetUserRankRecordRequest
-            && $request->relationId === 1
-            && $request->resourceId === 1;
+        return $request instanceof GetRequest
+            && $request->id === 1
+            && $request->resource === 'users/1/rank-records';
     });
 });
 
@@ -88,7 +109,8 @@ test('it can create a users rank record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateUserRankRecordRequest
+        return $request instanceof CreateRequest
+            && $request->resource === 'users/1/rank-records'
             && $request->data['foo'] === 'bar';
     });
 });
@@ -108,9 +130,9 @@ test('it can update a users rank record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateUserRankRecordRequest
-            && $request->relationId === 1
-            && $request->resourceId === 1
+        return $request instanceof UpdateRequest
+            && $request->id === 1
+            && $request->resource === 'users/1/rank-records'
             && $request->data['foo'] === 'bar';
     });
 });
@@ -125,8 +147,8 @@ test('it can delete a users rank record', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteUserRankRecordRequest
-            && $request->relationId === 1
-            && $request->resourceId === 1;
+        return $request instanceof DeleteRequest
+            && $request->id === 1
+            && $request->resource === 'users/1/rank-records';
     });
 });

@@ -7,21 +7,15 @@ namespace Perscom\Http\Resources;
 use Perscom\Contracts\Batchable;
 use Perscom\Contracts\Crudable;
 use Perscom\Contracts\Searchable;
-use Perscom\Http\Requests\Submissions\CreateSubmissionRequest;
-use Perscom\Http\Requests\Submissions\DeleteSubmissionRequest;
-use Perscom\Http\Requests\Submissions\GetSubmissionRequest;
-use Perscom\Http\Requests\Submissions\GetSubmissionsRequest;
-use Perscom\Http\Requests\Submissions\UpdateSubmissionRequest;
 use Perscom\Http\Resources\Submissions\StatusResource;
 use Perscom\Traits\HasBatchEndpoints;
+use Perscom\Traits\HasCrudEndpoints;
 use Perscom\Traits\HasSearchEndpoints;
-use Saloon\Exceptions\Request\FatalRequestException;
-use Saloon\Exceptions\Request\RequestException;
-use Saloon\Http\Response;
 
 class SubmissionResource extends Resource implements Batchable, Crudable, Searchable
 {
     use HasBatchEndpoints;
+    use HasCrudEndpoints;
     use HasSearchEndpoints;
 
     public function getResource(): string
@@ -29,56 +23,11 @@ class SubmissionResource extends Resource implements Batchable, Crudable, Search
         return 'submissions';
     }
 
-    /**
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
+    public function statuses(int $submissionId): StatusResource
     {
-        return $this->connector->send(new GetSubmissionsRequest($include, $page, $limit));
-    }
-
-    /**
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function get(int $id, string|array $include = []): Response
-    {
-        return $this->connector->send(new GetSubmissionRequest($id, $include));
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function create(array $data): Response
-    {
-        return $this->connector->send(new CreateSubmissionRequest($data));
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function update(int $id, array $data): Response
-    {
-        return $this->connector->send(new UpdateSubmissionRequest($id, $data));
-    }
-
-    /**
-     * @throws FatalRequestException|RequestException
-     */
-    public function delete(int $id): Response
-    {
-        return $this->connector->send(new DeleteSubmissionRequest($id));
-    }
-
-    public function statuses(int $id): StatusResource
-    {
-        return new StatusResource($this->connector, $id);
+        return new StatusResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$submissionId/statuses",
+        );
     }
 }

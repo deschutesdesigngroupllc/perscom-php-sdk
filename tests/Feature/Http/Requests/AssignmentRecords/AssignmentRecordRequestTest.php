@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use Perscom\Data\ResourceObject;
-use Perscom\Http\Requests\AssignmentRecords\CreateAssignmentRecordRequest;
-use Perscom\Http\Requests\AssignmentRecords\DeleteAssignmentRecordRequest;
-use Perscom\Http\Requests\AssignmentRecords\GetAssignmentRecordRequest;
-use Perscom\Http\Requests\AssignmentRecords\GetAssignmentRecordsRequest;
-use Perscom\Http\Requests\AssignmentRecords\UpdateAssignmentRecordRequest;
 use Perscom\Http\Requests\Batch\BatchCreateRequest;
 use Perscom\Http\Requests\Batch\BatchDeleteRequest;
 use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,22 +22,22 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetAssignmentRecordsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        GetAssignmentRecordRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateAssignmentRecordRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateAssignmentRecordRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteAssignmentRecordRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
         BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
@@ -73,7 +73,7 @@ test('it can get all assignment records', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetAssignmentRecordsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can get an assignment record', function () {
@@ -89,7 +89,7 @@ test('it can get an assignment record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetAssignmentRecordRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -109,7 +109,7 @@ test('it can create an assignment record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateAssignmentRecordRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -129,7 +129,7 @@ test('it can update an assignment record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateAssignmentRecordRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -145,7 +145,7 @@ test('it can delete an assignment record', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteAssignmentRecordRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

@@ -6,11 +6,11 @@ use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\Batch\BatchCreateRequest;
 use Perscom\Http\Requests\Batch\BatchDeleteRequest;
 use Perscom\Http\Requests\Batch\BatchUpdateRequest;
-use Perscom\Http\Requests\Positions\CreatePositionRequest;
-use Perscom\Http\Requests\Positions\DeletePositionRequest;
-use Perscom\Http\Requests\Positions\GetPositionRequest;
-use Perscom\Http\Requests\Positions\GetPositionsRequest;
-use Perscom\Http\Requests\Positions\UpdatePositionRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -23,7 +23,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetPositionsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
         SearchRequest::class => MockResponse::make([
@@ -34,19 +34,19 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetPositionRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreatePositionRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdatePositionRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeletePositionRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
         BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
@@ -82,7 +82,7 @@ test('it can get all positions', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetPositionsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search positions', function () {
@@ -117,7 +117,7 @@ test('it can get a position', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetPositionRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -137,7 +137,7 @@ test('it can create a position', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreatePositionRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -157,7 +157,7 @@ test('it can update a position', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdatePositionRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -173,7 +173,7 @@ test('it can delete a position', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeletePositionRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

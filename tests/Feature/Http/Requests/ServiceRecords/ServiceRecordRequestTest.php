@@ -6,11 +6,11 @@ use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\Batch\BatchCreateRequest;
 use Perscom\Http\Requests\Batch\BatchDeleteRequest;
 use Perscom\Http\Requests\Batch\BatchUpdateRequest;
-use Perscom\Http\Requests\ServiceRecords\CreateServiceRecordRequest;
-use Perscom\Http\Requests\ServiceRecords\DeleteServiceRecordRequest;
-use Perscom\Http\Requests\ServiceRecords\GetServiceRecordRequest;
-use Perscom\Http\Requests\ServiceRecords\GetServiceRecordsRequest;
-use Perscom\Http\Requests\ServiceRecords\UpdateServiceRecordRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -22,22 +22,22 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetServiceRecordsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
-        GetServiceRecordRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateServiceRecordRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateServiceRecordRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteServiceRecordRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
         BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
@@ -73,7 +73,7 @@ test('it can get all service records', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetServiceRecordsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can get a service record', function () {
@@ -89,7 +89,7 @@ test('it can get a service record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetServiceRecordRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -109,7 +109,7 @@ test('it can create a service record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateServiceRecordRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -129,7 +129,7 @@ test('it can update a service record', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateServiceRecordRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -145,7 +145,7 @@ test('it can delete a service record', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteServiceRecordRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

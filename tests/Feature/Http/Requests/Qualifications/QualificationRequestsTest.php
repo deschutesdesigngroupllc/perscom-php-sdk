@@ -6,15 +6,15 @@ use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\Batch\BatchCreateRequest;
 use Perscom\Http\Requests\Batch\BatchDeleteRequest;
 use Perscom\Http\Requests\Batch\BatchUpdateRequest;
-use Perscom\Http\Requests\Common\CreateImageRequest;
-use Perscom\Http\Requests\Common\DeleteImageRequest;
-use Perscom\Http\Requests\Common\GetImageRequest;
-use Perscom\Http\Requests\Common\UpdateImageRequest;
-use Perscom\Http\Requests\Qualifications\CreateQualificationRequest;
-use Perscom\Http\Requests\Qualifications\DeleteQualificationRequest;
-use Perscom\Http\Requests\Qualifications\GetQualificationRequest;
-use Perscom\Http\Requests\Qualifications\GetQualificationsRequest;
-use Perscom\Http\Requests\Qualifications\UpdateQualificationRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
+use Perscom\Http\Requests\Image\CreateImageRequest;
+use Perscom\Http\Requests\Image\DeleteImageRequest;
+use Perscom\Http\Requests\Image\GetImageRequest;
+use Perscom\Http\Requests\Image\UpdateImageRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -27,7 +27,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetQualificationsRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
         SearchRequest::class => MockResponse::make([
@@ -38,19 +38,19 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetQualificationRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateQualificationRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateQualificationRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteQualificationRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
         BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
@@ -110,7 +110,7 @@ test('it can get all qualifications', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetQualificationsRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search qualifications', function () {
@@ -145,7 +145,7 @@ test('it can get a qualification', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetQualificationRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -165,7 +165,7 @@ test('it can create a qualification', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateQualificationRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -185,7 +185,7 @@ test('it can update a qualification', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateQualificationRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -201,7 +201,7 @@ test('it can delete a qualification', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteQualificationRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

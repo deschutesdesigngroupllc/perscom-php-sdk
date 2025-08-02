@@ -6,12 +6,12 @@ use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\Batch\BatchCreateRequest;
 use Perscom\Http\Requests\Batch\BatchDeleteRequest;
 use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
-use Perscom\Http\Requests\Users\CreateUserRequest;
-use Perscom\Http\Requests\Users\DeleteUserRequest;
-use Perscom\Http\Requests\Users\GetUserRequest;
-use Perscom\Http\Requests\Users\GetUsersRequest;
-use Perscom\Http\Requests\Users\UpdateUserRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -23,7 +23,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetUsersRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
         SearchRequest::class => MockResponse::make([
@@ -35,19 +35,19 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetUserRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateUserRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateUserRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteUserRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
         BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
@@ -83,7 +83,7 @@ test('it can get all users', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetUsersRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search users', function () {
@@ -119,7 +119,7 @@ test('it can get a user', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetUserRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -139,7 +139,7 @@ test('it can create a user', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateUserRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -159,7 +159,7 @@ test('it can update a user', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateUserRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -175,7 +175,7 @@ test('it can delete a user', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteUserRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

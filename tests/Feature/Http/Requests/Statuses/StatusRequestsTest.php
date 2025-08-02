@@ -6,12 +6,12 @@ use Perscom\Data\ResourceObject;
 use Perscom\Http\Requests\Batch\BatchCreateRequest;
 use Perscom\Http\Requests\Batch\BatchDeleteRequest;
 use Perscom\Http\Requests\Batch\BatchUpdateRequest;
+use Perscom\Http\Requests\Crud\CreateRequest;
+use Perscom\Http\Requests\Crud\DeleteRequest;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Perscom\Http\Requests\Crud\GetRequest;
+use Perscom\Http\Requests\Crud\UpdateRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
-use Perscom\Http\Requests\Statuses\CreateStatusRequest;
-use Perscom\Http\Requests\Statuses\DeleteStatusRequest;
-use Perscom\Http\Requests\Statuses\GetStatusesRequest;
-use Perscom\Http\Requests\Statuses\GetStatusRequest;
-use Perscom\Http\Requests\Statuses\UpdateStatusRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
@@ -23,7 +23,7 @@ beforeEach(function () {
     Config::preventStrayRequests();
 
     $this->mockClient = new MockClient([
-        GetStatusesRequest::class => MockResponse::make([
+        GetAllRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
         SearchRequest::class => MockResponse::make([
@@ -34,19 +34,19 @@ beforeEach(function () {
                 ],
             ],
         ]),
-        GetStatusRequest::class => MockResponse::make([
+        GetRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        CreateStatusRequest::class => MockResponse::make([
+        CreateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        UpdateStatusRequest::class => MockResponse::make([
+        UpdateRequest::class => MockResponse::make([
             'id' => 1,
             'name' => 'foo',
         ]),
-        DeleteStatusRequest::class => MockResponse::make([], 201),
+        DeleteRequest::class => MockResponse::make([], 201),
         BatchCreateRequest::class => MockResponse::make([
             'data' => [
                 'id' => 1,
@@ -82,7 +82,7 @@ test('it can get all statuses', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(GetStatusesRequest::class);
+    $this->mockClient->assertSent(GetAllRequest::class);
 });
 
 test('it can search statuses', function () {
@@ -117,7 +117,7 @@ test('it can get a status', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof GetStatusRequest
+        return $request instanceof GetRequest
             && $request->id === 1;
     });
 });
@@ -137,7 +137,7 @@ test('it can create a status', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof CreateStatusRequest
+        return $request instanceof CreateRequest
             && $request->data['foo'] === 'bar';
     });
 });
@@ -157,7 +157,7 @@ test('it can update a status', function () {
         ]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof UpdateStatusRequest
+        return $request instanceof UpdateRequest
             && $request->id === 1
             && $request->data['foo'] === 'bar';
     });
@@ -173,7 +173,7 @@ test('it can delete a status', function () {
         ->and($data)->toEqual([]);
 
     $this->mockClient->assertSent(function (Request $request) {
-        return $request instanceof DeleteStatusRequest
+        return $request instanceof DeleteRequest
             && $request->id === 1;
     });
 });

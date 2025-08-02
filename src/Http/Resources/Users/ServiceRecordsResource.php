@@ -4,70 +4,31 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Resources\Users;
 
+use Perscom\Contracts\Attachable;
+use Perscom\Contracts\Batchable;
 use Perscom\Contracts\Crudable;
-use Perscom\Http\Requests\Users\ServiceRecords\CreateUserServiceRecordRequest;
-use Perscom\Http\Requests\Users\ServiceRecords\DeleteUserServiceRecordRequest;
-use Perscom\Http\Requests\Users\ServiceRecords\GetUserServiceRecordRequest;
-use Perscom\Http\Requests\Users\ServiceRecords\GetUserServiceRecordsRequest;
-use Perscom\Http\Requests\Users\ServiceRecords\UpdateUserServiceRecordRequest;
+use Perscom\Contracts\Searchable;
 use Perscom\Http\Resources\Resource;
-use Saloon\Exceptions\Request\FatalRequestException;
-use Saloon\Exceptions\Request\RequestException;
+use Perscom\Traits\HasAttachEndpoints;
+use Perscom\Traits\HasBatchEndpoints;
+use Perscom\Traits\HasCrudEndpoints;
+use Perscom\Traits\HasSearchEndpoints;
 use Saloon\Http\Connector;
-use Saloon\Http\Response;
 
-class ServiceRecordsResource extends Resource implements Crudable
+class ServiceRecordsResource extends Resource implements Attachable, Batchable, Crudable, Searchable
 {
-    public function __construct(protected Connector $connector, protected int $relationId)
+    use HasAttachEndpoints;
+    use HasBatchEndpoints;
+    use HasCrudEndpoints;
+    use HasSearchEndpoints;
+
+    public function __construct(protected Connector $connector, protected string $resource)
     {
         parent::__construct($connector);
     }
 
-    /**
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
+    public function getResource(): string
     {
-        return $this->connector->send(new GetUserServiceRecordsRequest($this->relationId, $include, $page, $limit));
-    }
-
-    /**
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function get(int $id, string|array $include = []): Response
-    {
-        return $this->connector->send(new GetUserServiceRecordRequest($this->relationId, $id, $include));
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function create(array $data): Response
-    {
-        return $this->connector->send(new CreateUserServiceRecordRequest($this->relationId, $data));
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function update(int $id, array $data): Response
-    {
-        return $this->connector->send(new UpdateUserServiceRecordRequest($this->relationId, $id, $data));
-    }
-
-    /**
-     * @throws FatalRequestException|RequestException
-     */
-    public function delete(int $id): Response
-    {
-        return $this->connector->send(new DeleteUserServiceRecordRequest($this->relationId, $id));
+        return $this->resource;
     }
 }
