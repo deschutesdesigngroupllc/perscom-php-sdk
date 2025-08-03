@@ -5,21 +5,8 @@ declare(strict_types=1);
 namespace Perscom\Http\Resources;
 
 use Perscom\Contracts\Batchable;
-use Perscom\Contracts\ResourceContract;
+use Perscom\Contracts\Crudable;
 use Perscom\Contracts\Searchable;
-use Perscom\Data\FilterObject;
-use Perscom\Data\ResourceObject;
-use Perscom\Data\ScopeObject;
-use Perscom\Data\SortObject;
-use Perscom\Http\Requests\Users\BatchCreateUserRequest;
-use Perscom\Http\Requests\Users\BatchDeleteUserRequest;
-use Perscom\Http\Requests\Users\BatchUpdateUserRequest;
-use Perscom\Http\Requests\Users\CreateUserRequest;
-use Perscom\Http\Requests\Users\DeleteUserRequest;
-use Perscom\Http\Requests\Users\GetUserRequest;
-use Perscom\Http\Requests\Users\GetUsersRequest;
-use Perscom\Http\Requests\Users\SearchUsersRequest;
-use Perscom\Http\Requests\Users\UpdateUserRequest;
 use Perscom\Http\Resources\Users\AssignmentRecordsResource;
 use Perscom\Http\Resources\Users\AttachmentsResource;
 use Perscom\Http\Resources\Users\AwardRecordsResource;
@@ -31,162 +18,100 @@ use Perscom\Http\Resources\Users\RankRecordsResource;
 use Perscom\Http\Resources\Users\ServiceRecordsResource;
 use Perscom\Http\Resources\Users\StatusResource;
 use Perscom\Http\Resources\Users\TrainingRecordsResource;
-use Saloon\Exceptions\Request\FatalRequestException;
-use Saloon\Exceptions\Request\RequestException;
-use Saloon\Http\Response;
+use Perscom\Traits\HasBatchEndpoints;
+use Perscom\Traits\HasCrudEndpoints;
+use Perscom\Traits\HasSearchEndpoints;
 
-class UserResource extends Resource implements Batchable, ResourceContract, Searchable
+class UserResource extends Resource implements Batchable, Crudable, Searchable
 {
-    /**
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
+    use HasBatchEndpoints;
+    use HasCrudEndpoints;
+    use HasSearchEndpoints;
+
+    public function getResource(): string
     {
-        return $this->connector->send(new GetUsersRequest($include, $page, $limit));
+        return 'users';
     }
 
-    /**
-     * @param  SortObject|array<SortObject>|null  $sort
-     * @param  FilterObject|array<FilterObject>|null  $filter
-     * @param  ScopeObject|array<ScopeObject>|null  $scope
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function search(
-        ?string $value = null,
-        SortObject|array|null $sort = null,
-        FilterObject|array|null $filter = null,
-        ScopeObject|array|null $scope = null,
-        string|array $include = [],
-        int $page = 1,
-        int $limit = 20,
-    ): Response {
-        return $this->connector->send(new SearchUsersRequest($value, $sort, $filter, $scope, $include, $page, $limit));
+    public function profilePhoto(int $userId): ProfilePhotoResource
+    {
+        return new ProfilePhotoResource($this->connector, $userId);
     }
 
-    /**
-     * @param  string|array<string>  $include
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function get(int $id, string|array $include = []): Response
+    public function coverPhoto(int $userId): CoverPhotoResource
     {
-        return $this->connector->send(new GetUserRequest($id, $include));
+        return new CoverPhotoResource($this->connector, $userId);
     }
 
-    /**
-     * @param  array<string, mixed>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function create(array $data): Response
+    public function attachments(int $userId): AttachmentsResource
     {
-        return $this->connector->send(new CreateUserRequest($data));
+        return new AttachmentsResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$userId/attachments"
+        );
     }
 
-    /**
-     * @param  array<string, mixed>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function update(int $id, array $data): Response
+    public function assignmentRecords(int $userId): AssignmentRecordsResource
     {
-        return $this->connector->send(new UpdateUserRequest($id, $data));
+        return new AssignmentRecordsResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$userId/assignment-records"
+        );
     }
 
-    /**
-     * @throws FatalRequestException|RequestException
-     */
-    public function delete(int $id): Response
+    public function awardRecords(int $userId): AwardRecordsResource
     {
-        return $this->connector->send(new DeleteUserRequest($id));
+        return new AwardRecordsResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$userId/award-records"
+        );
     }
 
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchCreate(ResourceObject|array $data): Response
+    public function combatRecords(int $userId): CombatRecordsResource
     {
-        return $this->connector->send(new BatchCreateUserRequest($data));
+        return new CombatRecordsResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$userId/combat-records"
+        );
     }
 
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchUpdate(ResourceObject|array $data): Response
+    public function qualificationRecords(int $userId): QualificationRecordsResource
     {
-        return $this->connector->send(new BatchUpdateUserRequest($data));
+        return new QualificationRecordsResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$userId/qualification-records"
+        );
     }
 
-    /**
-     * @param  ResourceObject|array<ResourceObject>  $data
-     *
-     * @throws FatalRequestException|RequestException
-     */
-    public function batchDelete(ResourceObject|array $data): Response
+    public function rankRecords(int $userId): RankRecordsResource
     {
-        return $this->connector->send(new BatchDeleteUserRequest($data));
+        return new RankRecordsResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$userId/rank-records"
+        );
     }
 
-    public function profile_photo(int $id): ProfilePhotoResource
+    public function serviceRecords(int $userId): ServiceRecordsResource
     {
-        return new ProfilePhotoResource($this->connector, $id);
+        return new ServiceRecordsResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$userId/service-records"
+        );
     }
 
-    public function cover_photo(int $id): CoverPhotoResource
+    public function trainingRecords(int $userId): TrainingRecordsResource
     {
-        return new CoverPhotoResource($this->connector, $id);
+        return new TrainingRecordsResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$userId/training-records"
+        );
     }
 
-    public function attachments(int $id): AttachmentsResource
+    public function statuses(int $userId): StatusResource
     {
-        return new AttachmentsResource($this->connector, $id);
-    }
-
-    public function assignment_records(int $id): AssignmentRecordsResource
-    {
-        return new AssignmentRecordsResource($this->connector, $id);
-    }
-
-    public function award_records(int $id): AwardRecordsResource
-    {
-        return new AwardRecordsResource($this->connector, $id);
-    }
-
-    public function combat_records(int $id): CombatRecordsResource
-    {
-        return new CombatRecordsResource($this->connector, $id);
-    }
-
-    public function qualification_records(int $id): QualificationRecordsResource
-    {
-        return new QualificationRecordsResource($this->connector, $id);
-    }
-
-    public function rank_records(int $id): RankRecordsResource
-    {
-        return new RankRecordsResource($this->connector, $id);
-    }
-
-    public function service_records(int $id): ServiceRecordsResource
-    {
-        return new ServiceRecordsResource($this->connector, $id);
-    }
-
-    public function training_records(int $id): TrainingRecordsResource
-    {
-        return new TrainingRecordsResource($this->connector, $id);
-    }
-
-    public function statuses(int $id): StatusResource
-    {
-        return new StatusResource($this->connector, $id);
+        return new StatusResource(
+            connector: $this->connector,
+            resource: "{$this->getResource()}/$userId/status-records"
+        );
     }
 }
