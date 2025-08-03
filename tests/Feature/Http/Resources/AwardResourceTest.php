@@ -11,6 +11,10 @@ use Perscom\Http\Requests\Crud\DeleteRequest;
 use Perscom\Http\Requests\Crud\GetAllRequest;
 use Perscom\Http\Requests\Crud\GetRequest;
 use Perscom\Http\Requests\Crud\UpdateRequest;
+use Perscom\Http\Requests\Image\CreateImageRequest;
+use Perscom\Http\Requests\Image\DeleteImageRequest;
+use Perscom\Http\Requests\Image\GetImageRequest;
+use Perscom\Http\Requests\Image\UpdateImageRequest;
 use Perscom\Http\Requests\Search\SearchRequest;
 use Perscom\PerscomConnection;
 use Saloon\Config;
@@ -77,6 +81,30 @@ beforeEach(function () {
         ]),
         BatchDeleteRequest::class => MockResponse::make([
             'deleted' => [1],
+        ]),
+        GetImageRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        CreateImageRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        DeleteImageRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]),
+        UpdateImageRequest::class => MockResponse::make([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
         ]),
     ]);
 
@@ -271,5 +299,91 @@ test('it can batch delete awards', function () {
     $this->mockClient->assertSent(function (Request $request) {
         return $request instanceof BatchDeleteRequest
             && $request->resource === 'awards';
+    });
+});
+
+test('it can get the award image', function () {
+    $response = $this->connector->awards()->imageGet(1, [
+        'foo' => 'bar',
+    ]);
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof GetImageRequest;
+    });
+});
+
+test('it can create the award image', function () {
+    $response = $this->connector->awards()->imageCreate(1, [
+        'foo' => 'bar',
+    ]);
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof CreateImageRequest;
+    });
+});
+
+test('it can delete the award image', function () {
+    $response = $this->connector->awards()->imageDelete(1, [
+        'foo' => 'bar',
+    ]);
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof DeleteImageRequest;
+    });
+});
+
+test('it can update the award image', function () {
+    $response = $this->connector->awards()->imageUpdate(1, [
+        'foo' => 'bar',
+    ], [
+        'foo' => 'bar',
+    ]);
+
+    $data = $response->json();
+
+    expect($response->status())->toEqual(200)
+        ->and($response)->toBeInstanceOf(Response::class)
+        ->and($data)->toEqual([
+            'data' => [
+                'id' => 1,
+                'name' => 'foo',
+            ],
+        ]);
+
+    $this->mockClient->assertSent(function (Request $request) {
+        return $request instanceof UpdateImageRequest;
     });
 });

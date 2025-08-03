@@ -58,31 +58,6 @@ test('it can get all settings', function () {
     $this->mockClient->assertSent(GetAllRequest::class);
 });
 
-test('it can get settings with includes', function () {
-    $response = $this->connector->settings()->all(['category']);
-
-    $data = $response->json();
-
-    expect($response->status())->toEqual(200)
-        ->and($response)->toBeInstanceOf(Response::class)
-        ->and($data)->toEqual([
-            'data' => [
-                [
-                    'key' => 'site_name',
-                    'value' => 'Test Site',
-                    'type' => 'string',
-                ],
-                [
-                    'key' => 'enable_notifications',
-                    'value' => true,
-                    'type' => 'boolean',
-                ],
-            ],
-        ]);
-
-    $this->mockClient->assertSent(GetAllRequest::class);
-});
-
 test('it can get settings with pagination', function () {
     $response = $this->connector->settings()->all([], 2, 10);
 

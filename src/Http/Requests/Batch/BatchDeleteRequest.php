@@ -38,7 +38,7 @@ class BatchDeleteRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         return [
-            'resources' => collect($this->data)->map(fn (ResourceObject $object) => $object->id),
+            'resources' => collect($this->data)->map(fn (ResourceObject $object) => $object->id)->toArray(),
         ];
     }
 }

@@ -42,7 +42,7 @@ class BatchUpdateRequest extends Request implements HasBody
                 return [
                     $object->id => $object->data,
                 ];
-            }),
+            })->toArray(),
         ];
     }
 }

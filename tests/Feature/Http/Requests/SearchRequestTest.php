@@ -17,19 +17,19 @@ use Saloon\Repositories\Body\JsonBodyRepository;
 
 beforeEach(function () {
     Config::preventStrayRequests();
+});
 
-    $this->mockClient = new MockClient([
+test('it properly forms the request body and query', function () {
+    $mockClient = new MockClient([
         SearchRequest::class => MockResponse::make([
             'name' => 'foo',
         ]),
     ]);
 
-    $this->connector = new PerscomConnection('foo', 'bar');
-    $this->connector->withMockClient($this->mockClient);
-});
+    $connector = new PerscomConnection('foo', 'bar');
+    $connector->withMockClient($mockClient);
 
-test('it properly forms the request body and query', function () {
-    $response = $this->connector->users()->search(
+    $response = $connector->users()->search(
         value: 'foo',
         sort: new SortObject('created_at', 'desc'),
         filter: [
@@ -50,7 +50,7 @@ test('it properly forms the request body and query', function () {
             'name' => 'foo',
         ]);
 
-    $this->mockClient->assertSent(function (Request $request) {
+    $mockClient->assertSent(function (Request $request) {
         return $request instanceof SearchRequest
             && $request->query() instanceof ArrayStore
             && $request->query()->all() === [
