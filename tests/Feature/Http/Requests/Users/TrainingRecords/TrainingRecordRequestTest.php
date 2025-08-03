@@ -62,7 +62,7 @@ beforeEach(function () {
 });
 
 test('it can get all users training records', function () {
-    $response = $this->connector->users()->training_records(1)->all();
+    $response = $this->connector->users()->trainingRecords(1)->all();
 
     $data = $response->json();
 
@@ -76,7 +76,7 @@ test('it can get all users training records', function () {
 });
 
 test('it can get a users training record', function () {
-    $response = $this->connector->users()->training_records(1)->get(1);
+    $response = $this->connector->users()->trainingRecords(1)->get(1);
 
     $data = $response->json();
 
@@ -95,7 +95,7 @@ test('it can get a users training record', function () {
 });
 
 test('it can create a users training record', function () {
-    $response = $this->connector->users()->training_records(1)->create([
+    $response = $this->connector->users()->trainingRecords(1)->create([
         'foo' => 'bar',
     ]);
 
@@ -116,7 +116,7 @@ test('it can create a users training record', function () {
 });
 
 test('it can update a users training record', function () {
-    $response = $this->connector->users()->training_records(1)->update(1, [
+    $response = $this->connector->users()->trainingRecords(1)->update(1, [
         'foo' => 'bar',
     ]);
 
@@ -138,7 +138,7 @@ test('it can update a users training record', function () {
 });
 
 test('it can delete a users training record', function () {
-    $response = $this->connector->users()->training_records(1)->delete(1);
+    $response = $this->connector->users()->trainingRecords(1)->delete(1);
 
     $data = $response->json();
 

@@ -179,7 +179,7 @@ test('it will send the proper parameters in a relational get all request', funct
 
     $connector = new PerscomConnection('foo', 'bar');
     $connector->withMockClient($mockClient);
-    $connector->users()->assignment_records(1)->all(['rank'], 5, 2);
+    $connector->users()->assignmentRecords(1)->all(['rank'], 5, 2);
 
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof GetAllRequest
@@ -202,7 +202,7 @@ test('it will send the proper parameters in a relational get request', function 
 
     $connector = new PerscomConnection('foo', 'bar');
     $connector->withMockClient($mockClient);
-    $connector->users()->assignment_records(1)->get(1, ['rank']);
+    $connector->users()->assignmentRecords(1)->get(1, ['rank']);
 
     $mockClient->assertSent(function (Request $request) {
         return $request instanceof GetRequest

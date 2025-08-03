@@ -62,7 +62,7 @@ beforeEach(function () {
 });
 
 test('it can get all users qualification records', function () {
-    $response = $this->connector->users()->qualification_records(1)->all();
+    $response = $this->connector->users()->qualificationRecords(1)->all();
 
     $data = $response->json();
 
@@ -76,7 +76,7 @@ test('it can get all users qualification records', function () {
 });
 
 test('it can get a users qualification record', function () {
-    $response = $this->connector->users()->qualification_records(1)->get(1);
+    $response = $this->connector->users()->qualificationRecords(1)->get(1);
 
     $data = $response->json();
 
@@ -95,7 +95,7 @@ test('it can get a users qualification record', function () {
 });
 
 test('it can create a users qualification record', function () {
-    $response = $this->connector->users()->qualification_records(1)->create([
+    $response = $this->connector->users()->qualificationRecords(1)->create([
         'foo' => 'bar',
     ]);
 
@@ -116,7 +116,7 @@ test('it can create a users qualification record', function () {
 });
 
 test('it can update a users qualification record', function () {
-    $response = $this->connector->users()->qualification_records(1)->update(1, [
+    $response = $this->connector->users()->qualificationRecords(1)->update(1, [
         'foo' => 'bar',
     ]);
 
@@ -138,7 +138,7 @@ test('it can update a users qualification record', function () {
 });
 
 test('it can delete a users qualification record', function () {
-    $response = $this->connector->users()->qualification_records(1)->delete(1);
+    $response = $this->connector->users()->qualificationRecords(1)->delete(1);
 
     $data = $response->json();
 

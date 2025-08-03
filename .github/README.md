@@ -83,14 +83,14 @@ $response = $perscom->users()->batchDelete([
 ]);
 
 // Uploading an attachment
-$response = $perscom->users()->attachments(id: 1)->create(data: [
+$response = $perscom->users()->attachments(userId: 1)->create(data: [
     'name' => 'Attachment 1',
     'file' => fopen('/../file.pdf', 'r')
 ]);
 
 // Other examples
-$response = $perscom->users()->profile_photo(id: 1)->create(filePath: 'image.jpg');
-$response = $perscom->users()->assignment_records(id: 1)->delete();
+$response = $perscom->users()->profilePhoto(userId: 1)->create(filePath: 'image.jpg');
+$response = $perscom->users()->assignmentRecords(userId: 1)->delete();
 
 // Parse the response into a usable array
 $data = $response->json();

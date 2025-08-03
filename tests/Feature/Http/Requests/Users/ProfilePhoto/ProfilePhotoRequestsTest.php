@@ -29,11 +29,11 @@ beforeEach(function () {
 });
 
 test('it will throw an exception if the file does not exist', function () {
-    $this->connector->users()->profile_photo(1)->create('foobar');
+    $this->connector->users()->profilePhoto(1)->create('foobar');
 })->throws(SaloonException::class);
 
 test('it can get set the users cover photo', function () {
-    $response = $this->connector->users()->cover_photo(1)->create(dirname(__FILE__).'/image.png');
+    $response = $this->connector->users()->coverPhoto(1)->create(dirname(__FILE__).'/image.png');
 
     $data = $response->json();
 
@@ -52,7 +52,7 @@ test('it can get set the users cover photo', function () {
 });
 
 test('it can delete a users cover photo', function () {
-    $response = $this->connector->users()->cover_photo(1)->delete();
+    $response = $this->connector->users()->coverPhoto(1)->delete();
 
     $data = $response->json();
 

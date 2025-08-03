@@ -33,85 +33,85 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
         return 'users';
     }
 
-    public function profile_photo(int $id): ProfilePhotoResource
+    public function profilePhoto(int $userId): ProfilePhotoResource
     {
-        return new ProfilePhotoResource($this->connector, $id);
+        return new ProfilePhotoResource($this->connector, $userId);
     }
 
-    public function cover_photo(int $id): CoverPhotoResource
+    public function coverPhoto(int $userId): CoverPhotoResource
     {
-        return new CoverPhotoResource($this->connector, $id);
+        return new CoverPhotoResource($this->connector, $userId);
     }
 
-    public function attachments(int $id): AttachmentsResource
+    public function attachments(int $userId): AttachmentsResource
     {
         return new AttachmentsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$id/attachments"
+            resource: "{$this->getResource()}/$userId/attachments"
         );
     }
 
-    public function assignment_records(int $id): AssignmentRecordsResource
+    public function assignmentRecords(int $userId): AssignmentRecordsResource
     {
         return new AssignmentRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$id/assignment-records"
+            resource: "{$this->getResource()}/$userId/assignment-records"
         );
     }
 
-    public function award_records(int $id): AwardRecordsResource
+    public function awardRecords(int $userId): AwardRecordsResource
     {
         return new AwardRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$id/award-records"
+            resource: "{$this->getResource()}/$userId/award-records"
         );
     }
 
-    public function combat_records(int $id): CombatRecordsResource
+    public function combatRecords(int $userId): CombatRecordsResource
     {
         return new CombatRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$id/combat-records"
+            resource: "{$this->getResource()}/$userId/combat-records"
         );
     }
 
-    public function qualification_records(int $id): QualificationRecordsResource
+    public function qualificationRecords(int $userId): QualificationRecordsResource
     {
         return new QualificationRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$id/qualification-records"
+            resource: "{$this->getResource()}/$userId/qualification-records"
         );
     }
 
-    public function rank_records(int $id): RankRecordsResource
+    public function rankRecords(int $userId): RankRecordsResource
     {
         return new RankRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$id/rank-records"
+            resource: "{$this->getResource()}/$userId/rank-records"
         );
     }
 
-    public function service_records(int $id): ServiceRecordsResource
+    public function serviceRecords(int $userId): ServiceRecordsResource
     {
         return new ServiceRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$id/service-records"
+            resource: "{$this->getResource()}/$userId/service-records"
         );
     }
 
-    public function training_records(int $id): TrainingRecordsResource
+    public function trainingRecords(int $userId): TrainingRecordsResource
     {
         return new TrainingRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$id/training-records"
+            resource: "{$this->getResource()}/$userId/training-records"
         );
     }
 
-    public function statuses(int $id): StatusResource
+    public function statuses(int $userId): StatusResource
     {
         return new StatusResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$id/status-records"
+            resource: "{$this->getResource()}/$userId/status-records"
         );
     }
 }
