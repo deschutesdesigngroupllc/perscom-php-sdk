@@ -5,7 +5,9 @@
       "Bash(grep:*)",
       "Bash(find:*)",
       "Bash(composer test:*)",
-      "Bash(./vendor/bin/pest:*)"
+      "Bash(./vendor/bin/pest:*)",
+      "Bash(mkdir:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }

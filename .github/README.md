@@ -23,9 +23,20 @@ The PERSCOM PHP SDK is a powerful tool that enables seamless integration with th
 ```php
 <?php
 
+use Perscom\PerscomConnection;
+use Perscom\Data\ResourceObject;
+use Perscom\Data\SortObject;
+use Perscom\Data\FilterObject;
+
 // The following are examples on the user resource, but the same principles
 // can be applied to any PERSCOM resource. 
 $perscom = new PerscomConnection('YOUR_API_KEY');
+
+// Optionally include your PERSCOM ID for better request identification
+// $perscom = new PerscomConnection('YOUR_API_KEY', 'YOUR_PERSCOM_ID');
+
+// For custom base URLs (advanced usage)
+// $perscom = new PerscomConnection('YOUR_API_KEY', 'YOUR_PERSCOM_ID', 'https://staging.perscom.io');
 
 // Get a list of a specific resource
 $response = $perscom->users()->all();
@@ -90,7 +101,7 @@ $response = $perscom->users()->attachments(userId: 1)->create(data: [
 
 // Other examples
 $response = $perscom->users()->profilePhoto(userId: 1)->create(filePath: 'image.jpg');
-$response = $perscom->users()->assignmentRecords(userId: 1)->delete();
+$response = $perscom->users()->assignmentRecords(userId: 1)->delete(id: 1);
 
 // Parse the response into a usable array
 $data = $response->json();
@@ -113,6 +124,9 @@ Visit our documentation [here](https://docs.perscom.io) to get started.
 The PERSCOM SDK throws exceptions when an API error occurs. You can catch these exceptions and handle them accordingly with a standard `try/catch` block. For a more elegant approach to error handling, consider using the [promise-based](#promise-support) approach.
 
 ```php
+use Perscom\PerscomConnection;
+use Perscom\Exceptions\AuthenticationException;
+
 try {
   $perscom = new PerscomConnection('YOUR_API_KEY');
 
@@ -126,11 +140,16 @@ try {
 The PERSCOM SDK can send asynchronous requests using a promise-based approach. This allows you to handle both successful and failed requests in a more fluent way.
 
 ```php
+use Perscom\PerscomConnection;
+use Perscom\Http\Requests\Crud\GetAllRequest;
+use Saloon\Http\Response;
+use Saloon\Exceptions\Request\RequestException;
+
 // Create a PERSCOM instance
 $perscom = new PerscomConnection('YOUR_API_KEY');
 
 // Create a promise
-$promise = $plaid->sendAsync(new GetAllUsersRequest());
+$promise = $perscom->sendAsync(new GetAllRequest('users'));
 
 // Send the request
 $promise
