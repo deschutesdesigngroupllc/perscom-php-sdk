@@ -6,19 +6,33 @@
 
 A PHP package that helps kickstart your next [PERSCOM](https://perscom.io) integration.
 
+![GitHub Release](https://img.shields.io/github/v/release/deschutesdesigngroupllc/perscom-php-sdk?display_name=release)
 [![Test Suite](https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/actions/workflows/tests.yml/badge.svg)](https://github.com/DeschutesDesignGroupLLC/perscom-php-sdk/actions/workflows/tests.yml)
 ![Downloads](https://img.shields.io/packagist/dm/deschutesdesigngroupllc/perscom-php-sdk)
-![Packagist Version](https://img.shields.io/packagist/v/DeschutesDesignGroupLLC/perscom-php-sdk)
 ![GitHub License](https://img.shields.io/github/license/DeschutesDesignGroupLLC/perscom-php-sdk)
 [![codecov](https://codecov.io/gh/DeschutesDesignGroupLLC/perscom-php-sdk/graph/badge.svg?token=uJUiz1Sv6X)](https://codecov.io/gh/DeschutesDesignGroupLLC/perscom-php-sdk)
-
-[Documentation](https://docs.perscom.io)
-
+[![Slack](https://img.shields.io/badge/Slack-4A154B?style=flat&logo=slack&logoColor=white)](https://slack.deschutesdesigngroup.com)
 </div>
 
 ## Introduction
 
 The PERSCOM PHP SDK is a powerful tool that enables seamless integration with the PERSCOM platform, allowing you to interact with PERSCOM's personnel data programmatically.
+
+## Getting Started
+
+You can install the package using [Composer](https://getcomposer.org):
+
+```shell
+composer require deschutesdesigngroupllc/perscom-php-sdk
+```
+
+## Documentation
+
+Visit our documentation [here](https://docs.perscom.io) to get started.
+
+## Usage
+
+Below is an overview of common usages for the SDK.
 
 ```php
 <?php
@@ -107,18 +121,6 @@ $response = $perscom->users()->assignmentRecords(userId: 1)->delete(id: 1);
 $data = $response->json();
 ```
 
-## Getting Started
-
-You can install the package using [Composer](https://getcomposer.org):
-
-```shell
-composer require deschutesdesigngroupllc/perscom-php-sdk
-```
-
-## Documentation
-
-Visit our documentation [here](https://docs.perscom.io) to get started.
-
 ## Error Handling
 
 The PERSCOM SDK throws exceptions when an API error occurs. You can catch these exceptions and handle them accordingly with a standard `try/catch` block. For a more elegant approach to error handling, consider using the [promise-based](#promise-support) approach.
@@ -137,6 +139,7 @@ try {
 ```
 
 ## Promise Support
+
 The PERSCOM SDK can send asynchronous requests using a promise-based approach. This allows you to handle both successful and failed requests in a more fluent way.
 
 ```php
