@@ -75,7 +75,7 @@ Before submitting your pull request, please make sure you have done the followin
 
 ## Community and Communication
 
-Join our [Slack](https://slack.deschutesdesigngroup.com) to stay connected with other contributors and maintainers. We appreciate your feedback and involvement!
+Join our [Slack](https://perscom.io/slack) to stay connected with other contributors and maintainers. We appreciate your feedback and involvement!
 
 ## License
 
