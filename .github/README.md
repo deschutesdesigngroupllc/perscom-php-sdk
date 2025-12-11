@@ -11,7 +11,7 @@ A PHP package that helps kickstart your next [PERSCOM](https://perscom.io) integ
 ![Downloads](https://img.shields.io/packagist/dm/deschutesdesigngroupllc/perscom-php-sdk)
 ![GitHub License](https://img.shields.io/github/license/DeschutesDesignGroupLLC/perscom-php-sdk)
 [![codecov](https://codecov.io/gh/DeschutesDesignGroupLLC/perscom-php-sdk/graph/badge.svg?token=uJUiz1Sv6X)](https://codecov.io/gh/DeschutesDesignGroupLLC/perscom-php-sdk)
-[![Slack](https://img.shields.io/badge/Slack-4A154B?style=flat&logo=slack&logoColor=white)](https://slack.deschutesdesigngroup.com)
+[![Slack](https://img.shields.io/badge/Slack-4A154B?style=flat&logo=slack&logoColor=white)](https://perscom.io/slack)
 </div>
 
 ## Introduction
