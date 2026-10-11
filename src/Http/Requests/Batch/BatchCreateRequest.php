@@ -40,7 +40,7 @@ class BatchCreateRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         return [
-            'resources' => collect($this->data)->map(fn (ResourceObject $resourceObject): array => $resourceObject->toArray())->toArray(),
+            'resources' => collect(Arr::wrap($this->data))->map(fn (ResourceObject $resourceObject): array => $resourceObject->toArray())->toArray(),
         ];
     }
 }

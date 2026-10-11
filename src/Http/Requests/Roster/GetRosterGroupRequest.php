@@ -42,7 +42,7 @@ class GetRosterGroupRequest extends Request
         ];
 
         if (filled($this->include)) {
-            $query['include'] = implode(',', $this->include);
+            $query['include'] = implode(',', (array) $this->include);
         }
 
         return $query;

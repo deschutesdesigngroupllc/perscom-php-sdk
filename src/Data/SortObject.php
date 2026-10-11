@@ -7,6 +7,9 @@ namespace Perscom\Data;
 use Illuminate\Contracts\Support\Arrayable;
 use Override;
 
+/**
+ * @implements Arrayable<string, string>
+ */
 final class SortObject implements Arrayable
 {
     /**

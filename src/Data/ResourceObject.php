@@ -7,6 +7,9 @@ namespace Perscom\Data;
 use Illuminate\Contracts\Support\Arrayable;
 use Override;
 
+/**
+ * @implements Arrayable<array-key, mixed>
+ */
 final class ResourceObject implements Arrayable
 {
     /**
@@ -21,7 +24,7 @@ final class ResourceObject implements Arrayable
     }
 
     /**
-     * @return array<string, array>|array<int, mixed>
+     * @return array<array-key, mixed>
      */
     #[Override]
     public function toArray(): array

@@ -20,6 +20,7 @@ class DetachRequest extends Request implements HasBody
 
     /**
      * @param  ResourceObject|array<ResourceObject>  $resources
+     * @param  string|array<string>  $include
      */
     public function __construct(
         public string $resource,
@@ -45,7 +46,7 @@ class DetachRequest extends Request implements HasBody
         $query = [];
 
         if (filled($this->include)) {
-            $query['include'] = implode(',', $this->include);
+            $query['include'] = implode(',', (array) $this->include);
         }
 
         return $query;
@@ -58,7 +59,7 @@ class DetachRequest extends Request implements HasBody
     {
         $resources = array_map(
             static fn (ResourceObject $resource): array => $resource->toArray(),
-            $this->resources
+            Arr::wrap($this->resources)
         );
 
         return [

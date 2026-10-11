@@ -40,7 +40,7 @@ class BatchUpdateRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         return [
-            'resources' => collect($this->data)->mapWithKeys(fn (ResourceObject $object) => [
+            'resources' => collect(Arr::wrap($this->data))->mapWithKeys(fn (ResourceObject $object) => [
                 $object->id => $object->data,
             ])->toArray(),
         ];

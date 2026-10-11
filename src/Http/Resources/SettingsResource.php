@@ -12,6 +12,8 @@ use Saloon\Http\Response;
 class SettingsResource extends Resource
 {
     /**
+     * @param  string|array<string>  $include
+     *
      * @throws FatalRequestException|RequestException
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response

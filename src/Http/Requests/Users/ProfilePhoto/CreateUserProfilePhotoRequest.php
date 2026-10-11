@@ -36,12 +36,12 @@ class CreateUserProfilePhotoRequest extends Request implements HasBody
      */
     protected function defaultBody(): array
     {
-        if (! file_exists($this->filePath)) {
-            throw new SaloonException('The specified file does not exist.');
+        if (! is_readable($this->filePath) || ($contents = file_get_contents($this->filePath)) === false) {
+            throw new SaloonException('The specified file does not exist or is not readable.');
         }
 
         return [
-            new MultipartValue(name: 'profile_photo', value: file_get_contents($this->filePath), filename: pathinfo($this->filePath, PATHINFO_BASENAME)),
+            new MultipartValue(name: 'profile_photo', value: $contents, filename: pathinfo($this->filePath, PATHINFO_BASENAME)),
             new MultipartValue(name: '_method', value: 'put'),
         ];
     }

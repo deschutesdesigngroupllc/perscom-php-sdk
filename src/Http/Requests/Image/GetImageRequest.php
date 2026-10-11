@@ -36,7 +36,7 @@ class GetImageRequest extends Request
         $query = [];
 
         if (filled($this->include)) {
-            $query['include'] = implode(',', $this->include);
+            $query['include'] = implode(',', (array) $this->include);
         }
 
         return $query;
