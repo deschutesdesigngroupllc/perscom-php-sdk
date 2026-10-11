@@ -16,6 +16,8 @@ class RosterResource extends Resource
     private RosterType $type = RosterType::Automatic;
 
     /**
+     * @param  string|array<string>  $include
+     *
      * @throws FatalRequestException|RequestException
      */
     public function all(string|array $include = [], int $page = 1, int $limit = 20): Response
@@ -24,6 +26,8 @@ class RosterResource extends Resource
     }
 
     /**
+     * @param  string|array<string>  $include
+     *
      * @throws FatalRequestException|RequestException
      */
     public function group(int $id, string|array $include = []): Response

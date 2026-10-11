@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Search;
 
 use Illuminate\Support\Arr;
+use Override;
 use Perscom\Data\FilterObject;
 use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
@@ -23,6 +24,7 @@ class SearchRequest extends Request implements HasBody
      * @param  SortObject|array<SortObject>|null  $sort
      * @param  FilterObject|array<FilterObject>|null  $filter
      * @param  ScopeObject|array<ScopeObject>|null  $scope
+     * @param  string|array<string>  $include
      */
     public function __construct(
         public string $resource,
@@ -40,14 +42,16 @@ class SearchRequest extends Request implements HasBody
         $this->include = Arr::wrap($this->include);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "{$this->resource}/search";
+        return $this->resource.'/search';
     }
 
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     protected function defaultQuery(): array
     {
         $query = [
@@ -56,7 +60,7 @@ class SearchRequest extends Request implements HasBody
         ];
 
         if (filled($this->include)) {
-            $query['include'] = implode(',', $this->include);
+            $query['include'] = implode(',', (array) $this->include);
         }
 
         return $query;
@@ -74,15 +78,15 @@ class SearchRequest extends Request implements HasBody
         }
 
         if (filled($this->sort)) {
-            $body['sort'] = collect($this->sort)->map(fn (SortObject $sortObject): array => $sortObject->toArray())->toArray();
+            $body['sort'] = collect(Arr::wrap($this->sort))->map(fn (SortObject $sortObject): array => $sortObject->toArray())->toArray();
         }
 
         if (filled($this->filter)) {
-            $body['filters'] = collect($this->filter)->map(fn (FilterObject $sortObject): array => $sortObject->toArray())->toArray();
+            $body['filters'] = collect(Arr::wrap($this->filter))->map(fn (FilterObject $sortObject): array => $sortObject->toArray())->toArray();
         }
 
         if (filled($this->scope)) {
-            $body['scopes'] = collect($this->scope)->map(fn (ScopeObject $scopeObject): array => $scopeObject->toArray())->toArray();
+            $body['scopes'] = collect(Arr::wrap($this->scope))->map(fn (ScopeObject $scopeObject): array => $scopeObject->toArray())->toArray();
         }
 
         return $body;

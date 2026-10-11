@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Attach;
 
 use Illuminate\Support\Arr;
+use Override;
 use Perscom\Data\ResourceObject;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -19,6 +20,7 @@ class SyncRequest extends Request implements HasBody
 
     /**
      * @param  ResourceObject|array<ResourceObject>  $resources
+     * @param  string|array<string>  $include
      */
     public function __construct(
         public string $resource,
@@ -30,20 +32,22 @@ class SyncRequest extends Request implements HasBody
         $this->include = Arr::wrap($this->include);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "$this->resource/sync";
+        return $this->resource.'/sync';
     }
 
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     protected function defaultQuery(): array
     {
         $query = [];
 
         if (filled($this->include)) {
-            $query['include'] = implode(',', $this->include);
+            $query['include'] = implode(',', (array) $this->include);
         }
 
         return $query;
@@ -55,8 +59,8 @@ class SyncRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         $resources = array_map(
-            static fn (ResourceObject $resource) => $resource->toArray(),
-            $this->resources
+            static fn (ResourceObject $resource): array => $resource->toArray(),
+            Arr::wrap($this->resources)
         );
 
         return [

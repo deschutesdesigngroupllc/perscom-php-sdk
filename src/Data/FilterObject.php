@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Perscom\Data;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Override;
 
+/**
+ * @implements Arrayable<string, mixed>
+ */
 final class FilterObject implements Arrayable
 {
     /**
@@ -26,6 +30,7 @@ final class FilterObject implements Arrayable
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     public function toArray(): array
     {
         return [

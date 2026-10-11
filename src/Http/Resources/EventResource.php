@@ -29,7 +29,7 @@ class EventResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new ImageResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$eventId/image",
+            resource: sprintf('%s/%d/image', $this->getResource(), $eventId),
         );
     }
 }

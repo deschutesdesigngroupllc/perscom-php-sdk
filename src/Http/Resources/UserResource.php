@@ -47,7 +47,7 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new AttachmentsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$userId/attachments"
+            resource: sprintf('%s/%d/attachments', $this->getResource(), $userId)
         );
     }
 
@@ -55,7 +55,7 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new AssignmentRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$userId/assignment-records"
+            resource: sprintf('%s/%d/assignment-records', $this->getResource(), $userId)
         );
     }
 
@@ -63,7 +63,7 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new AwardRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$userId/award-records"
+            resource: sprintf('%s/%d/award-records', $this->getResource(), $userId)
         );
     }
 
@@ -71,7 +71,7 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new CombatRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$userId/combat-records"
+            resource: sprintf('%s/%d/combat-records', $this->getResource(), $userId)
         );
     }
 
@@ -79,7 +79,7 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new QualificationRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$userId/qualification-records"
+            resource: sprintf('%s/%d/qualification-records', $this->getResource(), $userId)
         );
     }
 
@@ -87,7 +87,7 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new RankRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$userId/rank-records"
+            resource: sprintf('%s/%d/rank-records', $this->getResource(), $userId)
         );
     }
 
@@ -95,7 +95,7 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new ServiceRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$userId/service-records"
+            resource: sprintf('%s/%d/service-records', $this->getResource(), $userId)
         );
     }
 
@@ -103,7 +103,7 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new TrainingRecordsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$userId/training-records"
+            resource: sprintf('%s/%d/training-records', $this->getResource(), $userId)
         );
     }
 
@@ -111,7 +111,7 @@ class UserResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new StatusResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$userId/status-records"
+            resource: sprintf('%s/%d/status-records', $this->getResource(), $userId)
         );
     }
 }

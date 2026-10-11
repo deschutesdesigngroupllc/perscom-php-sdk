@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom;
 
 use JsonException;
+use Override;
 use Perscom\Enums\RosterType;
 use Perscom\Exceptions\AuthenticationException;
 use Perscom\Exceptions\ForbiddenException;
@@ -71,6 +72,7 @@ class PerscomConnection extends Connector
         protected ?string $perscomId = null,
         protected ?string $baseUrl = null) {}
 
+    #[Override]
     public function resolveBaseUrl(): string
     {
         return $this->baseUrl ?? static::$apiUrl;
@@ -261,34 +263,36 @@ class PerscomConnection extends Connector
     /**
      * @throws JsonException
      */
+    #[Override]
     public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
     {
         return match ($response->status()) {
             401 => new AuthenticationException(
-                message: $response->json('error.message') ?? 'You are not authenticated. Please provide a valid API key that contains your PERSCOM ID to continue.',
+                message: $this->resolveErrorMessage($response, 'You are not authenticated. Please provide a valid API key that contains your PERSCOM ID to continue.'),
             ),
             402 => new PaymentRequiredException(
-                message: $response->json('error.message') ?? 'A valid subscription is required to complete this request.',
+                message: $this->resolveErrorMessage($response, 'A valid subscription is required to complete this request.'),
             ),
             403 => new ForbiddenException(
-                message: $response->json('error.message') ?? 'he API key provided does not have the correct permissions and/or scopes to perform the requested action.',
+                message: $this->resolveErrorMessage($response, 'The API key provided does not have the correct permissions and/or scopes to perform the requested action.'),
             ),
             404 => new NotFoundHttpException(
-                message: $response->json('error.message') ?? 'The requested resource or endpoint could not be found.',
+                message: $this->resolveErrorMessage($response, 'The requested resource or endpoint could not be found.'),
             ),
             429 => new RateLimitException(
-                message: $response->json('error.message') ?? 'You have exceeded the API rate limit. Please wait a minute before trying again.',
+                message: $this->resolveErrorMessage($response, 'You have exceeded the API rate limit. Please wait a minute before trying again.'),
             ),
             500 => new ServerErrorException(
-                message: $response->json('error.message') ?? 'There was a server error with your last request. Please try again.',
+                message: $this->resolveErrorMessage($response, 'There was a server error with your last request. Please try again.'),
             ),
             503 => new ServiceUnavailableException(
-                message: $response->json('error.message') ?? 'The API is currently down for maintenance. Please check back later.',
+                message: $this->resolveErrorMessage($response, 'The API is currently down for maintenance. Please check back later.'),
             ),
             default => parent::getRequestException($response, $senderException)
         };
     }
 
+    #[Override]
     protected function defaultAuth(): TokenAuthenticator
     {
         return new TokenAuthenticator($this->apiKey);
@@ -297,10 +301,11 @@ class PerscomConnection extends Connector
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     protected function defaultHeaders(): array
     {
         $headers = [
-            'X-Perscom-Sdk' => true,
+            'X-Perscom-Sdk' => '1',
         ];
 
         if (! is_null($this->perscomId)) {
@@ -312,5 +317,15 @@ class PerscomConnection extends Connector
         }
 
         return $headers;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    private function resolveErrorMessage(Response $response, string $default): string
+    {
+        $message = $response->json('error.message');
+
+        return is_string($message) ? $message : $default;
     }
 }

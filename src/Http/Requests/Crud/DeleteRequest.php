@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests\Crud;
 
+use Override;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -18,8 +19,9 @@ class DeleteRequest extends Request
         //
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "{$this->resource}/{$this->id}";
+        return sprintf('%s/%d', $this->resource, $this->id);
     }
 }

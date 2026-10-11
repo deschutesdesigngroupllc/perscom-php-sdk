@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests\Crud;
 
+use Override;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -25,6 +26,7 @@ class CreateRequest extends Request implements HasBody
         //
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
         return $this->resource;

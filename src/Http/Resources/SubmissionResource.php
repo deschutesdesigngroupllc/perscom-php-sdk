@@ -27,7 +27,7 @@ class SubmissionResource extends Resource implements Batchable, Crudable, Search
     {
         return new StatusResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$submissionId/statuses",
+            resource: sprintf('%s/%d/statuses', $this->getResource(), $submissionId),
         );
     }
 }

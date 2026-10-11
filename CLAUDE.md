@@ -20,7 +20,7 @@ This is the PERSCOM PHP SDK - a comprehensive PHP SDK for interacting with the P
 - `./vendor/bin/phpstan` - Run static analysis (configuration in phpstan.dist.neon)
 
 ### Dependencies
-- PHP 8.2+ required
+- PHP 8.4+ required
 - Uses Saloon HTTP client as the core HTTP layer
 - Laravel/Illuminate Support package for utilities
 - Rate limiting via saloonphp/rate-limit-plugin

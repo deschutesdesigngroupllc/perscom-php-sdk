@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Crud;
 
 use Illuminate\Support\Arr;
+use Override;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -23,20 +24,22 @@ class GetRequest extends Request
         $this->include = Arr::wrap($this->include);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "{$this->resource}/{$this->id}";
+        return sprintf('%s/%d', $this->resource, $this->id);
     }
 
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     protected function defaultQuery(): array
     {
         $query = [];
 
         if (filled($this->include)) {
-            $query['include'] = implode(',', $this->include);
+            $query['include'] = implode(',', (array) $this->include);
         }
 
         return $query;

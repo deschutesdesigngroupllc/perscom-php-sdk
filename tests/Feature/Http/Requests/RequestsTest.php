@@ -122,3 +122,34 @@ test('it will throw a service unavailable exception', function () {
     $connector->withMockClient($mockClient);
     $connector->users()->all();
 })->throws(ServiceUnavailableException::class);
+
+test('it will use the exception message from the response', function () {
+    $mockClient = new MockClient([
+        MockResponse::make([
+            'error' => [
+                'message' => 'foo bar',
+            ],
+        ], 404),
+    ]);
+
+    $connector = new PerscomConnection('foo', 'bar');
+    $connector->withMockClient($mockClient);
+    $connector->users()->all();
+})->throws(NotFoundHttpException::class, 'foo bar');
+
+test('it will use a default exception message if the response does not contain one', function (mixed $message) {
+    $mockClient = new MockClient([
+        MockResponse::make([
+            'error' => [
+                'message' => $message,
+            ],
+        ], 404),
+    ]);
+
+    $connector = new PerscomConnection('foo', 'bar');
+    $connector->withMockClient($mockClient);
+    $connector->users()->all();
+})->with([
+    'missing' => [null],
+    'not a string' => [['foo' => 'bar']],
+])->throws(NotFoundHttpException::class, 'The requested resource or endpoint could not be found.');

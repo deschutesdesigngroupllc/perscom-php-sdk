@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Image;
 
 use Illuminate\Support\Collection;
+use Override;
+use Psr\Http\Message\StreamInterface;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Enums\Method;
@@ -25,9 +27,10 @@ class CreateImageRequest extends Request implements HasBody
         //
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "$this->resource/$this->id/image";
+        return sprintf('%s/%d/image', $this->resource, $this->id);
     }
 
     /**
@@ -38,9 +41,12 @@ class CreateImageRequest extends Request implements HasBody
         /** @var Collection<string, mixed> $data */
         $data = collect($this->data);
 
-        return $data->map(fn (mixed $value, string $key): MultipartValue => new MultipartValue(
-            name: $key,
-            value: $value
-        ))->toArray();
+        return $data->map(function (mixed $value, string $key): MultipartValue {
+            /** @var StreamInterface|resource|string|int $value */
+            return new MultipartValue(
+                name: $key,
+                value: $value
+            );
+        })->all();
     }
 }
