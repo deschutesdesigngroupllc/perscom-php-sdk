@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests\Users\CoverPhoto;
 
+use Override;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Enums\Method;
@@ -22,9 +23,10 @@ class CreateUserCoverPhotoRequest extends Request implements HasBody
         //
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "users/$this->relationId";
+        return 'users/'.$this->relationId;
     }
 
     /**

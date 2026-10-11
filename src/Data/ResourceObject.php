@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Data;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Override;
 
 final class ResourceObject implements Arrayable
 {
@@ -22,6 +23,7 @@ final class ResourceObject implements Arrayable
     /**
      * @return array<string, array>|array<int, mixed>
      */
+    #[Override]
     public function toArray(): array
     {
         if (filled($this->id)) {

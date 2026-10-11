@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Search;
 
 use Illuminate\Support\Arr;
+use Override;
 use Perscom\Data\FilterObject;
 use Perscom\Data\ScopeObject;
 use Perscom\Data\SortObject;
@@ -40,14 +41,16 @@ class SearchRequest extends Request implements HasBody
         $this->include = Arr::wrap($this->include);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "{$this->resource}/search";
+        return $this->resource.'/search';
     }
 
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     protected function defaultQuery(): array
     {
         $query = [

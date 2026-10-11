@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Multipart;
 
 use Illuminate\Support\Collection;
+use Override;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Enums\Method;
@@ -28,9 +29,10 @@ class UpdateMultipartRequest extends Request implements HasBody
         //
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "{$this->resource}/{$this->id}";
+        return sprintf('%s/%d', $this->resource, $this->id);
     }
 
     /**

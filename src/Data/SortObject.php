@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Data;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Override;
 
 final class SortObject implements Arrayable
 {
@@ -22,6 +23,7 @@ final class SortObject implements Arrayable
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function toArray(): array
     {
         return [

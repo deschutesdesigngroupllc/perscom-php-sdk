@@ -29,7 +29,7 @@ class GroupResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new UnitsResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$groupId/units",
+            resource: sprintf('%s/%d/units', $this->getResource(), $groupId),
         );
     }
 }

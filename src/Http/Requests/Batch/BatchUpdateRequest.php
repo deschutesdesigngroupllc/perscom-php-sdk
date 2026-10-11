@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Batch;
 
 use Illuminate\Support\Arr;
+use Override;
 use Perscom\Data\ResourceObject;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -27,9 +28,10 @@ class BatchUpdateRequest extends Request implements HasBody
         $this->data = Arr::wrap($this->data);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "{$this->resource}/batch";
+        return $this->resource.'/batch';
     }
 
     /**
@@ -38,11 +40,9 @@ class BatchUpdateRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         return [
-            'resources' => collect($this->data)->mapWithKeys(function (ResourceObject $object) {
-                return [
-                    $object->id => $object->data,
-                ];
-            })->toArray(),
+            'resources' => collect($this->data)->mapWithKeys(fn (ResourceObject $object) => [
+                $object->id => $object->data,
+            ])->toArray(),
         ];
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Image;
 
 use Illuminate\Support\Collection;
+use Override;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Enums\Method;
@@ -25,9 +26,10 @@ class CreateImageRequest extends Request implements HasBody
         //
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "$this->resource/$this->id/image";
+        return sprintf('%s/%d/image', $this->resource, $this->id);
     }
 
     /**

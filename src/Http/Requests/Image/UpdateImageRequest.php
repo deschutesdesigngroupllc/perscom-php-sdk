@@ -6,6 +6,7 @@ namespace Perscom\Http\Requests\Image;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Override;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Enums\Method;
@@ -27,9 +28,10 @@ class UpdateImageRequest extends Request implements HasBody
         $this->include = Arr::wrap($this->include);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "$this->resource/$this->id/image";
+        return sprintf('%s/%d/image', $this->resource, $this->id);
     }
 
     /**
@@ -49,6 +51,7 @@ class UpdateImageRequest extends Request implements HasBody
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     protected function defaultQuery(): array
     {
         $query = [];

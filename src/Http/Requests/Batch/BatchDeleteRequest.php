@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Batch;
 
 use Illuminate\Support\Arr;
+use Override;
 use Perscom\Data\ResourceObject;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -27,9 +28,10 @@ class BatchDeleteRequest extends Request implements HasBody
         $this->data = Arr::wrap($this->data);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "{$this->resource}/batch";
+        return $this->resource.'/batch';
     }
 
     /**
@@ -38,7 +40,7 @@ class BatchDeleteRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         return [
-            'resources' => collect($this->data)->map(fn (ResourceObject $object) => $object->id)->toArray(),
+            'resources' => collect($this->data)->map(fn (ResourceObject $object): ?int => $object->id)->toArray(),
         ];
     }
 }

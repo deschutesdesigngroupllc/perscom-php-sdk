@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace Perscom\Http\Requests;
 
+use Override;
 use Perscom\Support\Helpers\ApiUrl;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 class HealthRequest extends Request
 {
+    public ?bool $allowBaseUrlOverride = true;
+
     protected Method $method = Method::GET;
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return ApiUrl::withoutApiVersion(fn (string $baseUrl): string => "$baseUrl/health");
+        return ApiUrl::withoutApiVersion(fn (string $baseUrl): string => $baseUrl.'/health');
     }
 }

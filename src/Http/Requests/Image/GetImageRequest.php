@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Image;
 
 use Illuminate\Support\Arr;
+use Override;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -20,14 +21,16 @@ class GetImageRequest extends Request
         $this->include = Arr::wrap($this->include);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "$this->resource/$this->id/image";
+        return sprintf('%s/%d/image', $this->resource, $this->id);
     }
 
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     protected function defaultQuery(): array
     {
         $query = [];

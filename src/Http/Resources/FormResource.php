@@ -28,7 +28,7 @@ class FormResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new FieldResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$formId/fields",
+            resource: sprintf('%s/%d/fields', $this->getResource(), $formId),
         );
     }
 
@@ -36,7 +36,7 @@ class FormResource extends Resource implements Batchable, Crudable, Searchable
     {
         return new SubmissionResource(
             connector: $this->connector,
-            resource: "{$this->getResource()}/$formId/submissions",
+            resource: sprintf('%s/%d/submissions', $this->getResource(), $formId),
         );
     }
 }

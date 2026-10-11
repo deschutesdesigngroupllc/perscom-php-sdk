@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom;
 
 use JsonException;
+use Override;
 use Perscom\Enums\RosterType;
 use Perscom\Exceptions\AuthenticationException;
 use Perscom\Exceptions\ForbiddenException;
@@ -71,6 +72,7 @@ class PerscomConnection extends Connector
         protected ?string $perscomId = null,
         protected ?string $baseUrl = null) {}
 
+    #[Override]
     public function resolveBaseUrl(): string
     {
         return $this->baseUrl ?? static::$apiUrl;
@@ -261,6 +263,7 @@ class PerscomConnection extends Connector
     /**
      * @throws JsonException
      */
+    #[Override]
     public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
     {
         return match ($response->status()) {
@@ -289,6 +292,7 @@ class PerscomConnection extends Connector
         };
     }
 
+    #[Override]
     protected function defaultAuth(): TokenAuthenticator
     {
         return new TokenAuthenticator($this->apiKey);
@@ -297,10 +301,11 @@ class PerscomConnection extends Connector
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     protected function defaultHeaders(): array
     {
         $headers = [
-            'X-Perscom-Sdk' => true,
+            'X-Perscom-Sdk' => '1',
         ];
 
         if (! is_null($this->perscomId)) {

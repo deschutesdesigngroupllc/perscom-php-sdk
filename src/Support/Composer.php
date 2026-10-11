@@ -13,7 +13,7 @@ final class Composer
     {
         try {
             return InstalledVersions::getVersion($packageName);
-        } catch (Exception $exception) {
+        } catch (Exception) {
             return null;
         }
     }

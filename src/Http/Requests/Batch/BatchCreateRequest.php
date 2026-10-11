@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Batch;
 
 use Illuminate\Support\Arr;
+use Override;
 use Perscom\Data\ResourceObject;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -27,9 +28,10 @@ class BatchCreateRequest extends Request implements HasBody
         $this->data = Arr::wrap($this->data);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "{$this->resource}/batch";
+        return $this->resource.'/batch';
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Perscom\Http\Requests\Attach;
 
 use Illuminate\Support\Arr;
+use Override;
 use Perscom\Data\ResourceObject;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -29,14 +30,16 @@ class DetachRequest extends Request implements HasBody
         $this->include = Arr::wrap($this->include);
     }
 
+    #[Override]
     public function resolveEndpoint(): string
     {
-        return "$this->resource/detach";
+        return $this->resource.'/detach';
     }
 
     /**
      * @return array<string, mixed>
      */
+    #[Override]
     protected function defaultQuery(): array
     {
         $query = [];
@@ -54,7 +57,7 @@ class DetachRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         $resources = array_map(
-            static fn (ResourceObject $resource) => $resource->toArray(),
+            static fn (ResourceObject $resource): array => $resource->toArray(),
             $this->resources
         );
 
